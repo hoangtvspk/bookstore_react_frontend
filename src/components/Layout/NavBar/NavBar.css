@@ -1,0 +1,15 @@
+.logo {
+  width: 180px;
+  height: 150px;
+  margin: 16px 0px 0px 0;
+  background: transparent;
+}
+.site-layout-background {
+  background: transparent;
+  padding: 24;
+  min-height: calc(100vh - 300px);
+}
+.ant-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+}
