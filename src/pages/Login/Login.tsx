@@ -1,12 +1,12 @@
 import { Button, Checkbox, Form, Input, message, Spin } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
-import { UserInfo } from "../../modals/auth";
-import { LoginForm } from "../../modals/login";
+import { UserInfo } from "../../models/auth";
+import { LoginForm } from "../../models/login";
 import { userLogIn } from "../../redux/slices/authSlice";
 import { appRoutes } from "../../routers/config";
 import "./Login.css";
@@ -46,8 +46,6 @@ const Login = () => {
             wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
-            autoComplete="off"
-            className=""
           >
             <Form.Item
               label="Email"

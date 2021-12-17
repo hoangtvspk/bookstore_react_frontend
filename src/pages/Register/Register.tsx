@@ -1,10 +1,10 @@
 import { Button, Form, Input, Spin } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
-import { RegisterForm } from "../../modals/register";
+import { RegisterForm } from "../../models/register";
 import { appRoutes } from "../../routers/config";
 import "./Register.css";
 const layout = {

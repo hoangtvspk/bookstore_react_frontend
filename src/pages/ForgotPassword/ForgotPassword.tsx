@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
-import { ForgotPasswordForm } from "../../modals/forgotPassword";
+import { ForgotPasswordForm } from "../../models/forgotPassword";
 import "../../routers/config";
 import { appRoutes } from "../../routers/config";
 

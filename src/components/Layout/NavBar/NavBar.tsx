@@ -4,18 +4,25 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faUser,
+  faUserCircle,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Col, Divider, Layout, Menu, Row } from "antd";
+import { Breadcrumb, Col, Divider, Layout, Menu, Row } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../../image/book2.png";
 import { userLogOut } from "../../../redux/slices/authSlice";
 import { appRoutes } from "../../../routers/config";
 import "./NavBar.css";
+import {
+  UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 
 const { Header, Content } = Layout;
 
@@ -47,7 +54,7 @@ const NavBar: React.FC = ({ children }) => {
           position: "fixed",
           zIndex: 1,
           width: "100%",
-          height: "230px",
+          height: "198px",
         }}
       >
         <Row gutter={16}>
@@ -72,7 +79,7 @@ const NavBar: React.FC = ({ children }) => {
               selectedKeys={[selectedMenu]}
             >
               <Menu.Item key="home" onClick={() => setSelectedMenu("home")}>
-                <Link to={appRoutes.home}>
+                <Link to={appRoutes.home} className="font-text">
                   <FontAwesomeIcon className="mr-2" icon={faHome} />
                   Home
                 </Link>
@@ -88,10 +95,19 @@ const NavBar: React.FC = ({ children }) => {
                   style={{ background: "Transparent" }}
                   selectedKeys={[selectedMenu]}
                 >
-                  <SubMenu key="name" title={userName}>
+                  <SubMenu
+                    key="name"
+                    title={userName}
+                    style={{ fontSize: "20px" }}
+                    icon={
+                      <FontAwesomeIcon className="mr-2" icon={faUserCircle} />
+                    }
+                  >
                     <Menu.Item key="my-account">
                       <FontAwesomeIcon className="mr-2" icon={faUser} />
-                      <Link to={appRoutes.myAccount}>My account</Link>
+                      <Link to={appRoutes.myAccount} className="font-text">
+                        My account
+                      </Link>
                     </Menu.Item>
                     <Divider className="m-0" />
                     <Menu.Item
@@ -99,7 +115,9 @@ const NavBar: React.FC = ({ children }) => {
                       onClick={() => dispatch(userLogOut())}
                     >
                       <FontAwesomeIcon className="mr-2" icon={faSignOutAlt} />
-                      <Link to={appRoutes.login}>Log Out</Link>
+                      <Link to={appRoutes.login} className="font-text">
+                        Log Out
+                      </Link>
                     </Menu.Item>
                   </SubMenu>
                 </Menu>
@@ -118,7 +136,9 @@ const NavBar: React.FC = ({ children }) => {
                     onClick={() => setSelectedMenu("login")}
                   >
                     <FontAwesomeIcon className="mr-2" icon={faSignInAlt} />
-                    <Link to={appRoutes.login}>Login</Link>
+                    <Link to={appRoutes.login} className="font-text">
+                      Login
+                    </Link>
                   </Menu.Item>
 
                   <Menu.Item
@@ -126,7 +146,9 @@ const NavBar: React.FC = ({ children }) => {
                     onClick={() => setSelectedMenu("register")}
                   >
                     <FontAwesomeIcon className="mr-2" icon={faUserPlus} />
-                    <Link to={appRoutes.register}>Register</Link>
+                    <Link to={appRoutes.register} className="font-text">
+                      Register
+                    </Link>
                   </Menu.Item>
                 </Menu>
               </>
@@ -138,11 +160,19 @@ const NavBar: React.FC = ({ children }) => {
       <Content
         className="site-layout-background"
         style={{
-          padding: 230,
-
+          paddingTop: 198,
+          paddingBottom: 198,
+          paddingLeft: 160,
+          paddingRight: 160,
           margin: 0,
         }}
       >
+        <Breadcrumb separator=">" style={{ margin: "8px 0", fontSize: "18px" }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            {localStorage.getItem("breadcrumb")}
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <div>{children}</div>
       </Content>
     </Layout>

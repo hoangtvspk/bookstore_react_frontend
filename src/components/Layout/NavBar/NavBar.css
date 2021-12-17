@@ -12,4 +12,11 @@
 .ant-menu {
   background: transparent !important;
   border-bottom: none !important;
+  font-size: 30;
+}
+.font-text {
+  font-size: 18px;
+}
+.ant-layout-header {
+  line-height: 30px !important;
 }

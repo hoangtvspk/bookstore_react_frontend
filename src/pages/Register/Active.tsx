@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
-import { ActiveForm } from "../../modals/activationCode";
+import { ActiveForm } from "../../models/activationCode";
 
 import { appRoutes } from "../../routers/config";
 import "./Active.css";

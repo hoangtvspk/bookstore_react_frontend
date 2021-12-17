@@ -9,14 +9,13 @@ const ActivateAccount = () => {
   const [loading, setLoading] = useState(true);
   const [showError, setShowError] = useState(false);
   const { code } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(location);
+    console.log(code);
     if (code) {
       httpClient()
-        .get(APP_API.active1.replace(":activeCode", code)) //"registration/activate/:activeCode"
+        .get(APP_API.active1.replace(":activeCode", code))
         .then(() => {
           navigate(appRoutes.login);
           message.success("Account activated! Please login again.");

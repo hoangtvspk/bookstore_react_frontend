@@ -1,5 +1,6 @@
 export const HTTP_CONFIG = {
   baseURL: "http://localhost:8080/api/v1/",
+  headers: { "Content-Type": "application/json" },
 };
 
 export const APP_API = {
@@ -10,4 +11,8 @@ export const APP_API = {
   forgotPassword: "/auth/forgot",
   resetPassword: "/auth/reset",
   resetUserData: "/auth/reset/:resetCode",
+  userInfo: "/users/account/info",
+  editProfile: "/users/account/edit",
+  editPassword: "/auth/edit/password",
+  bookDetail: "/books/:id",
 };
