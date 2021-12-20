@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import "antd/dist/antd.css";
+import "react-image-gallery/styles/css/image-gallery.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 

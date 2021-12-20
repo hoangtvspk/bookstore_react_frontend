@@ -1,7 +1,7 @@
 import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
-import { RootStateOrAny, useSelector } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import PageTitle from "../../components/Layout/PageTitle";
 import { UserInfo } from "../../models/auth";
 import { httpClient } from "../../httpClient/httpServices";
@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./MyAccount.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { userLogIn } from "../../redux/slices/authSlice";
 
 const layout = {
   labelCol: { span: 8 },
@@ -26,6 +27,7 @@ const UpdateProfile = () => {
   const userInfo = useSelector(
     (state: RootStateOrAny) => state.authSlice.userInfo as UserInfo
   );
+  const dispatch = useDispatch();
   const [accountForm] = useForm();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);

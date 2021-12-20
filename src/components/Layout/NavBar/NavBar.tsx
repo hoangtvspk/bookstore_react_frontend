@@ -13,7 +13,7 @@ import SubMenu from "antd/lib/menu/SubMenu";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../../image/book2.png";
+import logo from "../../../image/book3.png";
 import { userLogOut } from "../../../redux/slices/authSlice";
 import { appRoutes } from "../../../routers/config";
 import "./NavBar.css";
@@ -54,7 +54,7 @@ const NavBar: React.FC = ({ children }) => {
           position: "fixed",
           zIndex: 1,
           width: "100%",
-          height: "198px",
+          height: "160px",
         }}
       >
         <Row gutter={16}>
@@ -73,7 +73,6 @@ const NavBar: React.FC = ({ children }) => {
         <Row gutter={16}>
           <Col className="gutter-row menu" span="6">
             <Menu
-              theme="dark"
               mode="horizontal"
               triggerSubMenuAction="hover"
               selectedKeys={[selectedMenu]}
@@ -90,7 +89,6 @@ const NavBar: React.FC = ({ children }) => {
             {isLoggedIn && (
               <>
                 <Menu
-                  theme="dark"
                   mode="horizontal"
                   style={{ background: "Transparent" }}
                   selectedKeys={[selectedMenu]}
@@ -98,14 +96,14 @@ const NavBar: React.FC = ({ children }) => {
                   <SubMenu
                     key="name"
                     title={userName}
-                    style={{ fontSize: "20px" }}
+                    className="font-name"
                     icon={
                       <FontAwesomeIcon className="mr-2" icon={faUserCircle} />
                     }
                   >
                     <Menu.Item key="my-account">
                       <FontAwesomeIcon className="mr-2" icon={faUser} />
-                      <Link to={appRoutes.myAccount} className="font-text">
+                      <Link to={appRoutes.myAccount} className="font-submenu">
                         My account
                       </Link>
                     </Menu.Item>
@@ -115,7 +113,7 @@ const NavBar: React.FC = ({ children }) => {
                       onClick={() => dispatch(userLogOut())}
                     >
                       <FontAwesomeIcon className="mr-2" icon={faSignOutAlt} />
-                      <Link to={appRoutes.login} className="font-text">
+                      <Link to={appRoutes.login} className="font-submenu">
                         Log Out
                       </Link>
                     </Menu.Item>
@@ -126,7 +124,6 @@ const NavBar: React.FC = ({ children }) => {
             {!isLoggedIn && (
               <>
                 <Menu
-                  theme="dark"
                   mode="horizontal"
                   style={{ background: "Transparent" }}
                   selectedKeys={[selectedMenu]}
@@ -160,8 +157,8 @@ const NavBar: React.FC = ({ children }) => {
       <Content
         className="site-layout-background"
         style={{
-          paddingTop: 198,
-          paddingBottom: 198,
+          paddingTop: 160,
+          paddingBottom: 160,
           paddingLeft: 160,
           paddingRight: 160,
           margin: 0,

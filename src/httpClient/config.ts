@@ -15,4 +15,6 @@ export const APP_API = {
   editProfile: "/users/account/edit",
   editPassword: "/auth/edit/password",
   bookDetail: "/books/:id",
+  addToCart: "/users/cart/add",
+  getCart: "/users/getcart"
 };

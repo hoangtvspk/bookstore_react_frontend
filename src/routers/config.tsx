@@ -11,6 +11,7 @@ import Active from "../pages/Register/Active";
 import Register from "../pages/Register/Register";
 import UpdatePassword from "../pages/Account/UpdatePassword";
 import BookDetail from "../pages/BookDetail/BookDetail";
+import Cart from "../pages/Cart/Cart";
 
 export const appRoutes = {
   home: "/",
@@ -24,6 +25,7 @@ export const appRoutes = {
   myAccount: "/my-account",
   updateProfile: "/my-account/update",
   updatePassword: "/my-account/password",
+  cart: "/cart",
 };
 
 interface IAppComponentConfig {
@@ -86,6 +88,10 @@ export const appComponentConfig: IAppComponentConfig[] = [
     path: appRoutes.activeAccount,
     component: <ActivateAccount />,
     noAuthRequired: true,
+  },
+  {
+    path: appRoutes.cart,
+    component: <Cart />,
   },
 ];
 

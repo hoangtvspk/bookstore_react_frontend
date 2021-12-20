@@ -8,6 +8,9 @@ const App: FC = () => {
   const isAuth = useSelector((state: RootStateOrAny) => {
     return state.authSlice.isAuth;
   });
+  const Cart = {};
+
+  localStorage.setItem("cart", JSON.stringify(Cart));
   return (
     <>
       <BrowserRouter>

@@ -1,29 +1,40 @@
-.cate-book {
-  display: grid;
-
-  grid-template-columns: repeat(5, 220px);
-  background: white;
-  width: 100%;
-  grid-column-gap: 70px;
-}
-.cate-list {
-  margin-top: 3rem;
-  display: grid;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  padding-left: 30px;
-}
-.book-list {
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: repeat(4, 220px);
-  grid-template-rows: repeat(5, 420px);
-  grid-row-gap: 20px;
-  grid-column-gap: 30px;
-  grid-column-start: 3;
-  grid-column-end: 5;
-}
 .preview-image {
   height: 330px;
   background-size: cover;
+}
+
+.book-images {
+  width: 400px;
+}
+.discount {
+  font-weight: 400;
+  margin-left: 8px;
+  border: 1px solid rgb(255, 66, 78);
+  border-radius: 2px;
+  background-color: rgb(255, 240, 241);
+  color: rgb(255, 66, 78);
+  line-height: 22px;
+  font-size: 18px;
+  padding: 0px 4px;
+  align-self: end;
+}
+.quantity-input {
+  width: 60px !important;
+  font-size: 18px !important;
+}
+
+.quantity-btn {
+  font-size: 18px !important;
+  padding: 0 12px !important;
+  font-weight: bold !important;
+  height: 40px !important;
+  width: 40px !important;
+  color: #a9a9a9 !important;
+}
+
+.btn-submit {
+  margin-top: 30px;
+  width: 300px !important;
+  background-color: rgb(255, 66, 78) !important;
+  color: white !important;
 }
