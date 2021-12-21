@@ -8,6 +8,7 @@ import { httpClient } from "../../httpClient/httpServices";
 import { UserInfo } from "../../models/auth";
 import { LoginForm } from "../../models/login";
 import { userLogIn } from "../../redux/slices/authSlice";
+import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
 import "./Login.css";
 
@@ -15,6 +16,16 @@ const Login = () => {
   const dispatch = useDispatch();
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+
+  const onLoadUserCartItems = () => {
+    httpClient()
+      .post(APP_API.getCart, localStorage.getItem("noAuthCart"))
+      .then((res) => {
+        dispatch(updateCartData(res.data));
+      })
+      .catch((err) => message.error("Cannot load cart data"));
+  };
+
   const onFinish = (values: LoginForm) => {
     setSubmitting(true);
     httpClient()
@@ -24,6 +35,7 @@ const Login = () => {
         dispatch(userLogIn(userInfo));
         navigate(appRoutes.home);
         message.success("Log In Successfully");
+        onLoadUserCartItems();
       })
       .catch((err) => {
         console.error(err);

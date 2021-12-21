@@ -12,7 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./MyAccount.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { userLogIn } from "../../redux/slices/authSlice";
+import { updateUserInfo, userLogIn } from "../../redux/slices/authSlice";
+import { resolveSrv } from "dns";
 
 const layout = {
   labelCol: { span: 8 },
@@ -38,6 +39,14 @@ const UpdateProfile = () => {
       .then((res) => {
         const userInfo: UserInfo = res.data as UserInfo;
         message.success("Update Successfully");
+        dispatch(
+          updateUserInfo({
+            ...userInfo,
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            phoneNumber: res.data.phoneNumber,
+          })
+        );
         navigate(appRoutes.myAccount);
       })
       .catch((err) => {

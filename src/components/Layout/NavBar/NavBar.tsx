@@ -8,7 +8,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Breadcrumb, Col, Divider, Layout, Menu, Row } from "antd";
+import { Badge, Breadcrumb, Col, Divider, Layout, Menu, Row } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
@@ -33,6 +33,10 @@ const NavBar: React.FC = ({ children }) => {
   );
   const isLoggedIn = useSelector((state: RootStateOrAny) => {
     return state.authSlice.isAuth;
+  });
+
+  const totalCartItem = useSelector((state: RootStateOrAny) => {
+    return state.cartSlice.total;
   });
 
   const userName = useSelector((state: RootStateOrAny) => {
@@ -63,11 +67,6 @@ const NavBar: React.FC = ({ children }) => {
               <img src={logo} alt="logo" className="logo" />
             </Menu>
           </Col>
-          <Col className="gutter-row menu" span="6" offset="2">
-            <Link to={appRoutes.home}>
-              <FontAwesomeIcon className="mr-2" icon={faCartArrowDown} />
-            </Link>
-          </Col>
         </Row>
 
         <Row gutter={16}>
@@ -76,6 +75,7 @@ const NavBar: React.FC = ({ children }) => {
               mode="horizontal"
               triggerSubMenuAction="hover"
               selectedKeys={[selectedMenu]}
+              className="bg-transparent"
             >
               <Menu.Item key="home" onClick={() => setSelectedMenu("home")}>
                 <Link to={appRoutes.home} className="font-text">
@@ -118,6 +118,16 @@ const NavBar: React.FC = ({ children }) => {
                       </Link>
                     </Menu.Item>
                   </SubMenu>
+                  <Menu.Item key="cart">
+                    <Link to={appRoutes.cart}>
+                      <Badge count={totalCartItem}>
+                        <FontAwesomeIcon
+                          className="mr-2 text-white fa-2x"
+                          icon={faCartArrowDown}
+                        />
+                      </Badge>
+                    </Link>
+                  </Menu.Item>
                 </Menu>
               </>
             )}
@@ -132,8 +142,11 @@ const NavBar: React.FC = ({ children }) => {
                     key="login"
                     onClick={() => setSelectedMenu("login")}
                   >
-                    <FontAwesomeIcon className="mr-2" icon={faSignInAlt} />
-                    <Link to={appRoutes.login} className="font-text">
+                    <FontAwesomeIcon
+                      className="mr-2  text-white"
+                      icon={faSignInAlt}
+                    />
+                    <Link to={appRoutes.login} className=" font-text">
                       Login
                     </Link>
                   </Menu.Item>
@@ -142,8 +155,11 @@ const NavBar: React.FC = ({ children }) => {
                     key="register"
                     onClick={() => setSelectedMenu("register")}
                   >
-                    <FontAwesomeIcon className="mr-2" icon={faUserPlus} />
-                    <Link to={appRoutes.register} className="font-text">
+                    <FontAwesomeIcon
+                      className="mr-2 text-white"
+                      icon={faUserPlus}
+                    />
+                    <Link to={appRoutes.register} className="  font-text">
                       Register
                     </Link>
                   </Menu.Item>

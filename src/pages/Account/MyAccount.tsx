@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
-import { RootStateOrAny, useSelector } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import PageTitle from "../../components/Layout/PageTitle";
 import { UserInfo } from "../../models/auth";
 import { httpClient } from "../../httpClient/httpServices";
@@ -21,6 +21,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { updateUserInfo } from "../../redux/slices/authSlice";
 
 const layout = {
   labelCol: { span: 8 },
@@ -32,13 +33,16 @@ const layout = {
 /* eslint-enable no-template-curly-in-string */
 
 const MyAccount = () => {
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
+  const dispatch = useDispatch();
   const userInfo = useSelector(
     (state: RootStateOrAny) => state.authSlice.userInfo as UserInfo
   );
+
   const [accountForm] = useForm();
+
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
 
   useEffect(() => {
     httpClient()
@@ -46,20 +50,10 @@ const MyAccount = () => {
       .then((res) => {
         console.log(res);
         accountForm.setFieldsValue(res.data);
+
         console.log(accountForm);
       });
   }, []);
-
-  // useEffect(() => {
-  //   if (userInfo?.firstName) {
-  //     accountForm.setFieldsValue({
-  //       firstName: userInfo.firstName,
-  //       lastName: userInfo.lastName,
-  //       email: userInfo.email,
-  //     });
-  //   }
-  //   //eslint-disable-next-line
-  // }, [userInfo]);
 
   return (
     <div className="profile-background">

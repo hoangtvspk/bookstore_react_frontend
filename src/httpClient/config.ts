@@ -17,6 +17,6 @@ export const APP_API = {
   bookDetail: "/books/:id",
   addToCart: "/users/cart/add",
   getCart: "/users/getcart",
-  deleteCartItem: "users/cart/delete",
+  deleteCartItem: "users/cart/delete/:id",
   updateCartItem: "/users/cart/update",
 };

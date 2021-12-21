@@ -10,9 +10,11 @@
   min-height: calc(100vh - 300px);
 }
 .ant-menu {
-  background: transparent !important;
   border-bottom: none !important;
   font-size: 30;
+}
+.bg-transparent {
+  background: transparent !important;
 }
 .font-text {
   font-size: 18px;

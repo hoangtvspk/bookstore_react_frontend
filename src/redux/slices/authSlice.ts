@@ -10,7 +10,7 @@ export const authSlice = createSlice({
     userLogIn: (state, payload) => {
       state.isAuth = true;
       state.userInfo = payload.payload;
-      localStorage.setItem("token", payload.payload.token)
+      localStorage.setItem("token", payload.payload.token);
       localStorage.setItem("userInfo", JSON.stringify(payload.payload));
     },
     userLogOut: (state) => {
@@ -18,9 +18,14 @@ export const authSlice = createSlice({
       state.userInfo = undefined;
       localStorage.removeItem("token");
       localStorage.removeItem("userInfo");
+      localStorage.removeItem("cart");
     },
+    updateUserInfo: (state, payload) => {
+      state.userInfo = payload.payload;
+      localStorage.setItem("userInfo", JSON.stringify(payload.payload));
+    }
   },
 });
 
-export const { userLogIn, userLogOut } = authSlice.actions;
+export const { userLogIn, userLogOut, updateUserInfo } = authSlice.actions;
 export default authSlice.reducer;
