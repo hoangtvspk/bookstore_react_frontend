@@ -46,7 +46,7 @@ function Cart() {
     quantity: ChangeEvent<HTMLInputElement>
   ) => {
     const update = {
-      "1": quantity,
+      "1": parseInt(quantity.target.value),
     };
     httpClient()
       .post(APP_API.updateCartItem, JSON.stringify(update))
