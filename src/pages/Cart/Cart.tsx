@@ -1,5 +1,5 @@
 import { Button, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
@@ -41,12 +41,13 @@ function Cart() {
       .then((res) => console.log(res));
   };
 
-  const onUpdateItem = (bookId: string, quantity: string) => {
+  const onUpdateItem = (
+    bookId: number,
+    quantity: ChangeEvent<HTMLInputElement>
+  ) => {
     const update = {
       "1": quantity,
     };
-    // const arr = JSON.parse(update)
-
     httpClient()
       .post(APP_API.updateCartItem, JSON.stringify(update))
       .then((res) => {
@@ -108,12 +109,7 @@ function Cart() {
             </div>
             <div className="item-quantity">
               <Input
-                onChange={() =>
-                  onUpdateItem(
-                    cartItem.book.id.toString(),
-                    cartItem.quantity.toString()
-                  )
-                }
+                onChange={(event) => onUpdateItem(cartItem.book.id, event)}
                 defaultValue={cartItem.quantity}
                 style={{ width: "70px" }}
               ></Input>
