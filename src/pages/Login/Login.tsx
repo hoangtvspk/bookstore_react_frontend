@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input, message, Spin } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "../../components/Layout/PageTitle";

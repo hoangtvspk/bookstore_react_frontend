@@ -4,7 +4,7 @@
 .cartitem {
   display: flex;
   background-color: white;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px 30px;
 }
 .item-image {
@@ -19,7 +19,7 @@
 .item-totalquantity {
   display: flex;
   font-size: 18px;
-  width: 150px;
+  width: 250px;
   justify-content: center;
   align-items: center;
 }
@@ -71,6 +71,29 @@
 .order-quantity {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-right: 30px;
   font-size: 18px;
+  margin-bottom: 0px;
+}
+.order-total {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30px;
+  font-size: 28px;
+  margin-bottom: 0px;
+  color: #ff7f50;
+}
+.discountt {
+  font-weight: 400;
+  margin-left: 8px;
+  border: 1px solid rgb(255, 66, 78);
+  border-radius: 2px;
+  background-color: rgb(255, 240, 241);
+  color: rgb(255, 66, 78);
+  line-height: 22px;
+  font-size: 15px;
+  margin-bottom: 0px;
+  margin-top: 8px;
 }

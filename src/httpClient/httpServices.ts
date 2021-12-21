@@ -19,7 +19,7 @@ export const httpClient = () => {
       axiosInstance.post(url, data, { ...defaultOptions, ...options }),
     put: (url: string, data: any, options?: AxiosRequestConfig) =>
       axiosInstance.put(url, data, { ...defaultOptions, ...options }),
-    delete: (url: string, options?: AxiosRequestConfig) =>
+    delete: (url: string,  options?: AxiosRequestConfig) =>
       axiosInstance.delete(url, { ...defaultOptions, ...options }),
   };
 };

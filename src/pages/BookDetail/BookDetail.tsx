@@ -47,13 +47,20 @@ function BookDetail() {
   const onFinish = (id: string, number: string) => {
     console.log(id, number);
     const formData = new FormData();
-    formData.append("idBook", id);
-    formData.append("quantity", number);
+    formData.append(
+      "idBook",
+      new Blob([JSON.stringify({ idBook: id })], { type: "application/json" })
+    );
+    formData.append(
+      "quantity",
+      new Blob([JSON.stringify({ quantity: number })], {
+        type: "application/json",
+      })
+    );
     httpClient()
       .post(APP_API.addToCart, formData, {
         headers: {
           Authorization: localStorage.getItem("token") || "",
-          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {

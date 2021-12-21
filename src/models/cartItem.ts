@@ -12,7 +12,7 @@ export interface CartItem{
         },
         nameBook: string,
         author: string,
-        discout: number,
+        discount: number,
         quantity: number,
         price: number,
         detail: string,
