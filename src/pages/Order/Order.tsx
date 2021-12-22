@@ -134,7 +134,7 @@ function Order() {
                   { required: true, message: "Please input your address!" },
                 ]}
               >
-                <Select defaultValue={0}>
+                <Select allowClear>
                   {addressArray.length > 0 &&
                     addressArray.map((address: AddressOrder, index) => (
                       <Option value={index}>
