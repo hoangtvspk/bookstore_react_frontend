@@ -59,12 +59,7 @@ const MyAccount = () => {
     <div className="profile-background">
       <PageTitle>My Profile</PageTitle>
       <div className="site-layout-background d-flex align-items-center justify-content-center ">
-        <Form
-          {...layout}
-          name="nest-messages"
-          form={accountForm}
-          onFinish={onFinish}
-        >
+        <Form {...layout} name="login" form={accountForm} onFinish={onFinish}>
           <Form.Item name="firstName" label="First name">
             <Input />
           </Form.Item>

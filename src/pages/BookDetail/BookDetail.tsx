@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Carousel, Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";
+import { updateCartData } from "../../redux/slices/cartSlice";
 import "./BookDetail.css";
 
 function BookDetail() {
@@ -27,6 +29,7 @@ function BookDetail() {
       setNumber(number - 1);
     }
   };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(id);
@@ -66,6 +69,7 @@ function BookDetail() {
       .then((res) => {
         console.log(res);
         message.success("Thêm vào giỏ hàng thành công");
+        dispatch(updateCartData(res.data));
       })
       .catch((err) => {
         console.log(err);

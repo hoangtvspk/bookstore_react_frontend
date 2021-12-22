@@ -1,4 +1,5 @@
 import {
+  faBook,
   faCartArrowDown,
   faHome,
   faSignInAlt,
@@ -81,6 +82,12 @@ const NavBar: React.FC = ({ children }) => {
                 <Link to={appRoutes.home} className="font-text">
                   <FontAwesomeIcon className="mr-2" icon={faHome} />
                   Home
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="books" onClick={() => setSelectedMenu("books")}>
+                <Link to={appRoutes.books} className="font-text">
+                  <FontAwesomeIcon className="mr-2" icon={faBook} />
+                  All Books
                 </Link>
               </Menu.Item>
             </Menu>

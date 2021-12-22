@@ -19,4 +19,9 @@ export const APP_API = {
   getCart: "/users/getcart",
   deleteCartItem: "users/cart/delete/:id",
   updateCartItem: "/users/cart/update",
+  order: "/users/order",
+  addressOrder: "/users/address",
+  addAddress: "/users/address/add",
+  updateAddress: "/users/address/edit/:id",
+  deleteAddress: "/users/cart/delete/:id",
 };

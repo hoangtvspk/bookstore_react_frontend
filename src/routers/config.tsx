@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import MyAccount from "../pages/Account/MyAccount";
 import UpdateProfile from "../pages/Account/UpdateProfile";
-import ActivateAccount from "../pages/ActivateAccount";
+import ActivateAccount from "../pages/Register/ActivateAccount";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import Home from "../pages/HomePage/HomePage";
@@ -12,6 +12,9 @@ import Register from "../pages/Register/Register";
 import UpdatePassword from "../pages/Account/UpdatePassword";
 import BookDetail from "../pages/BookDetail/BookDetail";
 import Cart from "../pages/Cart/Cart";
+import Order from "../pages/Order/Order";
+import Books from "../pages/Books/Books";
+import Address from "../pages/Address/Address";
 
 export const appRoutes = {
   home: "/",
@@ -26,6 +29,9 @@ export const appRoutes = {
   updateProfile: "/my-account/update",
   updatePassword: "/my-account/password",
   cart: "/cart",
+  order: "/checkout",
+  books: "/books",
+  address: "/address",
 };
 
 interface IAppComponentConfig {
@@ -39,6 +45,10 @@ export const appComponentConfig: IAppComponentConfig[] = [
   {
     path: appRoutes.home,
     component: <Home />,
+  },
+  {
+    path: appRoutes.books,
+    component: <Books />,
   },
   {
     path: appRoutes.bookDetail,
@@ -92,6 +102,16 @@ export const appComponentConfig: IAppComponentConfig[] = [
   {
     path: appRoutes.cart,
     component: <Cart />,
+  },
+  {
+    path: appRoutes.order,
+    component: <Order />,
+    authRequired: true,
+  },
+  {
+    path: appRoutes.address,
+    component: <Address />,
+    authRequired: true,
   },
 ];
 

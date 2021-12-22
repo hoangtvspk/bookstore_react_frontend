@@ -1,9 +1,9 @@
 import { message, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { APP_API } from "../httpClient/config";
-import { httpClient } from "../httpClient/httpServices";
-import { appRoutes } from "../routers/config";
+import { APP_API } from "../../httpClient/config";
+import { httpClient } from "../../httpClient/httpServices";
+import { appRoutes } from "../../routers/config";
 
 const ActivateAccount = () => {
   const [loading, setLoading] = useState(true);

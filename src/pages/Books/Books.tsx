@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";
 import { appRoutes } from "../../routers/config";
-import "./HomePage.css";
+import "./Books.css";
 
 const DEFAULT_PAGE_SIZE = 30;
 
-function HomePage() {
+function Books() {
   const [bookArray, setBookArray] = useState<Book[]>([]);
   const navigate = useNavigate();
   const [value, setValue] = useState(2);
@@ -37,9 +37,6 @@ function HomePage() {
       .then((res) => {
         setBookArray([...res.data]);
         setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }, []);
 
@@ -106,4 +103,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Books;
