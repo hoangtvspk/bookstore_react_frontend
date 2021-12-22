@@ -61,16 +61,16 @@ const MyAccount = () => {
       <div className="site-layout-background d-flex align-items-center justify-content-center ">
         <Form {...layout} name="login" form={accountForm} onFinish={onFinish}>
           <Form.Item name="firstName" label="First name">
-            <Input />
+            <Input disabled />
           </Form.Item>
           <Form.Item name="lastName" label="Last name">
-            <Input />
+            <Input disabled />
           </Form.Item>
           <Form.Item name="email" label="Email">
-            <Input />
+            <Input disabled />
           </Form.Item>
           <Form.Item name="phoneNumber" label="Phone Number">
-            <Input />
+            <Input disabled />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Link to={appRoutes.updateProfile}>

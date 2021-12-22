@@ -1,4 +1,5 @@
 import {
+  faAddressCard,
   faBook,
   faCartArrowDown,
   faHome,
@@ -111,10 +112,16 @@ const NavBar: React.FC = ({ children }) => {
                     <Menu.Item key="my-account">
                       <FontAwesomeIcon className="mr-2" icon={faUser} />
                       <Link to={appRoutes.myAccount} className="font-submenu">
-                        My account
+                        My Account
                       </Link>
                     </Menu.Item>
                     <Divider className="m-0" />
+                    <Menu.Item key="address">
+                      <FontAwesomeIcon className="mr-2" icon={faAddressCard} />
+                      <Link to={appRoutes.address} className="font-submenu">
+                        Address Manage
+                      </Link>
+                    </Menu.Item>
                     <Menu.Item
                       key="logout"
                       onClick={() => dispatch(userLogOut())}
