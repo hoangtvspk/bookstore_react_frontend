@@ -1,8 +1,45 @@
-.profile-background {
-  background: white;
-  width: 100%;
-  padding-left: 50px;
-}
 .label {
   font-size: 20px !important;
+}
+.address-background {
+  background: white;
+  width: 100%;
+  padding: 0px 50px;
+  min-height: 500px;
+}
+.address-item-background {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 20px;
+  padding: 20px 60px;
+  border-top: 1px solid #efefef;
+}
+.action-background {
+  display: flex;
+}
+.action-item-slice {
+  margin: 0px 10px;
+  padding-bottom: 0px;
+}
+.action-item {
+  margin: 0px 10px;
+  padding-bottom: 0px;
+  cursor: pointer;
+}
+.btn-add-background {
+  background: white;
+  display: flex;
+  justify-content: end;
+  width: 100%;
+
+  padding: 20px 60px;
+}
+.btn-add {
+  background: tomato !important;
+  font-size: 20px !important;
+  height: 50px !important;
+  padding: 5px 20px !important;
+  color: white !important;
 }

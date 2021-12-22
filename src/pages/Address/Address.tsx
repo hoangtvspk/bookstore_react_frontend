@@ -11,10 +11,11 @@ import { LoginForm } from "../../models/login";
 import { Link, useNavigate } from "react-router-dom";
 import "./Address.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { updateUserInfo, userLogIn } from "../../redux/slices/authSlice";
 import { resolveSrv } from "dns";
 import { AddressOrder } from "../../models/addressOrder";
+import { updateAddressData } from "../../redux/slices/addressSlice";
 
 const layout = {
   labelCol: { span: 8 },
@@ -25,85 +26,113 @@ const layout = {
 
 /* eslint-enable no-template-curly-in-string */
 
-const AddAddress = () => {
+const Address = () => {
   const userInfo = useSelector(
     (state: RootStateOrAny) => state.authSlice.userInfo as UserInfo
   );
-  const dispatch = useDispatch();
-  const [accountForm] = useForm();
+
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
-  const onFinish = (values: AddressOrder) => {
+  const [addressArray, setAddressArray] = useState<AddressOrder[]>([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    httpClient()
+      .get(APP_API.addressOrder)
+      .then((res) => {
+        console.log(res);
+        setAddressArray([...res.data]);
+        dispatch(updateAddressData(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const reload = () => {
+    httpClient()
+      .get(APP_API.addressOrder)
+      .then((res) => {
+        console.log(res);
+        setAddressArray([...res.data]);
+        dispatch(updateAddressData(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onDelete = (id: string) => {
     setSubmitting(true);
     httpClient()
-      .put(APP_API.editProfile, values)
+      .delete(APP_API.deleteAddress.replace(":id", id))
       .then((res) => {
-        const userInfo: UserInfo = res.data as UserInfo;
-        message.success("Update Successfully");
-        navigate(appRoutes.myAccount);
+        console.log(res);
+        message.success("Delete Successfully");
+        navigate(appRoutes.address);
+        dispatch(updateAddressData(res.data));
+        reload();
       })
       .catch((err) => {
         console.error(err);
-        message.error(err.response.data);
       })
       .finally(() => setSubmitting(false));
   };
 
+  const onEdit = (id: string) => {
+    navigate(appRoutes.editAddress.replace(":id", id));
+  };
+
   return (
     <Spin spinning={submitting}>
-      <div className="profile-background">
-        <PageTitle>Update Profile</PageTitle>
-        <div className="site-layout-background d-flex align-items-center justify-content-center ">
-          <Form
-            {...layout}
-            name="nest-messages"
-            form={accountForm}
-            onFinish={onFinish}
+      <div className="address-background">
+        <PageTitle>Address Manage</PageTitle>
+        <div className="btn-add-background">
+          <Button
+            className="btn-add"
+            onClick={() => {
+              navigate(appRoutes.addAddress);
+            }}
           >
-            <Form.Item
-              name="firstName"
-              label="First name"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="lastName"
-              label="Last name"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[{ type: "email", required: true }]}
-            >
-              <Input disabled />
-            </Form.Item>
-            <Form.Item
-              name="phoneNumber"
-              label="Phone Number"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Update
-              </Button>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Link to={appRoutes.myAccount}>
-                <FontAwesomeIcon className="mr-2" icon={faArrowLeft} />
-                Turn Back
-              </Link>
-            </Form.Item>
-          </Form>
+            <FontAwesomeIcon className="mr-3" icon={faPlus}></FontAwesomeIcon>
+            Add New Address
+          </Button>
         </div>
+        {addressArray.length > 0 &&
+          addressArray.map((address: AddressOrder, index) => (
+            <div className="address-item-background">
+              {address.address +
+                ", " +
+                address.neighborhoodVillage +
+                ", " +
+                address.districtTown +
+                ", " +
+                address.provinceCity}
+              <div className="action-background">
+                <u
+                  className="action-item"
+                  onClick={() => {
+                    onEdit(address.id.toString());
+                  }}
+                >
+                  Edit
+                </u>
+                <p className="action-item-slice"> | </p>
+                <u
+                  className="action-item"
+                  onClick={() => {
+                    onDelete(address.id.toString());
+                  }}
+                >
+                  Delete
+                </u>
+              </div>
+            </div>
+          ))}
       </div>
     </Spin>
   );
 };
 
-export default AddAddress;
+export default Address;

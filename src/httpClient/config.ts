@@ -23,5 +23,6 @@ export const APP_API = {
   addressOrder: "/users/address",
   addAddress: "/users/address/add",
   updateAddress: "/users/address/edit/:id",
-  deleteAddress: "/users/cart/delete/:id",
+  deleteAddress: "/users/address/delete/:id",
+  getAddress: "/users/address/:id"
 };

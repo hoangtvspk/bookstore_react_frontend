@@ -15,6 +15,8 @@ import Cart from "../pages/Cart/Cart";
 import Order from "../pages/Order/Order";
 import Books from "../pages/Books/Books";
 import Address from "../pages/Address/Address";
+import AddAddress from "../pages/Address/AddAddress";
+import EditAddress from "../pages/Address/EditAddress";
 
 export const appRoutes = {
   home: "/",
@@ -31,7 +33,9 @@ export const appRoutes = {
   cart: "/cart",
   order: "/checkout",
   books: "/books",
-  address: "/address",
+  address: "/user/address",
+  addAddress: "/user/address/add",
+  editAddress: "/user/address/edit/:id",
 };
 
 interface IAppComponentConfig {
@@ -111,6 +115,16 @@ export const appComponentConfig: IAppComponentConfig[] = [
   {
     path: appRoutes.address,
     component: <Address />,
+    authRequired: true,
+  },
+  {
+    path: appRoutes.addAddress,
+    component: <AddAddress />,
+    authRequired: true,
+  },
+  {
+    path: appRoutes.editAddress,
+    component: <EditAddress />,
     authRequired: true,
   },
 ];
