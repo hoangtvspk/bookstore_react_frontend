@@ -1,7 +1,7 @@
 import { faCartPlus, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Carousel, Input, message } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -30,6 +30,10 @@ function BookDetail() {
     }
   };
   const dispatch = useDispatch();
+
+  const onUpdateQuantity = (quantity: ChangeEvent<HTMLInputElement>) => {
+    setNumber(parseInt(quantity.target.value));
+  };
 
   useEffect(() => {
     console.log(id);
@@ -74,6 +78,7 @@ function BookDetail() {
       .catch((err) => {
         console.log(err);
         message.error("Thêm thất bại");
+        setNumber(1);
       });
   };
 
@@ -91,9 +96,12 @@ function BookDetail() {
           )}
         </Carousel>
         <div>
-          {/* <p style={{ fontSize: "18px", marginBottom: "0px" }}>
-            Thể loại: {book.category.nameCategory}
-          </p> */}
+          {/* {book.category.nameCategory && (
+            <p style={{ fontSize: "18px", marginBottom: "0px" }}>
+              Thể loại: {book.category.nameCategory}
+            </p>
+          )} */}
+
           <h2>{book.nameBook}</h2>
           <p style={{ fontSize: "16px" }}>Tác Giả: {book.author}</p>
           <div
@@ -132,35 +140,96 @@ function BookDetail() {
             >
               Số lượng
             </p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <Button className="quantity-btn" onClick={onDecrease}>
-                <FontAwesomeIcon className="mr-2" icon={faMinus} />
-              </Button>
-              <Input
-                className="quantity-input"
-                value={number}
-                width="300px"
-              ></Input>
-              <Button className="quantity-btn" onClick={onIncrease}>
-                <FontAwesomeIcon className="mr-2" icon={faPlus} />
-              </Button>
-            </div>
+
+            {book.quantity > 0 && (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <Button className="quantity-btn" onClick={onDecrease}>
+                    <FontAwesomeIcon className="mr-2" icon={faMinus} />
+                  </Button>
+                  <Input
+                    className="quantity-input"
+                    value={number}
+                    width="300px"
+                    onChange={(event) => onUpdateQuantity(event)}
+                  ></Input>
+                  <Button className="quantity-btn" onClick={onIncrease}>
+                    <FontAwesomeIcon className="mr-2" icon={faPlus} />
+                  </Button>
+                  <p
+                    style={{
+                      marginBottom: "0px",
+                      alignSelf: "end",
+                      color: "red",
+                      marginLeft: "10px",
+                      fontSize: "18px",
+                    }}
+                  >
+                    Còn lại {book.quantity} cuốn
+                  </p>
+                </div>
+                <Button
+                  htmlType="submit"
+                  className="btn-submit"
+                  onClick={() => onFinish(id || "", number.toString())}
+                >
+                  <FontAwesomeIcon className="mr-2" icon={faCartPlus} />
+                  Thêm vào giỏ hàng
+                </Button>
+              </>
+            )}
+            {book.quantity < 1 && (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <Button className="quantity-btn" onClick={onDecrease}>
+                    <FontAwesomeIcon className="mr-2" icon={faMinus} />
+                  </Button>
+                  <Input
+                    className="quantity-input"
+                    value="0"
+                    width="300px"
+                    disabled
+                  ></Input>
+                  <Button className="quantity-btn" onClick={onIncrease}>
+                    <FontAwesomeIcon className="mr-2" icon={faPlus} />
+                  </Button>
+                  <p
+                    style={{
+                      marginBottom: "0px",
+                      alignSelf: "end",
+                      color: "red",
+                      marginLeft: "10px",
+                      fontSize: "18px",
+                    }}
+                  >
+                    (Tạm Hết Hàng)
+                  </p>
+                </div>
+                <Button
+                  htmlType="submit"
+                  className="btn-submit-disable"
+                  disabled
+                >
+                  <FontAwesomeIcon className="mr-2" icon={faCartPlus} />
+                  Thêm vào giỏ hàng
+                </Button>
+              </>
+            )}
           </div>
-          <Button
-            htmlType="submit"
-            className="btn-submit"
-            onClick={() => onFinish(id || "", number.toString())}
-          >
-            <FontAwesomeIcon className="mr-2" icon={faCartPlus} />
-            Thêm vào giỏ hàng
-          </Button>
         </div>
       </div>
-      <div className=" p-5 bg-white" style={{ marginTop: "25px" }}>
+      <div
+        className=" p-5 bg-white"
+        style={{ marginTop: "25px", alignSelf: "end" }}
+      >
         <h2>Mô tả sản phẩm</h2>
         <p style={{ fontSize: "20px" }}>{book.detail}</p>
       </div>

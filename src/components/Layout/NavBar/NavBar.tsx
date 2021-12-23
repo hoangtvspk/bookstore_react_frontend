@@ -64,13 +64,9 @@ const NavBar: React.FC = ({ children }) => {
           height: "160px",
         }}
       >
-        <Row gutter={16}>
-          <Col className="gutter-row menu" span="6" offset="10">
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-              <img src={logo} alt="logo" className="logo" />
-            </Menu>
-          </Col>
-        </Row>
+        <div className="nav-logo">
+          <img src={logo} alt="logo" className="logo" />
+        </div>
 
         <Row gutter={16}>
           <Col className="gutter-row menu" span="6">

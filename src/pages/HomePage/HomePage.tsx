@@ -2,19 +2,26 @@ import { Card, Input, Pagination, Radio, RadioChangeEvent, Space } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";
 import { appRoutes } from "../../routers/config";
 import "./HomePage.css";
+import NewBook from "../../image/newbook.jpg";
+import TopSelling from "../../image/topsellingbook.png";
+import discount from "../../image/discount.jpg";
 
 const DEFAULT_PAGE_SIZE = 30;
 
 function HomePage() {
-  const [bookArray, setBookArray] = useState<Book[]>([]);
+  const [newBookArray, setNewBookArray] = useState<Book[]>([]);
+  const [bestSellingBookArray, setBestSellingBookArray] = useState<Book[]>([]);
+  const [bestDiscountBookArray, setBestDiscountBookArray] = useState<Book[]>(
+    []
+  );
   const navigate = useNavigate();
   const [value, setValue] = useState(2);
   const [curPage, setCurPage] = useState(1);
-  const [showingBook, setShowingBook] = useState<Book[]>([]);
 
   const onChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
@@ -25,18 +32,30 @@ function HomePage() {
   };
   const onPageChange = (page: number, pageSize: number) => {
     setCurPage(page);
-    setShowingBook([
-      ...bookArray.slice((page - 1) * pageSize, page * pageSize),
-    ]);
   };
 
   useEffect(() => {
     localStorage.setItem("breadcrumb", "List");
     httpClient()
-      .get("/books")
+      .get(APP_API.newBook)
       .then((res) => {
-        setBookArray([...res.data]);
-        setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
+        setNewBookArray([...res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    httpClient()
+      .get(APP_API.bestSellingBook)
+      .then((res) => {
+        setBestSellingBookArray([...res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    httpClient()
+      .get(APP_API.bestDiscountBook)
+      .then((res) => {
+        setBestDiscountBookArray([...res.data]);
       })
       .catch((err) => {
         console.log(err);
@@ -44,65 +63,89 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="d-flex bg-white pr-3">
-      <div className="pt-5 mr-4 facet-list">
-        <Radio.Group onChange={onChange} value={value}>
-          <Space direction="vertical">
-            <Radio value={1}>Option A</Radio>
-            <Radio value={2}>Option B</Radio>
-            <Radio value={3}>Option C</Radio>
-            <Radio value={4}>
-              More...
-              {value === 4 ? (
-                <Input style={{ width: 100, marginLeft: 10 }} />
-              ) : null}
-            </Radio>
-          </Space>
-        </Radio.Group>
-      </div>
-      <div className="right-content">
-        <div className="text-center">
-          <Pagination
-            className="p-3 mb-4"
-            total={bookArray.length}
-            onChange={onPageChange}
-            defaultPageSize={DEFAULT_PAGE_SIZE}
-            current={curPage}
-            showSizeChanger={false}
-          />
+    <>
+      <div className="d-flex bg-white pr-3 mt-3 pb-3">
+        <div className="pt-5 mr-4 home-facet-list ">
+          <img src={NewBook} className="home-type-book-image"></img>
         </div>
-
-        <div className="book-list">
-          {showingBook.length > 0 &&
-            showingBook.map((book: Book) => (
-              <Card
-                key={book.id}
-                hoverable
-                onClick={() => onCardClick(book.id.toString())}
-                cover={
-                  <img
-                    className="preview-image"
-                    alt={book.nameBook}
-                    src={book.bookImages[0]?.image}
-                  />
-                }
-              >
-                <Meta title={book.nameBook} description={book.price + "đ"} />
-              </Card>
-            ))}
-        </div>
-        <div className="text-center">
-          <Pagination
-            className="p-3 mb-4"
-            total={bookArray.length}
-            onChange={onPageChange}
-            defaultPageSize={DEFAULT_PAGE_SIZE}
-            current={curPage}
-            showSizeChanger={false}
-          />
+        <div className="home-right-content">
+          <h2 className="home-title-text">New Updates</h2>
+          <div className="home-book-list">
+            {newBookArray.length > 0 &&
+              newBookArray.map((book: Book) => (
+                <Card
+                  key={book.id}
+                  hoverable
+                  onClick={() => onCardClick(book.id.toString())}
+                  cover={
+                    <img
+                      className="home-preview-image"
+                      alt={book.nameBook}
+                      src={book.bookImages[0]?.image}
+                    />
+                  }
+                >
+                  <Meta title={book.nameBook} description={book.price + "đ"} />
+                </Card>
+              ))}
+          </div>
         </div>
       </div>
-    </div>
+      <div className="d-flex bg-white pr-3 mt-3 pb-3">
+        <div className="pt-5 mr-4 home-facet-list ">
+          <img src={TopSelling} className="home-type-book-image"></img>
+        </div>
+        <div className="home-right-content">
+          <h2 className="home-title-text">Top Selling Books</h2>
+          <div className="home-book-list">
+            {bestSellingBookArray.length > 0 &&
+              bestSellingBookArray.map((book: Book) => (
+                <Card
+                  key={book.id}
+                  hoverable
+                  onClick={() => onCardClick(book.id.toString())}
+                  cover={
+                    <img
+                      className="home-preview-image"
+                      alt={book.nameBook}
+                      src={book.bookImages[0]?.image}
+                    />
+                  }
+                >
+                  <Meta title={book.nameBook} description={book.price + "đ"} />
+                </Card>
+              ))}
+          </div>
+        </div>
+      </div>
+      <div className="d-flex bg-white pr-3 mt-3 pb-3">
+        <div className="pt-5 mr-4 home-facet-list ">
+          <img src={discount} className="home-type-book-image"></img>
+        </div>
+        <div className="home-right-content">
+          <h2 className="home-title-text">Best Discounts</h2>
+          <div className="home-book-list">
+            {bestDiscountBookArray.length > 0 &&
+              bestDiscountBookArray.map((book: Book) => (
+                <Card
+                  key={book.id}
+                  hoverable
+                  onClick={() => onCardClick(book.id.toString())}
+                  cover={
+                    <img
+                      className="home-preview-image"
+                      alt={book.nameBook}
+                      src={book.bookImages[0]?.image}
+                    />
+                  }
+                >
+                  <Meta title={book.nameBook} description={book.price + "đ"} />
+                </Card>
+              ))}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-.cate-book {
+.home-cate-book {
   display: grid;
   grid-template-columns: repeat(5, 220px);
   background: white;
@@ -6,25 +6,38 @@
   grid-column-gap: 70px;
 }
 
-.facet-list {
+.home-facet-list {
   min-width: 200px;
   margin-top: 3rem;
   padding-left: 30px;
 }
-.right-content {
+.home-right-content {
   padding-left: 70px;
-
+  padding-right: 50px;
+  margin-top: 30px;
   width: 100%;
 }
 
-.book-list {
+.home-book-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, 220px);
   /* grid-template-rows: repeat(5, 420px); */
   grid-row-gap: 20px;
   grid-column-gap: 30px;
+  padding-top: 10px;
+  border-top: 2px solid #efefef;
 }
-.preview-image {
+.home-preview-image {
   height: 330px;
   background-size: cover;
+}
+
+.home-type-book-image {
+  height: 700px;
+  width: 250px;
+}
+.home-title-text {
+  color: dimgrey !important;
+  margin-bottom: 10px;
+  font-family: Georgia, "Times New Roman", Times, serif !important;
 }

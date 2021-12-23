@@ -38,3 +38,9 @@
   background-color: rgb(255, 66, 78) !important;
   color: white !important;
 }
+.btn-submit-disable {
+  margin-top: 30px;
+  width: 300px !important;
+  background-color: slategray !important;
+  color: white !important;
+}

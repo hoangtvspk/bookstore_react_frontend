@@ -25,5 +25,8 @@ export const APP_API = {
   addAddress: "/users/address/add",
   updateAddress: "/users/address/edit/:id",
   deleteAddress: "/users/address/delete/:id",
-  getAddress: "/users/address/:id"
+  getAddress: "/users/address/:id",
+  newBook: "/books/new",
+  bestSellingBook: "/books/best-selling",
+  bestDiscountBook: "/books/best-discount",
 };

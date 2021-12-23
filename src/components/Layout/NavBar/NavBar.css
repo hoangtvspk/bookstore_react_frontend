@@ -1,3 +1,7 @@
+.nav-logo {
+  display: flex;
+  justify-content: center;
+}
 .logo {
   width: 190px;
   height: 100px;
@@ -24,6 +28,7 @@
 .ant-layout-header {
   padding: 0 160px !important;
   line-height: 40px !important;
+  background: black !important;
 }
 .font-submenu {
   font-size: 18px;
