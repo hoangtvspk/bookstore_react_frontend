@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import MyAccount from "../pages/Account/MyAccount";
-import UpdateProfile from "../pages/Account/UpdateProfile";
+import MyAccount from "../pages/Account/MyAccount/MyAccount";
+import UpdateProfile from "../pages/Account/MyAccount/UpdateProfile";
 import ActivateAccount from "../pages/Register/ActivateAccount";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
@@ -9,14 +9,15 @@ import Home from "../pages/HomePage/HomePage";
 import Login from "../pages/Login/Login";
 import Active from "../pages/Register/Active";
 import Register from "../pages/Register/Register";
-import UpdatePassword from "../pages/Account/UpdatePassword";
+import UpdatePassword from "../pages/Account/MyAccount/UpdatePassword";
 import BookDetail from "../pages/BookDetail/BookDetail";
 import Cart from "../pages/Cart/Cart";
 import Order from "../pages/Order/Order";
 import Books from "../pages/Books/Books";
-import Address from "../pages/Address/Address";
-import AddAddress from "../pages/Address/AddAddress";
-import EditAddress from "../pages/Address/EditAddress";
+import Address from "../pages/Account/MyAddress/Address";
+import AddAddress from "../pages/Account/MyAddress/AddAddress";
+import EditAddress from "../pages/Account/MyAddress/EditAddress";
+import MyPurchase from "../pages/Account/MyPurchase/MyPurchase";
 
 export const appRoutes = {
   home: "/",
@@ -32,6 +33,7 @@ export const appRoutes = {
   updatePassword: "/my-account/password",
   cart: "/cart",
   order: "/checkout",
+  purchase: "user/mypurchase",
   books: "/books",
   address: "/user/address",
   addAddress: "/user/address/add",
@@ -125,6 +127,11 @@ export const appComponentConfig: IAppComponentConfig[] = [
   {
     path: appRoutes.editAddress,
     component: <EditAddress />,
+    authRequired: true,
+  },
+  {
+    path: appRoutes.purchase,
+    component: <MyPurchase />,
     authRequired: true,
   },
 ];

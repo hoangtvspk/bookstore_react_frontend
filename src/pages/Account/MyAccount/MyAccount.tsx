@@ -2,11 +2,11 @@ import { Button, Form, Input } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import PageTitle from "../../components/Layout/PageTitle";
-import { UserInfo } from "../../models/auth";
-import { httpClient } from "../../httpClient/httpServices";
-import { APP_API } from "../../httpClient/config";
-import { appRoutes } from "../../routers/config";
+import PageTitle from "../../../components/Layout/PageTitle";
+import { UserInfo } from "../../../models/auth";
+import { httpClient } from "../../../httpClient/httpServices";
+import { APP_API } from "../../../httpClient/config";
+import { appRoutes } from "../../../routers/config";
 import { Link } from "react-router-dom";
 import "./MyAccount.css";
 import {
@@ -21,7 +21,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { updateUserInfo } from "../../redux/slices/authSlice";
+import { updateUserInfo } from "../../../redux/slices/authSlice";
 
 const layout = {
   labelCol: { span: 8 },

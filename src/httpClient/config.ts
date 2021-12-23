@@ -20,6 +20,7 @@ export const APP_API = {
   deleteCartItem: "users/cart/delete/:id",
   updateCartItem: "/users/cart/update",
   order: "/users/order",
+  purchase: "/users/orders",
   addressOrder: "/users/address",
   addAddress: "/users/address/add",
   updateAddress: "/users/address/edit/:id",

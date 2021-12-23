@@ -3,6 +3,7 @@ import {
   faBook,
   faCartArrowDown,
   faHome,
+  faMoneyBill,
   faSignInAlt,
   faSignOutAlt,
   faUser,
@@ -120,6 +121,12 @@ const NavBar: React.FC = ({ children }) => {
                       <FontAwesomeIcon className="mr-2" icon={faAddressCard} />
                       <Link to={appRoutes.address} className="font-submenu">
                         Address Manage
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="address">
+                      <FontAwesomeIcon className="mr-2" icon={faMoneyBill} />
+                      <Link to={appRoutes.purchase} className="font-submenu">
+                        My Purchase
                       </Link>
                     </Menu.Item>
                     <Menu.Item

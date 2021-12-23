@@ -2,20 +2,20 @@ import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import PageTitle from "../../components/Layout/PageTitle";
-import { UserInfo } from "../../models/auth";
-import { httpClient } from "../../httpClient/httpServices";
-import { APP_API } from "../../httpClient/config";
-import { appRoutes } from "../../routers/config";
-import { LoginForm } from "../../models/login";
+import PageTitle from "../../../components/Layout/PageTitle";
+import { UserInfo } from "../../../models/auth";
+import { httpClient } from "../../../httpClient/httpServices";
+import { APP_API } from "../../../httpClient/config";
+import { appRoutes } from "../../../routers/config";
+import { LoginForm } from "../../../models/login";
 import { Link, useNavigate } from "react-router-dom";
 import "./Address.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { updateUserInfo, userLogIn } from "../../redux/slices/authSlice";
+import { updateUserInfo, userLogIn } from "../../../redux/slices/authSlice";
 import { resolveSrv } from "dns";
-import { AddressOrder } from "../../models/addressOrder";
-import { updateAddressData } from "../../redux/slices/addressSlice";
+import { AddressOrder } from "../../../models/addressOrder";
+import { updateAddressData } from "../../../redux/slices/addressSlice";
 
 const layout = {
   labelCol: { span: 8 },

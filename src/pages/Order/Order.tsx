@@ -136,8 +136,18 @@ function Order() {
               >
                 <Select allowClear>
                   {addressArray.length > 0 &&
-                    addressArray.map((address: AddressOrder, index) => (
-                      <Option value={index}>
+                    addressArray.map((address: AddressOrder) => (
+                      <Option
+                        value={
+                          address.address +
+                          ", " +
+                          address.neighborhoodVillage +
+                          ", " +
+                          address.districtTown +
+                          ", " +
+                          address.provinceCity
+                        }
+                      >
                         {address.address +
                           ", " +
                           address.neighborhoodVillage +

@@ -18,7 +18,7 @@ export interface CartItem{
         detail: string,
         bookImages:[
             {
-                id: 1,
+                id: number,
                 image: string,
             }
         ],
