@@ -45,56 +45,58 @@ const Register = () => {
 
   return (
     <Spin spinning={submitting}>
-      <PageTitle>Register new account</PageTitle>
-      <div className="site-layout-background d-flex align-items-center justify-content-center ">
-        <Form
-          {...layout}
-          name="nest-messages"
-          onFinish={onFinish}
-          validateMessages={validateMessages}
-        >
-          <Form.Item
-            name="firstName"
-            label="First name"
-            rules={[{ required: true }]}
+      <div className="backgroundlogin">
+        <PageTitle>Register new account</PageTitle>
+        <div className="site-layout-background d-flex align-items-center justify-content-center  ">
+          <Form
+            {...layout}
+            name="nest-messages"
+            onFinish={onFinish}
+            validateMessages={validateMessages}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="lastName"
-            label="Last name"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[{ type: "email", required: true }]}
-          >
-            <Input />
-          </Form.Item>
+            <Form.Item
+              name="firstName"
+              label="First name"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="lastName"
+              label="Last name"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[{ type: "email", required: true }]}
+            >
+              <Input />
+            </Form.Item>
 
-          <Form.Item
-            name="password"
-            label="Password"
-            rules={[{ required: true }]}
-          >
-            <Input type="password" />
-          </Form.Item>
-          <Form.Item
-            name="password2"
-            label="Confirm Password"
-            rules={[{ required: true }]}
-          >
-            <Input type="password" />
-          </Form.Item>
-          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Sign Up
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              name="password"
+              label="Password"
+              rules={[{ required: true }]}
+            >
+              <Input type="password" />
+            </Form.Item>
+            <Form.Item
+              name="password2"
+              label="Confirm Password"
+              rules={[{ required: true }]}
+            >
+              <Input type="password" />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+              <Button type="primary" htmlType="submit">
+                Sign Up
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </Spin>
   );

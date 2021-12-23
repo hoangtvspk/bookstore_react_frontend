@@ -1,27 +1,16 @@
-import { Button, Form, Input } from "antd";
-import { useForm } from "antd/lib/form/Form";
-import { useEffect, useState } from "react";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import PageTitle from "../../../components/Layout/PageTitle";
-import { UserInfo } from "../../../models/auth";
-import { httpClient } from "../../../httpClient/httpServices";
-import { APP_API } from "../../../httpClient/config";
-import { appRoutes } from "../../../routers/config";
-import { Link } from "react-router-dom";
-import "./MyAccount.css";
-import {
-  faCartArrowDown,
-  faHome,
-  faKey,
-  faSignInAlt,
-  faSignOutAlt,
-  faTools,
-  faUser,
-  faUserCircle,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faKey, faTools } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { updateUserInfo } from "../../../redux/slices/authSlice";
+import { Form, Input } from "antd";
+import { useForm } from "antd/lib/form/Form";
+import { useEffect } from "react";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import PageTitle from "../../../components/Layout/PageTitle";
+import { APP_API } from "../../../httpClient/config";
+import { httpClient } from "../../../httpClient/httpServices";
+import { UserInfo } from "../../../models/auth";
+import { appRoutes } from "../../../routers/config";
+import "./MyAccount.css";
 
 const layout = {
   labelCol: { span: 8 },

@@ -27,7 +27,7 @@ const ForgotPassword = () => {
 
   return (
     <Spin spinning={submitting}>
-      <div>
+      <div className="backgroundlogin">
         <PageTitle>Forgot Password?</PageTitle>
         <div
           className="site-layout-background d-flex align-items-center justify-content-center"

@@ -46,10 +46,10 @@ const Login = () => {
 
   return (
     <Spin spinning={submitting}>
-      <div>
+      <div className="backgroundlogin">
         <PageTitle>Login to your account</PageTitle>
         <div
-          className="site-layout-background d-flex align-items-center justify-content-center"
+          className="site-layout-background d-flex align-items-center justify-content-center "
           // style={{ background: "red" }}
         >
           <Form

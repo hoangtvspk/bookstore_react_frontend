@@ -46,28 +46,32 @@ const Active = () => {
 
   return (
     <Spin spinning={submitting}>
-      <PageTitle>Activate your account</PageTitle>
-      <div className="site-layout-background d-flex align-items-center justify-content-center ">
-        <Form
-          {...layout}
-          name="nest-messages"
-          onFinish={onFinish}
-          validateMessages={validateMessages}
-        >
-          <div>Your activation code was sent to your email, check it now!</div>
-          <Form.Item
-            name="code"
-            label="Enter your activation code"
-            rules={[{ required: true }]}
+      <div className="backgroundlogin">
+        <PageTitle>Activate your account</PageTitle>
+        <div className="site-layout-background d-flex align-items-center justify-content-center">
+          <Form
+            {...layout}
+            name="nest-messages"
+            onFinish={onFinish}
+            validateMessages={validateMessages}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Active
-            </Button>
-          </Form.Item>
-        </Form>
+            <div>
+              Your activation code was sent to your email, check it now!
+            </div>
+            <Form.Item
+              name="code"
+              label="Enter Active Code"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+              <Button type="primary" htmlType="submit">
+                Active
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </Spin>
   );

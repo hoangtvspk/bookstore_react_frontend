@@ -48,7 +48,7 @@ const ResetPassword = () => {
 
   return (
     <Spin spinning={submitting}>
-      <div>
+      <div className="backgroundlogin">
         <PageTitle>Reset Your Password</PageTitle>
         <div
           className="site-layout-background d-flex align-items-center justify-content-center"
