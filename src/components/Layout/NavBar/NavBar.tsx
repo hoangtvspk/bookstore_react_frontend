@@ -119,7 +119,7 @@ const NavBar: React.FC = ({ children }) => {
                         Address Manage
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="address">
+                    <Menu.Item key="bill">
                       <FontAwesomeIcon className="mr-2" icon={faMoneyBill} />
                       <Link to={appRoutes.purchase} className="font-submenu">
                         My Purchase
@@ -178,6 +178,15 @@ const NavBar: React.FC = ({ children }) => {
                     />
                     <Link to={appRoutes.register} className="  font-text">
                       Register
+                    </Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="cart" onClick={() => setSelectedMenu("cart")}>
+                    <Link to={appRoutes.cart}>
+                      <FontAwesomeIcon
+                        className="mr-2 text-white fa-2x"
+                        icon={faCartArrowDown}
+                      />
                     </Link>
                   </Menu.Item>
                 </Menu>

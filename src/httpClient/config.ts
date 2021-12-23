@@ -15,6 +15,7 @@ export const APP_API = {
   editProfile: "/users/account/edit",
   editPassword: "/auth/edit/password",
   bookDetail: "/books/:id",
+  makeCart: "/users/makecart",
   addToCart: "/users/cart/add",
   getCart: "/users/getcart",
   deleteCartItem: "users/cart/delete/:id",

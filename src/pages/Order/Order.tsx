@@ -157,7 +157,14 @@ function Order() {
                           address.provinceCity}
                       </Option>
                     ))}
-                  <Option value="newAddress">New ...</Option>
+                  <Option value="newAddress">
+                    <p
+                      style={{ marginBottom: "0" }}
+                      onClick={() => navigate(appRoutes.addAddress)}
+                    >
+                      New ...
+                    </p>
+                  </Option>
                 </Select>
               </Form.Item>
             </div>

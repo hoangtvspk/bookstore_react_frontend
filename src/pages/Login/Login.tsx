@@ -19,7 +19,7 @@ const Login = () => {
 
   const onLoadUserCartItems = () => {
     httpClient()
-      .post(APP_API.getCart, localStorage.getItem("noAuthCart"))
+      .post(APP_API.getCart, localStorage.getItem("noAuthCart") || [])
       .then((res) => {
         dispatch(updateCartData(res.data));
       })

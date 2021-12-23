@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Carousel, Input, message } from "antd";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
-import { useDispatch } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";
+import { userLogOut } from "../../redux/slices/authSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import "./BookDetail.css";
 
@@ -30,13 +31,17 @@ function BookDetail() {
     }
   };
   const dispatch = useDispatch();
+  const Cart = new Array();
 
   const onUpdateQuantity = (quantity: ChangeEvent<HTMLInputElement>) => {
     setNumber(parseInt(quantity.target.value));
   };
 
+  const isLoggedIn = useSelector((state: RootStateOrAny) => {
+    return state.authSlice.isAuth;
+  });
+
   useEffect(() => {
-    console.log(id);
     if (id) {
       httpClient()
         .get(APP_API.bookDetail.replace(":id", id))
@@ -63,23 +68,36 @@ function BookDetail() {
       "quantity",
       new Blob([JSON.stringify({ number })], { type: "application/json" })
     );
-    httpClient()
-      .post(APP_API.addToCart, formData, {
-        headers: {
-          Authorization: localStorage.getItem("token") || "",
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        message.success("Thêm vào giỏ hàng thành công");
-        dispatch(updateCartData(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-        message.error("Thêm thất bại");
-        setNumber(1);
-      });
+
+    if (!isLoggedIn) {
+      const localCartArray = JSON.parse(
+        localStorage.getItem("noAuthCart") || "[]"
+      );
+      console.log(localCartArray);
+      console.log(id);
+      localCartArray.push({ id: id, quantity: number });
+      localStorage.setItem("noAuthCart", JSON.stringify(localCartArray));
+      message.success("Thêm vào thành công");
+    }
+    if (isLoggedIn) {
+      httpClient()
+        .post(APP_API.addToCart, formData, {
+          headers: {
+            Authorization: localStorage.getItem("token") || "",
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          message.success("Thêm vào giỏ hàng thành công");
+          dispatch(updateCartData(res.data));
+        })
+        .catch((err) => {
+          console.log(err);
+          message.error("Thêm thất bại");
+          setNumber(1);
+        });
+    }
   };
 
   return (
