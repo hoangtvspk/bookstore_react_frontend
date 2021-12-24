@@ -69,12 +69,6 @@ function Cart() {
       .finally(() => setSubmitting(false));
   };
 
-  const onDeleteNoAuth = (id: string) => {
-    setSubmitting(true);
-    const cartLocalItemArray = JSON.parse(localNoAuthCart || "[]");
-    console.log(localCart);
-  };
-
   const onUpdateItem = (
     bookId: number,
     quantity: ChangeEvent<HTMLInputElement>,

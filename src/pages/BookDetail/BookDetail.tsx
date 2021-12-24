@@ -1,24 +1,32 @@
 import { faCartPlus, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Carousel, Input, message } from "antd";
+import { Button, Card, Carousel, Input, message } from "antd";
+import Meta from "antd/lib/card/Meta";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
-import { Book } from "../../models/book";
-import { userLogOut } from "../../redux/slices/authSlice";
+import { Book, BookImage } from "../../models/book";
+import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
+import { appRoutes } from "../../routers/config";
 import "./BookDetail.css";
+import Reviews from "./Reviews";
 
 function BookDetail() {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
-  const [book, setBook] = useState({} as Book);
+  const book = useSelector(
+    (state: RootStateOrAny) => state.bookDetailSlice.value
+  );
 
   const onChange = () => {};
   const [number, setNumber] = useState(1);
+  const [bookArray, setBookArray] = useState<Book[]>([]);
+  const navigate = useNavigate();
 
   const onIncrease = () => {
     if (number < book.quantity) {
@@ -30,34 +38,46 @@ function BookDetail() {
       setNumber(number - 1);
     }
   };
-  const dispatch = useDispatch();
   const Cart = new Array();
 
   const onUpdateQuantity = (quantity: ChangeEvent<HTMLInputElement>) => {
     setNumber(parseInt(quantity.target.value));
+  };
+  const onCardClick = (id: string) => {
+    navigate(appRoutes.bookDetail.replace(":id", id));
   };
 
   const isLoggedIn = useSelector((state: RootStateOrAny) => {
     return state.authSlice.isAuth;
   });
 
+  const relatedbook = (catId: string) => {
+    httpClient()
+      .get(APP_API.relatedBooks.replace(":id", catId))
+      .then((res) => {
+        setBookArray(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   useEffect(() => {
     if (id) {
       httpClient()
         .get(APP_API.bookDetail.replace(":id", id))
         .then((res) => {
-          console.log(res);
-          setBook(res.data);
-          console.log(book);
+          const bookData = res.data as Book;
+          dispatch(loadBookDetail(bookData));
+          relatedbook(bookData.category.id.toString());
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     }
   }, [id]);
 
   const onFinish = (id: string, number: string) => {
-    console.log(id, number);
     const formData: FormData = new FormData();
     formData.append(
       "idBook",
@@ -73,8 +93,6 @@ function BookDetail() {
       const localCartArray = JSON.parse(
         localStorage.getItem("noAuthCart") || "[]"
       );
-      console.log(localCartArray);
-      console.log(id);
       localCartArray.push({ id: id, quantity: number });
       localStorage.setItem("noAuthCart", JSON.stringify(localCartArray));
       message.success("Thêm vào thành công");
@@ -88,12 +106,11 @@ function BookDetail() {
           },
         })
         .then((res) => {
-          console.log(res);
           message.success("Thêm vào giỏ hàng thành công");
           dispatch(updateCartData(res.data));
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
           message.error("Thêm thất bại");
           setNumber(1);
         });
@@ -107,18 +124,18 @@ function BookDetail() {
           {Object.entries(book).length > 0 && (
             <ImageGallery
               showPlayButton={false}
-              items={book.bookImages.map((img) => {
+              items={book.bookImages.map((img: BookImage) => {
                 return { original: img.image };
               })}
             ></ImageGallery>
           )}
         </Carousel>
         <div>
-          {/* {book.category.nameCategory && (
+          {book.category && (
             <p style={{ fontSize: "18px", marginBottom: "0px" }}>
               Thể loại: {book.category.nameCategory}
             </p>
-          )} */}
+          )}
 
           <h2>{book.nameBook}</h2>
           <p style={{ fontSize: "16px" }}>Tác Giả: {book.author}</p>
@@ -248,9 +265,33 @@ function BookDetail() {
         className=" p-5 bg-white"
         style={{ marginTop: "25px", alignSelf: "end" }}
       >
-        <h2>Mô tả sản phẩm</h2>
+        <h2>Book Description</h2>
         <p style={{ fontSize: "20px" }}>{book.detail}</p>
       </div>
+      <div className="p-5 bg-white " style={{ marginTop: "25px" }}>
+        <h2>Related Book</h2>
+        <div className="book-list">
+          {bookArray.length > 0 &&
+            bookArray.map((book: Book) => (
+              <Card
+                key={book.id}
+                hoverable
+                onClick={() => onCardClick(book.id.toString())}
+                cover={
+                  <img
+                    className="preview-image"
+                    alt={book.nameBook}
+                    src={book.bookImages[0]?.image}
+                  />
+                }
+              >
+                <Meta title={book.nameBook} description={book.price + "đ"} />
+              </Card>
+            ))}
+        </div>
+      </div>
+
+      <Reviews />
     </div>
   );
 }

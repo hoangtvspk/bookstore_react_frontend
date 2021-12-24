@@ -2,23 +2,59 @@ import { Card, Input, Pagination, Radio, RadioChangeEvent, Space } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";
+import { Category } from "../../models/categoryBooks";
 import { appRoutes } from "../../routers/config";
 import "./Books.css";
 
-const DEFAULT_PAGE_SIZE = 30;
+const DEFAULT_PAGE_SIZE = 32;
 
 function Books() {
   const [bookArray, setBookArray] = useState<Book[]>([]);
   const navigate = useNavigate();
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState("all");
   const [curPage, setCurPage] = useState(1);
   const [showingBook, setShowingBook] = useState<Book[]>([]);
+  const [categoryArray, setCategoryArray] = useState<Category[]>([]);
+
+  const onLoadBook = () => {
+    httpClient()
+      .get("/books")
+      .then((res) => {
+        console.log(res);
+        setValue("all");
+        setBookArray([...res.data]);
+        console.log(bookArray);
+        setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
+      });
+  };
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
+    console.log(e.target.value);
+
+    if (e.target.value == "all") {
+      onLoadBook();
+    } else {
+      const bookSearch = {
+        idCategory: parseInt(e.target.value),
+        keyWord: "",
+      };
+      console.log(bookSearch);
+      setValue(e.target.value);
+      httpClient()
+        .post(APP_API.booksOfCate, bookSearch)
+        .then((res) => {
+          console.log(res);
+          setBookArray([...res.data]);
+          console.log(bookArray);
+          setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   const onCardClick = (id: string) => {
     navigate(appRoutes.bookDetail.replace(":id", id));
@@ -32,11 +68,16 @@ function Books() {
 
   useEffect(() => {
     localStorage.setItem("breadcrumb", "List");
+    onLoadBook();
     httpClient()
-      .get("/books")
+      .get(APP_API.categoryBooks)
       .then((res) => {
-        setBookArray([...res.data]);
-        setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
+        console.log(res);
+        setCategoryArray([...res.data]);
+        console.log(categoryArray);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -45,15 +86,15 @@ function Books() {
       <div className="pt-5 mr-4 facet-list">
         <Radio.Group onChange={onChange} value={value}>
           <Space direction="vertical">
-            <Radio value={1}>Option A</Radio>
-            <Radio value={2}>Option B</Radio>
-            <Radio value={3}>Option C</Radio>
-            <Radio value={4}>
-              More...
-              {value === 4 ? (
-                <Input style={{ width: 100, marginLeft: 10 }} />
-              ) : null}
+            <Radio value={"all"} className="font-cate">
+              All Books
             </Radio>
+            {categoryArray.length > 0 &&
+              categoryArray.map((category: Category) => (
+                <Radio value={category.id} className="font-cate">
+                  {category.nameCategory}
+                </Radio>
+              ))}
           </Space>
         </Radio.Group>
       </div>

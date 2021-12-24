@@ -22,6 +22,7 @@ const Login = () => {
       .post(APP_API.getCart, localStorage.getItem("noAuthCart") || [])
       .then((res) => {
         dispatch(updateCartData(res.data));
+        localStorage.removeItem("noAuthCart");
       })
       .catch((err) => message.error("Cannot load cart data"));
   };

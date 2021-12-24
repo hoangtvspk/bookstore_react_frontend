@@ -1,15 +1,15 @@
-import { Card, Input, Pagination, Radio, RadioChangeEvent, Space } from "antd";
+import { Card, RadioChangeEvent } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
+import discount from "../../image/discount.jpg";
+import NewBook from "../../image/newbook.jpg";
+import TopSelling from "../../image/topsellingbook.png";
 import { Book } from "../../models/book";
 import { appRoutes } from "../../routers/config";
 import "./HomePage.css";
-import NewBook from "../../image/newbook.jpg";
-import TopSelling from "../../image/topsellingbook.png";
-import discount from "../../image/discount.jpg";
 
 const DEFAULT_PAGE_SIZE = 30;
 

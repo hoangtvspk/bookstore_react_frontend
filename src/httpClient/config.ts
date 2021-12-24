@@ -30,4 +30,9 @@ export const APP_API = {
   newBook: "/books/new",
   bestSellingBook: "/books/best-selling",
   bestDiscountBook: "/books/best-discount",
+  relatedBooks: "/books/related-products/:id",
+  categoryBooks: "/books/categories",
+  booksOfCate: "/books/search",
+  addReview: "/users/review/add",
+  addReplyReview: "/users/reviewrep/add",
 };

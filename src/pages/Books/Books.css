@@ -7,12 +7,12 @@
 }
 
 .facet-list {
-  min-width: 200px;
+  min-width: 300px;
   margin-top: 3rem;
   padding-left: 30px;
 }
 .right-content {
-  padding-left: 70px;
+  padding-left: 10px;
 
   width: 100%;
 }
@@ -27,4 +27,9 @@
 .preview-image {
   height: 330px;
   background-size: cover;
+}
+.font-cate {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 20px !important;
+  color: "#404040";
 }

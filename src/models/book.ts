@@ -1,20 +1,42 @@
+import { UserInfo } from "./auth";
 
+export interface Category {
+    id: number,
+    nameCategory: string,
+};
+
+export interface BookImage {
+    id: number,
+    image: string
+}
 
 export interface Book{
     id : number,
-    category: {
-        id: number,
-        nameCategory: string,
-    },
+    category: Category,
     nameBook: string,
     author: string,
     discount: number,
     quantity: number,
     price: number,
     detail: string,
-    bookImages: [
+    bookImages:BookImage[],
+    rating: number
+    reviews:[
         {
-        id: number,
-        image: string
-    }]
+            id:number,
+            user:UserInfo,
+            reviewReps: [
+                {
+                    id:number,
+                    user: UserInfo,
+                    message: string,
+                    date: string,
+                }
+            ],
+            date: string,
+            message: string,
+            rating: number,
+        }
+        
+    ],
 }
