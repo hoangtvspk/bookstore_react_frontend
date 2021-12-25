@@ -26,6 +26,7 @@ import {
   NotificationOutlined,
   DownOutlined,
 } from "@ant-design/icons";
+import BreadCrumb from "../../BreadCrumb";
 
 const { Header, Content } = Layout;
 
@@ -206,12 +207,7 @@ const NavBar: React.FC = ({ children }) => {
           margin: 0,
         }}
       >
-        <Breadcrumb separator=">" style={{ margin: "8px 0", fontSize: "18px" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            {localStorage.getItem("breadcrumb")}
-          </Breadcrumb.Item>
-        </Breadcrumb>
+        <BreadCrumb></BreadCrumb>
         <div>{children}</div>
       </Content>
     </Layout>

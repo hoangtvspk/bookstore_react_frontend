@@ -10,10 +10,13 @@
   min-width: 300px;
   margin-top: 3rem;
   padding-left: 30px;
+  border-right: 1px solid #efefef;
+  margin-top: 30px;
+  gap: 0px !important;
 }
 .right-content {
   padding-left: 10px;
-
+  padding-top: 30px;
   width: 100%;
 }
 
@@ -29,7 +32,28 @@
   background-size: cover;
 }
 .font-cate {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: Roboto, Helvetica, Arial, sans-serif !important;
+  font-size: 18px !important;
+  color: "#404040";
+}
+.font-cate-title {
+  font-family: Roboto, Helvetica, Arial, sans-serif !important;
   font-size: 20px !important;
   color: "#404040";
+  font-weight: bold;
+}
+.discountt {
+  margin-left: 8px;
+  border: 1px solid rgb(255, 66, 78);
+  border-radius: 2px;
+  background-color: rgb(255, 240, 241);
+  color: rgb(255, 66, 78);
+  height: 22px;
+
+  margin-top: 0;
+  display: flex;
+  padding: 0px 4px;
+}
+.cover-book-card {
+  display: block;
 }

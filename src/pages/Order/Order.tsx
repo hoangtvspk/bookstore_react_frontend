@@ -77,7 +77,7 @@ function Order() {
       })
       .catch((err) => {
         console.log(err);
-        message.error("All datas are required");
+        message.error("Failed To Order");
       })
       .finally(() => setSubmitting(false));
   };

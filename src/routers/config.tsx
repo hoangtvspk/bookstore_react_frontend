@@ -21,7 +21,7 @@ import MyPurchase from "../pages/Account/MyPurchase/MyPurchase";
 
 export const appRoutes = {
   home: "/",
-  bookDetail: "/book/:id",
+  bookDetail: "/books/:id",
   login: "/login",
   register: "/register",
   active: "/register/active",
@@ -33,11 +33,11 @@ export const appRoutes = {
   updatePassword: "/my-account/password",
   cart: "/cart",
   order: "/checkout",
-  purchase: "user/mypurchase",
+  purchase: "userPurchase",
   books: "/books",
-  address: "/user/address",
-  addAddress: "/user/address/add",
-  editAddress: "/user/address/edit/:id",
+  address: "/userAddress",
+  addAddress: "/userAddress/add",
+  editAddress: "/userAddress/edit/:id",
 };
 
 interface IAppComponentConfig {

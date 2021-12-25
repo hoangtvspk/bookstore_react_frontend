@@ -1,4 +1,12 @@
-import { Card, Input, Pagination, Radio, RadioChangeEvent, Space } from "antd";
+import {
+  Card,
+  Input,
+  Pagination,
+  Radio,
+  RadioChangeEvent,
+  Rate,
+  Space,
+} from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -84,8 +92,16 @@ function Books() {
   return (
     <div className="d-flex bg-white pr-3">
       <div className="pt-5 mr-4 facet-list">
+        <p className="font-cate-title"> Type of book:</p>
         <Radio.Group onChange={onChange} value={value}>
-          <Space direction="vertical">
+          <Space
+            direction="vertical"
+            style={{
+              gap: "0px",
+              borderBottom: "1px solid #efefef",
+              paddingBottom: "20px",
+            }}
+          >
             <Radio value={"all"} className="font-cate">
               All Books
             </Radio>
@@ -99,17 +115,6 @@ function Books() {
         </Radio.Group>
       </div>
       <div className="right-content">
-        <div className="text-center">
-          <Pagination
-            className="p-3 mb-4"
-            total={bookArray.length}
-            onChange={onPageChange}
-            defaultPageSize={DEFAULT_PAGE_SIZE}
-            current={curPage}
-            showSizeChanger={false}
-          />
-        </div>
-
         <div className="book-list">
           {showingBook.length > 0 &&
             showingBook.map((book: Book) => (
@@ -125,7 +130,47 @@ function Books() {
                   />
                 }
               >
-                <Meta title={book.nameBook} description={book.price + "đ"} />
+                <Meta
+                  title={book.nameBook}
+                  description={
+                    <>
+                      <div
+                        style={{
+                          display: "flex",
+                          marginBottom: "0px",
+                        }}
+                      >
+                        <p
+                          style={{
+                            color: "rgb(255, 66, 78)",
+                            marginBottom: "0",
+                          }}
+                        >
+                          {book.price - (book.price * book.discount) / 100} ₫
+                        </p>
+                        {book.discount > 0 && (
+                          <>
+                            <p
+                              style={{
+                                color: "rgb(128, 128, 137) ",
+
+                                textDecoration: "line-through",
+                                paddingLeft: "8px",
+                                marginBottom: "0",
+                              }}
+                            >
+                              {book.price} ₫
+                            </p>
+                            <p className="discountt">-{book.discount}%</p>
+                          </>
+                        )}
+                      </div>
+                      <div>
+                        <Rate value={book.rating} disabled></Rate>
+                      </div>
+                    </>
+                  }
+                />
               </Card>
             ))}
         </div>

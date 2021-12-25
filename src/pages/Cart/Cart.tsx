@@ -202,9 +202,24 @@ function Cart() {
                         Tác giả: {cartItem.book.author}
                       </p>
                     </div>
-                    <div className="item-totalquantity">
-                      {cartItem.book.quantity}
-                    </div>
+                    {cartItem.book.quantity > 0 && (
+                      <div className="item-totalquantity">
+                        {cartItem.book.quantity}
+                      </div>
+                    )}
+                    {cartItem.book.quantity < 1 && (
+                      <div className="pt-5">
+                        <div className="item-totalquantity">
+                          {cartItem.book.quantity}
+                        </div>
+                        <div
+                          className="item-totalquantity"
+                          style={{ fontSize: "12px", color: "red" }}
+                        >
+                          You must remove this book to continue!
+                        </div>
+                      </div>
+                    )}
                     <div className="item-totalquantity">
                       <p style={{ marginBottom: "0px" }}>
                         {cartItem.book.price -
