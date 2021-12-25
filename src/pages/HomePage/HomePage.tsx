@@ -80,12 +80,11 @@ function HomePage() {
       <div className="d-flex">
         <div className="pt-5 mr-4 home-facet-banner ">
           <img src={BookLogo}></img>
-          <p className="allbook">
+          <p className="allbook" onClick={() => navigate(appRoutes.books)}>
             {" "}
             <FontAwesomeIcon
               className="mr-2 fa-2x"
               icon={faArrowAltCircleRight}
-              onClick={() => navigate(appRoutes.books)}
             />
             See All Books Now!
           </p>
