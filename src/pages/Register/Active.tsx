@@ -1,6 +1,7 @@
 import { Button, Form, Input, Spin } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PageFooter from "../../components/Footer/Footer";
 import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
@@ -73,6 +74,7 @@ const Active = () => {
           </Form>
         </div>
       </div>
+      <PageFooter></PageFooter>
     </Spin>
   );
 };

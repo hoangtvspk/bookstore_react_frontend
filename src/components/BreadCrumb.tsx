@@ -11,6 +11,7 @@ const BreadCrumb = () => {
     return (
       <div>
         <Breadcrumb
+          separator=">"
           style={{
             display: "flex",
             alignItems: "center",

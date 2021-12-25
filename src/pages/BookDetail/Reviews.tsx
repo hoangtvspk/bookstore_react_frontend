@@ -203,16 +203,29 @@ function Reviews() {
       <h2>Books Ratings</h2>
       <div style={{ borderBottom: "3px solid #efefef" }}>
         <h4 className="book-rating">{book.rating?.toFixed(1)} out of 5</h4>
-
-        <Rate
-          style={{
-            fontSize: "40px",
-            color: "orangered",
-          }}
-          allowHalf
-          value={book.rating}
-          disabled
-        />
+        <div className="d-flex align-items-end">
+          <Rate
+            style={{
+              fontSize: "40px",
+              color: "orangered",
+            }}
+            allowHalf
+            value={book.rating}
+            disabled
+          />
+          {book.reviews && (
+            <p
+              style={{
+                marginLeft: "20px",
+                marginBottom: "0",
+                fontSize: "22px",
+                color: "darkgrey",
+              }}
+            >
+              ({book.reviews.length} Review)
+            </p>
+          )}
+        </div>
       </div>
       {RenderReview(book.reviews)}
       <div>

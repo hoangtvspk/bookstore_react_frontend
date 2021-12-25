@@ -5,6 +5,7 @@ import { useForm } from "antd/lib/form/Form";
 import { useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import PageFooter from "../../../components/Footer/Footer";
 import PageTitle from "../../../components/Layout/PageTitle";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
@@ -45,37 +46,40 @@ const MyAccount = () => {
   }, []);
 
   return (
-    <div className="profile-background">
-      <PageTitle>My Profile</PageTitle>
-      <div className="site-layout-background d-flex align-items-center justify-content-center ">
-        <Form {...layout} name="login" form={accountForm} onFinish={onFinish}>
-          <Form.Item name="firstName" label="First name">
-            <Input disabled />
-          </Form.Item>
-          <Form.Item name="lastName" label="Last name">
-            <Input disabled />
-          </Form.Item>
-          <Form.Item name="email" label="Email">
-            <Input disabled />
-          </Form.Item>
-          <Form.Item name="phoneNumber" label="Phone Number">
-            <Input disabled />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Link to={appRoutes.updateProfile}>
-              <FontAwesomeIcon className="mr-2" icon={faTools} />
-              Update Your Profile
-            </Link>
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Link to={appRoutes.updatePassword}>
-              <FontAwesomeIcon className="mr-2" icon={faKey} />
-              Change Your Password
-            </Link>
-          </Form.Item>
-        </Form>
+    <>
+      <div className="profile-background">
+        <PageTitle>My Profile</PageTitle>
+        <div className="site-layout-background d-flex align-items-center justify-content-center ">
+          <Form {...layout} name="login" form={accountForm} onFinish={onFinish}>
+            <Form.Item name="firstName" label="First name">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item name="lastName" label="Last name">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item name="email" label="Email">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item name="phoneNumber" label="Phone Number">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Link to={appRoutes.updateProfile}>
+                <FontAwesomeIcon className="mr-2" icon={faTools} />
+                Update Your Profile
+              </Link>
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Link to={appRoutes.updatePassword}>
+                <FontAwesomeIcon className="mr-2" icon={faKey} />
+                Change Your Password
+              </Link>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
-    </div>
+      <PageFooter></PageFooter>
+    </>
   );
 };
 

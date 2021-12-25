@@ -15,6 +15,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { updateUserInfo, userLogIn } from "../../../redux/slices/authSlice";
 import { resolveSrv } from "dns";
 import { UpdateProfileForm } from "../../../models/updateProfile";
+import PageFooter from "../../../components/Footer/Footer";
 
 const layout = {
   labelCol: { span: 8 },
@@ -119,6 +120,7 @@ const UpdateProfile = () => {
           </Form>
         </div>
       </div>
+      <PageFooter></PageFooter>
     </Spin>
   );
 };

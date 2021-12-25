@@ -16,6 +16,7 @@ import { updateUserInfo, userLogIn } from "../../../redux/slices/authSlice";
 import { resolveSrv } from "dns";
 import { AddressOrder } from "../../../models/addressOrder";
 import { updateAddressData } from "../../../redux/slices/addressSlice";
+import PageFooter from "../../../components/Footer/Footer";
 
 const layout = {
   labelCol: { span: 8 },
@@ -102,6 +103,7 @@ const AddAddress = () => {
           </Form>
         </div>
       </div>
+      <PageFooter></PageFooter>
     </Spin>
   );
 };

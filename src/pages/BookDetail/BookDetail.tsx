@@ -6,6 +6,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import PageFooter from "../../components/Footer/Footer";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book, BookImage } from "../../models/book";
@@ -343,6 +344,7 @@ function BookDetail() {
       </div>
 
       <Reviews />
+      <PageFooter></PageFooter>
     </div>
   );
 }

@@ -19,6 +19,7 @@ import { useForm } from "antd/lib/form/Form";
 import { GetOrder } from "../../../models/getOrder";
 import { AddressOrder } from "../../../models/addressOrder";
 import { Collapse } from "antd";
+import PageFooter from "../../../components/Footer/Footer";
 
 const { Panel } = Collapse;
 
@@ -206,6 +207,7 @@ function MyPurchase() {
               </div>
             </div>
           ))}
+      <PageFooter></PageFooter>
     </Spin>
   );
 }

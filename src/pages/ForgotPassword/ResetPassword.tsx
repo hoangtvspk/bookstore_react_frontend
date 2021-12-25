@@ -2,6 +2,7 @@ import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import PageFooter from "../../components/Footer/Footer";
 import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
@@ -100,6 +101,7 @@ const ResetPassword = () => {
           </Form>
         </div>
       </div>
+      <PageFooter></PageFooter>
     </Spin>
   );
 };

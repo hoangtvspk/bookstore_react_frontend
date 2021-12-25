@@ -201,7 +201,7 @@ const NavBar: React.FC = ({ children }) => {
         className="site-layout-background"
         style={{
           paddingTop: 160,
-          paddingBottom: 160,
+          paddingBottom: 0,
           paddingLeft: 160,
           paddingRight: 160,
           margin: 0,

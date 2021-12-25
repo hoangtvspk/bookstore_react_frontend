@@ -12,6 +12,7 @@ import { UpdatePasswordForm } from "../../../models/updatePassword";
 import "./MyAccount.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import PageFooter from "../../../components/Footer/Footer";
 
 const UpdatePassword = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -113,6 +114,7 @@ const UpdatePassword = () => {
           </Form>
         </div>
       </div>
+      <PageFooter></PageFooter>
     </Spin>
   );
 };

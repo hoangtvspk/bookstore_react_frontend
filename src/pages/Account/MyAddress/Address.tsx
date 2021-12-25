@@ -4,6 +4,7 @@ import { Button, message, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PageFooter from "../../../components/Footer/Footer";
 import PageTitle from "../../../components/Layout/PageTitle";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
@@ -127,6 +128,7 @@ const Address = () => {
             </div>
           ))}
       </div>
+      <PageFooter></PageFooter>
     </Spin>
   );
 };
