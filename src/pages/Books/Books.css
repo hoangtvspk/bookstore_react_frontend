@@ -8,10 +8,10 @@
 
 .facet-list {
   min-width: 300px;
-  margin-top: 3rem;
+
   padding-left: 30px;
   border-right: 1px solid #efefef;
-  margin-top: 30px;
+
   gap: 0px !important;
 }
 .right-content {

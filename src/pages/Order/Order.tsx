@@ -31,6 +31,14 @@ function Order() {
   const [addressNumber, setAddressNumber] = useState(0);
   const { Option } = Select;
 
+  const stringPrice = (number: number) => {
+    const newNumber = number.toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+    });
+    console.log(newNumber);
+    return newNumber;
+  };
+
   useEffect(() => {
     httpClient()
       .get(APP_API.order)
@@ -202,8 +210,10 @@ function Order() {
               </div>
               <div className="order-item-totalquantity">
                 <p style={{ marginBottom: "0px" }}>
-                  {cartItem.book.price -
-                    (cartItem.book.price * cartItem.book.discount) / 100}{" "}
+                  {stringPrice(
+                    cartItem.book.price -
+                      (cartItem.book.price * cartItem.book.discount) / 100
+                  )}{" "}
                   ₫
                 </p>
                 {cartItem.book.discount > 0 && (
@@ -218,7 +228,7 @@ function Order() {
                         marginBottom: "0px",
                       }}
                     >
-                      {cartItem.book.price} ₫
+                      {stringPrice(cartItem.book.price)} ₫
                     </p>
                     <p className="discountt">-{cartItem.book.discount}%</p>
                   </>
@@ -227,9 +237,11 @@ function Order() {
 
               <div className="order-item-quantity">{cartItem.quantity}</div>
               <div className="order-item-totalprice">
-                {cartItem.quantity *
-                  (cartItem.book.price -
-                    (cartItem.book.price * cartItem.book.discount) / 100)}{" "}
+                {stringPrice(
+                  cartItem.quantity *
+                    (cartItem.book.price -
+                      (cartItem.book.price * cartItem.book.discount) / 100)
+                )}{" "}
                 ₫
               </div>
             </div>
@@ -241,7 +253,11 @@ function Order() {
           </p>
 
           <p className="order-order-quantity">Total Payment:</p>
-          <p className="order-order-total">{order.totalPrice} ₫</p>
+          {order.totalPrice && (
+            <p className="order-order-total">
+              {stringPrice(order.totalPrice)} ₫
+            </p>
+          )}
 
           <div className="order-order-btn-background">
             <Button className="order-order-btn" htmlType="submit">

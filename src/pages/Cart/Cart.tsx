@@ -19,12 +19,19 @@ function Cart() {
   const isLoggedIn = useSelector((state: RootStateOrAny) => {
     return state.authSlice.isAuth;
   });
-  const cartLcItemArray = new Array();
+
   const [localCartItemArray, setLocalCartItemArray] = useState<CartItem[]>([]);
 
   const cartItemArray = useSelector((state: RootStateOrAny) => {
     return state.cartSlice.cartItems;
   });
+  const stringPrice = (number: number) => {
+    const newNumber = number.toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+    });
+    console.log(newNumber);
+    return newNumber;
+  };
 
   const localCart = localStorage.getItem("cart");
   const localNoAuthCart = localStorage.getItem("noAuthCart");
@@ -222,9 +229,10 @@ function Cart() {
                     )}
                     <div className="item-totalquantity">
                       <p style={{ marginBottom: "0px" }}>
-                        {cartItem.book.price -
-                          (cartItem.book.price * cartItem.book.discount) /
-                            100}{" "}
+                        {stringPrice(
+                          cartItem.book.price -
+                            (cartItem.book.price * cartItem.book.discount) / 100
+                        )}{" "}
                         ₫
                       </p>
                       {cartItem.book.discount > 0 && (
@@ -239,7 +247,7 @@ function Cart() {
                               marginBottom: "0px",
                             }}
                           >
-                            {cartItem.book.price} ₫
+                            {stringPrice(cartItem.book.price)} ₫
                           </p>
                           <p className="discountt">
                             -{cartItem.book.discount}%
@@ -282,10 +290,12 @@ function Cart() {
                       </Button>
                     </div>
                     <div className="item-totalprice">
-                      {cartItem.quantity *
-                        (cartItem.book.price -
-                          (cartItem.book.price * cartItem.book.discount) /
-                            100)}{" "}
+                      {stringPrice(
+                        cartItem.quantity *
+                          (cartItem.book.price -
+                            (cartItem.book.price * cartItem.book.discount) /
+                              100)
+                      )}{" "}
                       ₫
                     </div>
                     <div className="item-delete">
@@ -376,9 +386,10 @@ function Cart() {
                     </div>
                     <div className="item-totalquantity">
                       <p style={{ marginBottom: "0px" }}>
-                        {cartItem.book.price -
-                          (cartItem.book.price * cartItem.book.discount) /
-                            100}{" "}
+                        {stringPrice(
+                          cartItem.book.price -
+                            (cartItem.book.price * cartItem.book.discount) / 100
+                        )}{" "}
                         ₫
                       </p>
                       {cartItem.book.discount > 0 && (
@@ -393,7 +404,7 @@ function Cart() {
                               marginBottom: "0px",
                             }}
                           >
-                            {cartItem.book.price} ₫
+                            {stringPrice(cartItem.book.price)} ₫
                           </p>
                           <p className="discountt">
                             -{cartItem.book.discount}%
@@ -436,10 +447,12 @@ function Cart() {
                       </Button>
                     </div>
                     <div className="item-totalprice">
-                      {cartItem.quantity *
-                        (cartItem.book.price -
-                          (cartItem.book.price * cartItem.book.discount) /
-                            100)}{" "}
+                      {stringPrice(
+                        cartItem.quantity *
+                          (cartItem.book.price -
+                            (cartItem.book.price * cartItem.book.discount) /
+                              100)
+                      )}{" "}
                       ₫
                     </div>
                     <div className="item-delete">

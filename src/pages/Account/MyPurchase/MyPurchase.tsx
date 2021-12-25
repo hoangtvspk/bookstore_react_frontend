@@ -37,6 +37,14 @@ function MyPurchase() {
   const [addressNumber, setAddressNumber] = useState(0);
   const { Option } = Select;
 
+  const stringPrice = (number: number) => {
+    const newNumber = number.toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+    });
+    console.log(newNumber);
+    return newNumber;
+  };
+
   useEffect(() => {
     httpClient()
       .get(APP_API.purchase)
@@ -135,9 +143,12 @@ function MyPurchase() {
                         </div>
                         <div className="order-item-totalquantity">
                           <p style={{ marginBottom: "0px" }}>
-                            {orderItem.book.price -
-                              (orderItem.book.price * orderItem.book.discount) /
-                                100}{" "}
+                            {stringPrice(
+                              orderItem.book.price -
+                                (orderItem.book.price *
+                                  orderItem.book.discount) /
+                                  100
+                            )}{" "}
                             ₫
                           </p>
                           {orderItem.book.discount > 0 && (
@@ -152,7 +163,7 @@ function MyPurchase() {
                                   marginBottom: "0px",
                                 }}
                               >
-                                {orderItem.book.price} ₫
+                                {stringPrice(orderItem.book.price)} ₫
                               </p>
                               <p className="discountt">
                                 -{orderItem.book.discount}%
@@ -165,10 +176,13 @@ function MyPurchase() {
                           {orderItem.quantity}
                         </div>
                         <div className="order-item-totalprice">
-                          {orderItem.quantity *
-                            (orderItem.book.price -
-                              (orderItem.book.price * orderItem.book.discount) /
-                                100)}{" "}
+                          {stringPrice(
+                            orderItem.quantity *
+                              (orderItem.book.price -
+                                (orderItem.book.price *
+                                  orderItem.book.discount) /
+                                  100)
+                          )}{" "}
                           ₫
                         </div>
                       </div>
@@ -186,7 +200,7 @@ function MyPurchase() {
                     Order Total:{" "}
                   </p>
                   <p className="purchase-order-total">
-                    {purchaseItem.totalPrice} ₫
+                    {stringPrice(purchaseItem.totalPrice)} ₫
                   </p>
                 </div>
               </div>

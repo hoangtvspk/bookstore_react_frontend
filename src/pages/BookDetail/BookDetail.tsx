@@ -1,6 +1,6 @@
 import { faCartPlus, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, Carousel, Input, message } from "antd";
+import { Button, Card, Carousel, Input, message, Rate } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
@@ -77,6 +77,14 @@ function BookDetail() {
     }
   }, [id]);
 
+  const stringPrice = (number: number) => {
+    const newNumber = number.toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+    });
+    console.log(newNumber);
+    return newNumber;
+  };
+
   const onFinish = (id: string, number: string) => {
     const formData: FormData = new FormData();
     formData.append(
@@ -146,7 +154,7 @@ function BookDetail() {
             }}
           >
             <h1 style={{ color: "rgb(255, 66, 78)" }}>
-              {book.price - (book.price * book.discount) / 100} ₫
+              {stringPrice(book.price - (book.price * book.discount) / 100)} ₫
             </h1>
             {book.discount > 0 && (
               <>
@@ -159,7 +167,7 @@ function BookDetail() {
                     paddingLeft: "8px",
                   }}
                 >
-                  {book.price} ₫
+                  {stringPrice(book.price)} ₫
                 </p>
                 <p className="discount">-{book.discount}%</p>
               </>
@@ -285,7 +293,50 @@ function BookDetail() {
                   />
                 }
               >
-                <Meta title={book.nameBook} description={book.price + "đ"} />
+                <Meta
+                  title={book.nameBook}
+                  description={
+                    <>
+                      <div
+                        style={{
+                          display: "flex",
+                          marginBottom: "0px",
+                        }}
+                      >
+                        <p
+                          style={{
+                            color: "rgb(255, 66, 78)",
+                            marginBottom: "0",
+                          }}
+                        >
+                          {stringPrice(
+                            book.price - (book.price * book.discount) / 100
+                          )}{" "}
+                          ₫
+                        </p>
+                        {book.discount > 0 && (
+                          <>
+                            <p
+                              style={{
+                                color: "rgb(128, 128, 137) ",
+
+                                textDecoration: "line-through",
+                                paddingLeft: "8px",
+                                marginBottom: "0",
+                              }}
+                            >
+                              {stringPrice(book.price)} ₫
+                            </p>
+                            <p className="discountt">-{book.discount}%</p>
+                          </>
+                        )}
+                      </div>
+                      <div>
+                        <Rate value={book.rating} disabled></Rate>
+                      </div>
+                    </>
+                  }
+                />
               </Card>
             ))}
         </div>
