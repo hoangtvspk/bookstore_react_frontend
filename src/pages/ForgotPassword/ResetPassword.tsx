@@ -3,7 +3,6 @@ import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageFooter from "../../components/Footer/Footer";
-import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { ResetPasswordForm } from "../../models/resetPassword";
@@ -23,7 +22,8 @@ const ResetPassword = () => {
       .post(APP_API.resetPassword, values)
       .then((res) => {
         console.log(res);
-        navigate(appRoutes.home);
+        navigate(appRoutes.login);
+        message.success("Change Password Successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -50,12 +50,10 @@ const ResetPassword = () => {
   return (
     <Spin spinning={submitting}>
       <div className="backgroundlogin">
-        <PageTitle>Reset Your Password</PageTitle>
-        <div
-          className="site-layout-background d-flex align-items-center justify-content-center"
-          // style={{ background: "red" }}
-        >
-          <div></div>
+        <div className="site-layout-background site-layout-background-signin">
+          <h2 className="d-flex justify-content-md-center mb-4">
+            Reset Your Password
+          </h2>
 
           <Form
             name="basic"

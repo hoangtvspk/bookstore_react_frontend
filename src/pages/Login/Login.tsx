@@ -1,9 +1,8 @@
-import { Button, Checkbox, Form, Input, message, Spin } from "antd";
+import { Button, Form, Input, message, Spin } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PageFooter from "../../components/Footer/Footer";
-import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { UserInfo } from "../../models/auth";
@@ -49,53 +48,74 @@ const Login = () => {
   return (
     <Spin spinning={submitting}>
       <div className="backgroundlogin">
-        <PageTitle>Login to your account</PageTitle>
-        <div
-          className="site-layout-background d-flex align-items-center justify-content-center "
-          // style={{ background: "red" }}
-        >
-          <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
+        <div>
+          <div
+            className="site-layout-background site-layout-background-signin "
+            // style={{ background: "red" }}
           >
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+            <h2 className="d-flex justify-content-md-center mb-4">Sign In</h2>
+            <Form
+              name="basic"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
             >
-              <Input className="w-100" />
-            </Form.Item>
+              <Form.Item
+                className="input-signin"
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
+              >
+                <Input className="w-100" />
+              </Form.Item>
 
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
+              <Form.Item
+                className="input-signin"
+                label="Password"
+                name="password"
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-            <Form.Item
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{ offset: 8, span: 16 }}
-            >
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Login
-              </Button>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Link to={appRoutes.forgotpassword}>Forgot your password?</Link>
-            </Form.Item>
-          </Form>
+              <Form.Item
+                className="form-item"
+                wrapperCol={{ offset: 8, span: 16 }}
+              >
+                <Button className="btn-login " type="primary" htmlType="submit">
+                  Sign In
+                </Button>
+              </Form.Item>
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Link
+                  style={{ marginLeft: "30px" }}
+                  to={appRoutes.forgotpassword}
+                >
+                  Forgot Your Password?
+                </Link>
+              </Form.Item>
+              <Form.Item
+                className="form-item"
+                wrapperCol={{ offset: 8, span: 16 }}
+              >
+                <p className="continue">Or Continue With:</p>
+              </Form.Item>
+              <Form.Item
+                className="form-item"
+                wrapperCol={{ offset: 8, span: 16 }}
+              >
+                <img
+                  className="img-login"
+                  src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
+                ></img>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
       </div>
       <PageFooter></PageFooter>

@@ -11,7 +11,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Badge, Breadcrumb, Col, Divider, Layout, Menu, Row } from "antd";
+import { Badge, Col, Divider, Layout, Menu, Row } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
@@ -19,14 +19,8 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../../image/book3.png";
 import { userLogOut } from "../../../redux/slices/authSlice";
 import { appRoutes } from "../../../routers/config";
-import "./NavBar.css";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
 import BreadCrumb from "../../BreadCrumb";
+import "./NavBar.css";
 
 const { Header, Content } = Layout;
 

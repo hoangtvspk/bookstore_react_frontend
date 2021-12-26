@@ -1,18 +1,17 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import PageFooter from "../../../components/Footer/Footer";
 import PageTitle from "../../../components/Layout/PageTitle";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
-import { ResetPasswordForm } from "../../../models/resetPassword";
+import { UpdatePasswordForm } from "../../../models/updatePassword";
 import "../../../routers/config";
 import { appRoutes } from "../../../routers/config";
-import { UpdatePasswordForm } from "../../../models/updatePassword";
 import "./MyAccount.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import PageFooter from "../../../components/Footer/Footer";
 
 const UpdatePassword = () => {
   const [submitting, setSubmitting] = useState(false);

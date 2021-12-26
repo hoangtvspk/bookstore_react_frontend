@@ -2,7 +2,7 @@ import { Avatar, Button, Collapse, Comment, Rate } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { ChangeEvent, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";

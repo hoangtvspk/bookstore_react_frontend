@@ -1,8 +1,7 @@
-import { Button, Form, Input, Spin } from "antd";
+import { Button, Form, Input, message, Spin } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageFooter from "../../components/Footer/Footer";
-import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { ForgotPasswordForm } from "../../models/forgotPassword";
@@ -19,6 +18,7 @@ const ForgotPassword = () => {
       .then((res) => {
         console.log(res);
         navigate(appRoutes.home);
+        message.success("Your Reset Code Was Send To Your Mail!");
       })
       .catch((err) => {
         console.log(err);
@@ -29,12 +29,10 @@ const ForgotPassword = () => {
   return (
     <Spin spinning={submitting}>
       <div className="backgroundlogin">
-        <PageTitle>Forgot Password?</PageTitle>
-        <div
-          className="site-layout-background d-flex align-items-center justify-content-center"
-          // style={{ background: "red" }}
-        >
-          <div></div>
+        <div className="site-layout-background site-layout-background-signin">
+          <h2 className="d-flex justify-content-md-center mb-4">
+            Forgot Password?
+          </h2>
 
           <Form
             name="basic"
@@ -54,7 +52,7 @@ const ForgotPassword = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" className="btn-login">
                 Send
               </Button>
             </Form.Item>

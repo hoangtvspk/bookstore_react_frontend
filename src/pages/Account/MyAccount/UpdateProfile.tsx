@@ -1,21 +1,19 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import PageTitle from "../../../components/Layout/PageTitle";
-import { UserInfo } from "../../../models/auth";
-import { httpClient } from "../../../httpClient/httpServices";
-import { APP_API } from "../../../httpClient/config";
-import { appRoutes } from "../../../routers/config";
-import { LoginForm } from "../../../models/login";
 import { Link, useNavigate } from "react-router-dom";
-import "./MyAccount.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { updateUserInfo, userLogIn } from "../../../redux/slices/authSlice";
-import { resolveSrv } from "dns";
-import { UpdateProfileForm } from "../../../models/updateProfile";
 import PageFooter from "../../../components/Footer/Footer";
+import PageTitle from "../../../components/Layout/PageTitle";
+import { APP_API } from "../../../httpClient/config";
+import { httpClient } from "../../../httpClient/httpServices";
+import { UserInfo } from "../../../models/auth";
+import { UpdateProfileForm } from "../../../models/updateProfile";
+import { updateUserInfo } from "../../../redux/slices/authSlice";
+import { appRoutes } from "../../../routers/config";
+import "./MyAccount.css";
 
 const layout = {
   labelCol: { span: 8 },

@@ -1,25 +1,20 @@
-import {
-  faDollarSign,
-  faMinus,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Form, Input, message, Select, Spin } from "antd";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { Collapse, message, Select, Spin } from "antd";
+import { useForm } from "antd/lib/form/Form";
+import React, { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PageFooter from "../../../components/Footer/Footer";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
+import { AddressOrder } from "../../../models/addressOrder";
 import { CartItem } from "../../../models/cartItem";
+import { GetOrder } from "../../../models/getOrder";
+import { OrderForm } from "../../../models/order";
 import { updateCartData } from "../../../redux/slices/cartSlice";
 import { appRoutes } from "../../../routers/config";
 import "./MyPurchase.css";
-import { OrderForm } from "../../../models/order";
-import { useForm } from "antd/lib/form/Form";
-import { GetOrder } from "../../../models/getOrder";
-import { AddressOrder } from "../../../models/addressOrder";
-import { Collapse } from "antd";
-import PageFooter from "../../../components/Footer/Footer";
 
 const { Panel } = Collapse;
 

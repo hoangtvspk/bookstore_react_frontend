@@ -6,12 +6,11 @@ import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
+import emptyCart from "../../image/empty-cart.png";
 import { CartItem } from "../../models/cartItem";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
 import "./Cart.css";
-import emptyCart from "../../image/empty-cart.png";
-import { AddCart } from "../../models/addCart";
 
 const DEFAULT_PAGE_SIZE = 30;
 

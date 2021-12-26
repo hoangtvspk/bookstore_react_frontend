@@ -2,13 +2,12 @@ import { Button, Form, Input, Spin } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageFooter from "../../components/Footer/Footer";
-import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { ActiveForm } from "../../models/activationCode";
-
 import { appRoutes } from "../../routers/config";
 import "./Active.css";
+
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -48,8 +47,10 @@ const Active = () => {
   return (
     <Spin spinning={submitting}>
       <div className="backgroundlogin">
-        <PageTitle>Activate your account</PageTitle>
-        <div className="site-layout-background d-flex align-items-center justify-content-center">
+        <div className="site-layout-background site-layout-background-signin">
+          <h2 className="d-flex justify-content-md-center mb-4">
+            Active Your Account
+          </h2>
           <Form
             {...layout}
             name="nest-messages"
@@ -67,7 +68,7 @@ const Active = () => {
               <Input />
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-              <Button type="primary" htmlType="submit">
+              <Button className="btn-active" type="primary" htmlType="submit">
                 Active
               </Button>
             </Form.Item>

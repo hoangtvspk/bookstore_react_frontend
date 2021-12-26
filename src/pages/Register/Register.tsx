@@ -1,8 +1,7 @@
-import { Button, Form, Input, Spin } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Form, Input, message, Spin } from "antd";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageFooter from "../../components/Footer/Footer";
-import PageTitle from "../../components/Layout/PageTitle";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { RegisterForm } from "../../models/register";
@@ -39,16 +38,17 @@ const Register = () => {
         navigate(appRoutes.active);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
+        message.error(err.response.data.emailError);
       })
       .finally(() => setSubmitting(false));
   };
 
   return (
     <Spin spinning={submitting}>
-      <div className="backgroundlogin">
-        <PageTitle>Register new account</PageTitle>
-        <div className="site-layout-background d-flex align-items-center justify-content-center  ">
+      <div className="backgroundregister">
+        <div className="site-layout-background-register">
+          <h2 className="d-flex justify-content-md-center mb-4">Sign Up</h2>
           <Form
             {...layout}
             name="nest-messages"
@@ -56,6 +56,7 @@ const Register = () => {
             validateMessages={validateMessages}
           >
             <Form.Item
+              className="form-item-register"
               name="firstName"
               label="First name"
               rules={[{ required: true }]}
@@ -63,6 +64,7 @@ const Register = () => {
               <Input />
             </Form.Item>
             <Form.Item
+              className="form-item-register"
               name="lastName"
               label="Last name"
               rules={[{ required: true }]}
@@ -70,6 +72,7 @@ const Register = () => {
               <Input />
             </Form.Item>
             <Form.Item
+              className="form-item-register"
               name="email"
               label="Email"
               rules={[{ type: "email", required: true }]}
@@ -78,6 +81,7 @@ const Register = () => {
             </Form.Item>
 
             <Form.Item
+              className="form-item-register"
               name="password"
               label="Password"
               rules={[{ required: true }]}
@@ -85,16 +89,49 @@ const Register = () => {
               <Input type="password" />
             </Form.Item>
             <Form.Item
+              className="form-item-register"
               name="password2"
+              dependencies={["password"]}
               label="Confirm Password"
-              rules={[{ required: true }]}
+              rules={[
+                {
+                  required: true,
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(
+                        "The two passwords that you entered do not match!"
+                      )
+                    );
+                  },
+                }),
+              ]}
             >
               <Input type="password" />
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-              <Button type="primary" htmlType="submit">
+              <Button className="btn-register" type="primary" htmlType="submit">
                 Sign Up
               </Button>
+            </Form.Item>
+            <Form.Item
+              className="form-item"
+              wrapperCol={{ offset: 8, span: 16 }}
+            >
+              <p className="continue-register">Or Sign Up With:</p>
+            </Form.Item>
+            <Form.Item
+              className="form-item"
+              wrapperCol={{ offset: 8, span: 16 }}
+            >
+              <img
+                className="img-login-register"
+                src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
+              ></img>
             </Form.Item>
           </Form>
         </div>

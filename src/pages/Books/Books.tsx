@@ -1,12 +1,4 @@
-import {
-  Card,
-  Input,
-  Pagination,
-  Radio,
-  RadioChangeEvent,
-  Rate,
-  Space,
-} from "antd";
+import { Card, Pagination, Radio, RadioChangeEvent, Rate, Space } from "antd";
 import Meta from "antd/lib/card/Meta";
 import Search from "antd/lib/input/Search";
 import React, { ChangeEvent, useEffect, useState } from "react";
