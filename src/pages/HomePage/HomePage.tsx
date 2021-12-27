@@ -76,7 +76,7 @@ function HomePage() {
 
   return (
     <>
-      <div className=" bg-white pr-3 mt-3 pb-3">
+      <div className=" bg-white pr-3 pb-3">
         <div className="d-flex">
           <div className="pt-5 mr-4 home-facet-banner ">
             <img src={BookLogo}></img>

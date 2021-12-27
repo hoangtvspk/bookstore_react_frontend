@@ -182,7 +182,6 @@ function Books() {
   };
 
   useEffect(() => {
-    localStorage.setItem("breadcrumb", "List");
     onLoadBook();
     httpClient()
       .get(APP_API.categoryBooks)
@@ -200,7 +199,7 @@ function Books() {
     <>
       <div className="d-flex bg-white pr-3">
         <div>
-          <div className="mt-5 mr-4 facet-list  ">
+          <div className="mt-5 mr-4 facet-list ">
             <Search
               placeholder="input search text"
               onChange={(e) => onKeyChange(e)}
@@ -316,8 +315,9 @@ function Books() {
                                   color: "rgb(128, 128, 137) ",
 
                                   textDecoration: "line-through",
-                                  paddingLeft: "8px",
+                                  paddingLeft: "5px",
                                   marginBottom: "0",
+                                  fontSize: "12px",
                                 }}
                               >
                                 {stringPrice(book.price)} ₫

@@ -202,7 +202,7 @@ const NavBar: React.FC = ({ children }) => {
         }}
       >
         <BreadCrumb></BreadCrumb>
-        <div>{children}</div>
+        <div style={{ marginTop: "0px", paddingTop: 0 }}>{children}</div>
       </Content>
     </Layout>
   );

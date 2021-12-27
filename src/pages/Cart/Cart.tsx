@@ -173,14 +173,14 @@ function Cart() {
   return (
     <Spin spinning={submitting}>
       {isLoggedIn && (
-        <>
+        <div>
           {isEmpty() && (
             <div className="empty-cart">
               <img src={emptyCart} />
             </div>
           )}
           {!isEmpty() && (
-            <>
+            <div className="cart-background">
               <div className="cartitem">
                 <div className="item-image-header"></div>
                 <div className="item-name"></div>
@@ -340,9 +340,9 @@ function Cart() {
                   </Button>
                 </div>
               </div>
-            </>
+            </div>
           )}
-        </>
+        </div>
       )}
       {!isLoggedIn && (
         <>

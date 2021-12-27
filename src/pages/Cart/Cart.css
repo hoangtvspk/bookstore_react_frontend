@@ -121,3 +121,6 @@
   align-items: center;
   height: 100%;
 }
+.cart-background {
+  min-height: 100vh !important;
+}

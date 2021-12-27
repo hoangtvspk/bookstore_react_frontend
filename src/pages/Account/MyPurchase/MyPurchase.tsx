@@ -28,10 +28,6 @@ function MyPurchase() {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [orderArray, setOrderArray] = useState<GetOrder[]>([]);
-  const [accountForm] = useForm();
-  const [addressArray, setAddressArray] = useState<AddressOrder[]>([]);
-  const [addressNumber, setAddressNumber] = useState(0);
-  const { Option } = Select;
 
   const stringPrice = (number: number) => {
     const newNumber = number.toLocaleString(undefined, {
