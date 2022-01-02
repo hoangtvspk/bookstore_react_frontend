@@ -18,6 +18,8 @@ import Address from "../pages/Account/MyAddress/Address";
 import AddAddress from "../pages/Account/MyAddress/AddAddress";
 import EditAddress from "../pages/Account/MyAddress/EditAddress";
 import MyPurchase from "../pages/Account/MyPurchase/MyPurchase";
+import OAuth2RedirectHandler from "../pages/Login/oauth2/OAuth2RedirectHandler";
+import HomePage from "../pages/HomePage/HomePage";
 
 export const appRoutes = {
   home: "/",
@@ -133,6 +135,14 @@ export const appComponentConfig: IAppComponentConfig[] = [
     path: appRoutes.purchase,
     component: <MyPurchase />,
     authRequired: true,
+  },
+  {
+    path: "/oauth2/redirect",
+    component: <OAuth2RedirectHandler />,
+  },
+  {
+    path: "/account",
+    component: <HomePage />,
   },
 ];
 

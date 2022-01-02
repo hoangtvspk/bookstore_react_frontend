@@ -112,10 +112,13 @@ const Login = () => {
                 className="form-item"
                 wrapperCol={{ offset: 8, span: 16 }}
               >
-                <img
-                  className="img-login"
-                  src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
-                ></img>
+                <a href="http://localhost:8080/oauth2/authorize/google">
+                  {" "}
+                  <img
+                    className="img-login"
+                    src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
+                  ></img>
+                </a>
               </Form.Item>
             </Form>
           </div>
