@@ -21,7 +21,7 @@ const OAuth2RedirectHandler = () => {
     token: localStorage.getItem("token"),
     userRole: "USER",
   };
-  // dispatch(userLogIn(userInfo));
+  dispatch(userLogIn(userInfo));
 
   return <>{navigate("/account")}</>;
 };
