@@ -39,7 +39,9 @@ const Register = () => {
       })
       .catch((err) => {
         console.log(err.response);
-        message.error(err.response.data.emailError);
+        message.error(
+          err.response.data.emailError || err.response.data.passwordError
+        );
       })
       .finally(() => setSubmitting(false));
   };
@@ -113,7 +115,10 @@ const Register = () => {
             >
               <Input type="password" />
             </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Form.Item
+              wrapperCol={{ ...layout.wrapperCol, offset: 8 }}
+              className="form-item-register"
+            >
               <Button className="btn-register" type="primary" htmlType="submit">
                 Sign Up
               </Button>

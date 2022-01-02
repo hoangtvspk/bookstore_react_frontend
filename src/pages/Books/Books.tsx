@@ -199,7 +199,7 @@ function Books() {
     <>
       <div className="d-flex bg-white pr-3">
         <div>
-          <div className="mt-5 mr-4 facet-list ">
+          <div className="mt-5 mr-2 facet-list ">
             <Search
               placeholder="input search text"
               onChange={(e) => onKeyChange(e)}
@@ -211,7 +211,7 @@ function Books() {
               }}
             />
           </div>
-          <div className="pt-5 mr-4 facet-list">
+          <div className="pt-5 mr-2 facet-list">
             <p className="font-cate-title"> Type of book:</p>
             <Radio.Group key="category" onChange={onChange} value={value}>
               <Space
@@ -234,7 +234,7 @@ function Books() {
               </Space>
             </Radio.Group>
           </div>
-          <div className="pt-5 mr-4 facet-list">
+          <div className="pt-5 mr-2 facet-list">
             <p className="font-cate-title"> Prices:</p>
             <Radio.Group
               key="price"
@@ -295,6 +295,7 @@ function Books() {
                           style={{
                             display: "flex",
                             marginBottom: "0px",
+                            alignItems: "end",
                           }}
                         >
                           <p
@@ -315,12 +316,12 @@ function Books() {
                                   color: "rgb(128, 128, 137) ",
 
                                   textDecoration: "line-through",
-                                  paddingLeft: "5px",
+                                  paddingLeft: "3px",
                                   marginBottom: "0",
                                   fontSize: "12px",
                                 }}
                               >
-                                {stringPrice(book.price)} ₫
+                                {stringPrice(book.price)}₫
                               </p>
                               <p className="discountt">-{book.discount}%</p>
                             </>

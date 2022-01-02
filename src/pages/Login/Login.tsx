@@ -40,7 +40,7 @@ const Login = () => {
       })
       .catch((err) => {
         console.error(err);
-        message.error(err.response.data);
+        message.error("Incorrect Email Or Password");
       })
       .finally(() => setSubmitting(false));
   };
@@ -62,18 +62,18 @@ const Login = () => {
               onFinish={onFinish}
             >
               <Form.Item
-                className="input-signin"
+                className="input-signin form-item"
                 label="Email"
                 name="email"
                 rules={[
                   { required: true, message: "Please input your email!" },
                 ]}
               >
-                <Input className="w-100" />
+                <Input />
               </Form.Item>
 
               <Form.Item
-                className="input-signin"
+                className="input-signin form-item"
                 label="Password"
                 name="password"
                 rules={[
@@ -84,14 +84,17 @@ const Login = () => {
               </Form.Item>
 
               <Form.Item
-                className="form-item"
+                className="form-item "
                 wrapperCol={{ offset: 8, span: 16 }}
               >
                 <Button className="btn-login " type="primary" htmlType="submit">
                   Sign In
                 </Button>
               </Form.Item>
-              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Form.Item
+                wrapperCol={{ offset: 8, span: 16 }}
+                className="form-item "
+              >
                 <Link
                   style={{ marginLeft: "30px" }}
                   to={appRoutes.forgotpassword}

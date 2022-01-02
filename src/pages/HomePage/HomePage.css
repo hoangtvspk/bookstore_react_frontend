@@ -7,7 +7,7 @@
 }
 
 .home-facet-list {
-  min-width: 200px;
+  min-width: 150px;
   margin-top: 3rem;
   padding-left: 30px;
 }
@@ -23,10 +23,10 @@
   padding-top: 5px;
   border-top: 2px solid #efefef !important;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 220px);
+  grid-template-columns: repeat(auto-fit, 200px);
   /* grid-template-rows: repeat(5, 420px); */
   grid-row-gap: 20px;
-  grid-column-gap: 30px;
+  grid-column-gap: 10px;
 }
 .home-preview-image {
   height: 330px;
@@ -58,10 +58,10 @@
   height: 400px;
 }
 .home-right-banner-content {
-  padding-left: 90px;
-  padding-right: 280px;
+  padding-right: 40px;
+  padding-left: 30px;
   margin-top: 30px;
-  width: 100%;
+  width: calc(100% - 280px);
 }
 .home-title {
   font-family: Georgia, "Times New Roman", Times, serif !important;

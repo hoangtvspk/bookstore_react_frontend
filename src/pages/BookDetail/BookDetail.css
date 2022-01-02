@@ -65,3 +65,10 @@
   margin-right: 8px !important;
   color: darkgray !important;
 }
+.related-book-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 210px);
+  /* grid-template-rows: repeat(5, 420px); */
+  grid-row-gap: 20px;
+  grid-column-gap: 10px;
+}

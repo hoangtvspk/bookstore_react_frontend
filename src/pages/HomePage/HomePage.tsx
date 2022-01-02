@@ -78,7 +78,7 @@ function HomePage() {
     <>
       <div className=" bg-white pr-3 pb-3">
         <div className="d-flex">
-          <div className="pt-5 mr-4 home-facet-banner ">
+          <div className="pt-5 mr-2 home-facet-banner ">
             <img src={BookLogo}></img>
             <p className="allbook" onClick={() => navigate(appRoutes.books)}>
               {" "}
@@ -102,7 +102,7 @@ function HomePage() {
         <Tabs defaultActiveKey="1">
           <TabPane tab="New Updates" key="1">
             <div className="d-flex">
-              <div className="pt-5 mr-4 home-facet-list ">
+              <div className="pt-5 mr-2 home-facet-list ">
                 <img src={NewBook} className="home-type-book-image"></img>
               </div>
               <div className="home-right-content">
@@ -129,12 +129,14 @@ function HomePage() {
                                 style={{
                                   display: "flex",
                                   marginBottom: "0px",
+                                  alignItems: "end",
                                 }}
                               >
                                 <p
                                   style={{
                                     color: "rgb(255, 66, 78)",
                                     marginBottom: "0",
+                                    fontSize: "13px",
                                   }}
                                 >
                                   {stringPrice(
@@ -150,11 +152,12 @@ function HomePage() {
                                         color: "rgb(128, 128, 137) ",
 
                                         textDecoration: "line-through",
-                                        paddingLeft: "8px",
+                                        paddingLeft: "3px",
                                         marginBottom: "0",
+                                        fontSize: "12px",
                                       }}
                                     >
-                                      {stringPrice(book.price)} ₫
+                                      {stringPrice(book.price)}₫
                                     </p>
                                     <p className="discountt">
                                       -{book.discount}%
@@ -203,12 +206,14 @@ function HomePage() {
                                 style={{
                                   display: "flex",
                                   marginBottom: "0px",
+                                  alignItems: "end",
                                 }}
                               >
                                 <p
                                   style={{
                                     color: "rgb(255, 66, 78)",
                                     marginBottom: "0",
+                                    fontSize: "13px",
                                   }}
                                 >
                                   {stringPrice(
@@ -224,11 +229,12 @@ function HomePage() {
                                         color: "rgb(128, 128, 137) ",
 
                                         textDecoration: "line-through",
-                                        paddingLeft: "8px",
+                                        paddingLeft: "3px",
                                         marginBottom: "0",
+                                        fontSize: "12px",
                                       }}
                                     >
-                                      {stringPrice(book.price)} ₫
+                                      {stringPrice(book.price)}₫
                                     </p>
                                     <p className="discountt">
                                       -{book.discount}%
@@ -277,12 +283,14 @@ function HomePage() {
                                 style={{
                                   display: "flex",
                                   marginBottom: "0px",
+                                  alignItems: "end",
                                 }}
                               >
                                 <p
                                   style={{
                                     color: "rgb(255, 66, 78)",
                                     marginBottom: "0",
+                                    fontSize: "13px",
                                   }}
                                 >
                                   {stringPrice(
@@ -298,11 +306,12 @@ function HomePage() {
                                         color: "rgb(128, 128, 137) ",
 
                                         textDecoration: "line-through",
-                                        paddingLeft: "8px",
+                                        paddingLeft: "3px",
                                         marginBottom: "0",
+                                        fontSize: "12px",
                                       }}
                                     >
-                                      {stringPrice(book.price)} ₫
+                                      {stringPrice(book.price)}₫
                                     </p>
                                     <p className="discountt">
                                       -{book.discount}%

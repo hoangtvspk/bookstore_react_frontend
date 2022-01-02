@@ -10,25 +10,25 @@ import React from "react";
 function PageFooter() {
   return (
     <div className="layout-footer">
-      <div style={{ paddingLeft: "60px" }}>
+      <div style={{ paddingLeft: "20px" }}>
         <h4 style={{ color: "darkgrey" }}>Contact:</h4>
-        <p style={{ paddingLeft: "20px", marginBottom: "2px" }}>
+        <p style={{ paddingLeft: "10px", marginBottom: "2px" }}>
           {" "}
           <FontAwesomeIcon className="mr-2" icon={faPhone} /> 0935970861 |
           0983553096
         </p>
-        <p style={{ paddingLeft: "20px", marginBottom: "2px" }}>
+        <p style={{ paddingLeft: "10px", marginBottom: "2px" }}>
           {" "}
           <FontAwesomeIcon className="mr-2" icon={faMailBulk} />{" "}
           18110278@student.hcmute.edu.vn
         </p>
-        <p style={{ paddingLeft: "20px", marginBottom: "2px" }}>
+        <p style={{ paddingLeft: "10px", marginBottom: "2px" }}>
           {" "}
           <FontAwesomeIcon className="mr-2" icon={faMailBulk} />{" "}
           18110289@student.hcmute.edu.vn
         </p>
       </div>
-      <div style={{ paddingLeft: "100px" }}>
+      <div style={{ paddingLeft: "60px" }}>
         <h4 style={{ color: "darkgrey" }}>Address:</h4>
         <p style={{ paddingLeft: "20px", marginBottom: "2px" }}>
           {" "}

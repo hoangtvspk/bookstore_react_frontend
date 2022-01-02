@@ -279,7 +279,7 @@ function BookDetail() {
       </div>
       <div className="p-5 bg-white " style={{ marginTop: "25px" }}>
         <h2>Related Book</h2>
-        <div className="book-list">
+        <div className="related-book-list">
           {bookArray.length > 0 &&
             bookArray.map((book: Book) => (
               <Card

@@ -4,7 +4,7 @@ export const HTTP_CONFIG = {
 };
 
 export const APP_API = {
-  login: "/auth/login",
+  login: "/auth/login-user",
   registration: "/registration",
   active1: "/registration/activate/:activeCode",
   active2: "/registration/activate",

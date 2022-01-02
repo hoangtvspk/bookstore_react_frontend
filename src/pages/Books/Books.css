@@ -7,9 +7,9 @@
 }
 
 .facet-list {
-  min-width: 300px;
+  min-width: 250px;
 
-  padding-left: 30px;
+  padding-left: 20px;
   border-right: 1px solid #efefef;
 
   gap: 0px !important;
@@ -22,7 +22,7 @@
 
 .book-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 220px);
+  grid-template-columns: repeat(auto-fit, 210px);
   /* grid-template-rows: repeat(5, 420px); */
   grid-row-gap: 20px;
   grid-column-gap: 30px;
@@ -33,17 +33,17 @@
 }
 .font-cate {
   font-family: Roboto, Helvetica, Arial, sans-serif !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   color: "#404040";
 }
 .font-cate-title {
   font-family: Roboto, Helvetica, Arial, sans-serif !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
   color: "#404040";
   font-weight: bold;
 }
 .discountt {
-  margin-left: 8px;
+  margin-left: 3px;
   border: 1px solid rgb(255, 66, 78);
   border-radius: 2px;
   background-color: rgb(255, 240, 241);

@@ -1,6 +1,6 @@
 .backgroundregister {
   background: white !important;
-  height: 72vh;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,12 +10,13 @@
 .site-layout-background-register {
   background: white !important;
   height: 100%;
-  padding: 40px 30px;
+  padding: 20px 30px;
   margin-bottom: 0px;
   border-radius: 20px;
   border: lightgray solid 1px;
   box-shadow: 10px 10px 5px grey;
   font-family: Georgia, "Times New Roman", Times, serif !important;
+  min-height: calc(100vh - 600px) !important;
 }
 .btn-register {
   margin-left: 20px;
@@ -33,6 +34,6 @@
   height: 50px;
 }
 .form-item-register {
-  margin-bottom: 19px !important;
+  margin-bottom: 5px !important;
   margin-right: 60px !important;
 }

@@ -63,7 +63,7 @@ const NavBar: React.FC = ({ children }) => {
           <img src={logo} alt="logo" className="logo" />
         </div>
 
-        <Row gutter={16}>
+        <Row>
           <Col className="gutter-row menu" span="6">
             <Menu
               mode="horizontal"
@@ -85,7 +85,7 @@ const NavBar: React.FC = ({ children }) => {
               </Menu.Item>
             </Menu>
           </Col>
-          <Col className="gutter-row" span="6" offset="12">
+          <Col className="gutter-row" span="7" offset="11">
             {isLoggedIn && (
               <>
                 <Menu
@@ -196,8 +196,8 @@ const NavBar: React.FC = ({ children }) => {
         style={{
           paddingTop: 160,
           paddingBottom: 0,
-          paddingLeft: 160,
-          paddingRight: 160,
+          paddingLeft: 150,
+          paddingRight: 150,
           margin: 0,
         }}
       >
