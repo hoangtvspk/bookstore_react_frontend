@@ -1,6 +1,6 @@
 .backgroundregister {
   background: white !important;
-  height: 70vh;
+  height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +11,7 @@
   background: white !important;
   height: 100%;
   padding: 20px 30px;
+  margin-top: 20px;
   margin-bottom: 0px;
   border-radius: 20px;
   border: lightgray solid 1px;

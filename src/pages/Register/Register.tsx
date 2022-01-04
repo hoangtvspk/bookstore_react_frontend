@@ -123,21 +123,6 @@ const Register = () => {
                 Sign Up
               </Button>
             </Form.Item>
-            <Form.Item
-              className="form-item"
-              wrapperCol={{ offset: 8, span: 16 }}
-            >
-              <p className="continue-register">Or Sign Up With:</p>
-            </Form.Item>
-            <Form.Item
-              className="form-item"
-              wrapperCol={{ offset: 8, span: 16 }}
-            >
-              <img
-                className="img-login-register"
-                src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
-              ></img>
-            </Form.Item>
           </Form>
         </div>
       </div>

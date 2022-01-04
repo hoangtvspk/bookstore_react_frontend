@@ -37,6 +37,7 @@ const Login = () => {
         navigate(appRoutes.home);
         message.success("Log In Successfully");
         onLoadUserCartItems();
+        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
