@@ -37,7 +37,7 @@ function MyPurchase() {
     return newNumber;
   };
 
-  useEffect(() => {
+  const onLoading = () => {
     httpClient()
       .get(APP_API.purchase)
       .then((res) => {
@@ -50,23 +50,28 @@ function MyPurchase() {
         message.error(err.response.data);
         navigate(appRoutes.cart);
       });
+  };
+
+  useEffect(() => {
+    onLoading();
   }, []);
 
-  const onFinish = (values: OrderForm) => {
+  const onCancel = (id: number) => {
     setSubmitting(true);
-    httpClient()
-      .post(APP_API.order, values)
-      .then((res) => {
-        console.log(res);
-        message.success("Order Successfully!");
-        navigate(appRoutes.cart);
-        dispatch(updateCartData([]));
-      })
-      .catch((err) => {
-        console.log(err);
-        message.error("All datas are required");
-      })
-      .finally(() => setSubmitting(false));
+    if (id) {
+      httpClient()
+        .get(APP_API.cancelOrder.replace(":id", id.toString()))
+        .then((res) => {
+          console.log(res);
+          message.success("Cancel successfully");
+          onLoading();
+        })
+        .catch((err) => {
+          console.log(err);
+          message.error("Can't delete");
+        })
+        .finally(() => setSubmitting(false));
+    }
   };
 
   return (
@@ -83,6 +88,7 @@ function MyPurchase() {
                 <p className="purchase-item-text-title">Address</p>
                 <p className="purchase-item-text-title">Order Date</p>
                 <p className="purchase-item-text-title">Status</p>
+                <p className="purchase-item-text-title">Action</p>
               </div>
               <div className="purchase-item">
                 <p className="purchase-item-text">{purchaseItem.id}</p>
@@ -92,6 +98,23 @@ function MyPurchase() {
                 <p className="purchase-item-text">{purchaseItem.address}</p>
                 <p className="purchase-item-text">{purchaseItem.date}</p>
                 <p className="purchase-item-text">{purchaseItem.status}</p>
+                {purchaseItem.status == "Đặt hàng" && (
+                  <>
+                    <u
+                      className="purchase-item-text action-item"
+                      onClick={() => onCancel(purchaseItem.id)}
+                    >
+                      Cancel
+                    </u>
+                  </>
+                )}
+                {purchaseItem.status == "Đã hủy" && (
+                  <>
+                    <u className="purchase-item-text action-item-cancelled">
+                      Cancel
+                    </u>
+                  </>
+                )}
               </div>
 
               <Collapse ghost>

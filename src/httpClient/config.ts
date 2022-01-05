@@ -35,4 +35,5 @@ export const APP_API = {
   booksOfCate: "/books/search",
   addReview: "/users/review/add",
   addReplyReview: "/users/reviewrep/add",
+  cancelOrder: "/users/orders/canel/:id"
 };

@@ -1,7 +1,11 @@
+import { message } from "antd";
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { APP_API } from "../../../httpClient/config";
+import { httpClient } from "../../../httpClient/httpServices";
 import { userLogIn } from "../../../redux/slices/authSlice";
+import { updateCartData } from "../../../redux/slices/cartSlice";
 
 const OAuth2RedirectHandler = () => {
   const navigate = useNavigate();
@@ -58,6 +62,17 @@ const OAuth2RedirectHandler = () => {
     userRole: localStorage.getItem("userRole"),
   };
   dispatch(userLogIn(userInfo));
+
+  const onLoadUserCartItems = () => {
+    httpClient()
+      .post(APP_API.getCart, localStorage.getItem("noAuthCart") || [])
+      .then((res) => {
+        dispatch(updateCartData(res.data));
+        localStorage.removeItem("noAuthCart");
+      })
+      .catch((err) => message.error("Cannot load cart data"));
+  };
+  onLoadUserCartItems();
 
   return <>{navigate("/account")}</>;
 };
