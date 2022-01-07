@@ -1,5 +1,5 @@
 export const HTTP_CONFIG = {
-  baseURL: "http://localhost:8080/api/v1/",
+  baseURL: "http://8aff098a639e.sn.mynetname.net/Bookstore_springboot-0.0.2-SNAPSHOT/api/v1/",
   headers: { "Content-Type": "application/json" },
 };
 

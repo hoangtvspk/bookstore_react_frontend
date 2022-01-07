@@ -113,7 +113,7 @@ const Login = () => {
                 className="form-item"
                 wrapperCol={{ offset: 8, span: 16 }}
               >
-                <a href="http://localhost:8080/oauth2/authorize/google">
+                <a href="http://8aff098a639e.sn.mynetname.net/Bookstore_springboot-0.0.2-SNAPSHOT/oauth2/authorize/google">
                   {" "}
                   <img
                     className="img-login"
