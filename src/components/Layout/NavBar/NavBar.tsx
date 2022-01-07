@@ -37,6 +37,10 @@ const NavBar: React.FC = ({ children }) => {
     return state.cartSlice.total;
   });
 
+  const localNoAuthCart = localStorage.getItem("noAuthCart");
+  const cartLocalItemArray = JSON.parse(localNoAuthCart || "[]");
+  const totalLocalCartItem = Object.keys(cartLocalItemArray).length;
+
   const userName = useSelector((state: RootStateOrAny) => {
     if (state.authSlice.userInfo) {
       return (
@@ -178,10 +182,12 @@ const NavBar: React.FC = ({ children }) => {
 
                   <Menu.Item key="cart" onClick={() => setSelectedMenu("cart")}>
                     <Link to={appRoutes.cart}>
-                      <FontAwesomeIcon
-                        className="mr-2 text-white fa-2x"
-                        icon={faCartArrowDown}
-                      />
+                      <Badge count={totalLocalCartItem}>
+                        <FontAwesomeIcon
+                          className="mr-2 text-white fa-2x"
+                          icon={faCartArrowDown}
+                        />
+                      </Badge>
                     </Link>
                   </Menu.Item>
                 </Menu>

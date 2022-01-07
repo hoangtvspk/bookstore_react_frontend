@@ -64,6 +64,9 @@ function BookDetail() {
   };
 
   useEffect(() => {
+    onLoad();
+  }, [id]);
+  const onLoad = () => {
     if (id) {
       httpClient()
         .get(APP_API.bookDetail.replace(":id", id))
@@ -76,7 +79,7 @@ function BookDetail() {
           console.error(err);
         });
     }
-  }, [id]);
+  };
 
   const stringPrice = (number: number) => {
     const newNumber = number.toLocaleString(undefined, {
@@ -97,7 +100,7 @@ function BookDetail() {
       "quantity",
       new Blob([JSON.stringify({ number })], { type: "application/json" })
     );
-
+    navigate(appRoutes.bookDetail.replace(":id", id));
     if (!isLoggedIn) {
       const localCartArray = JSON.parse(
         localStorage.getItem("noAuthCart") || "[]"

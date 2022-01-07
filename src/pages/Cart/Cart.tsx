@@ -352,7 +352,7 @@ function Cart() {
             </div>
           )}
           {!isLocalEmpty() && (
-            <>
+            <div className="cart-background">
               <div className="cartitem">
                 <div className="item-image-header"></div>
                 <div className="item-name"></div>
@@ -497,7 +497,7 @@ function Cart() {
                   </Button>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </>
       )}
