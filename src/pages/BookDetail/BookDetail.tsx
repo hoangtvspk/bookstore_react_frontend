@@ -142,12 +142,12 @@ function BookDetail() {
         <div>
           {book.category && (
             <p style={{ fontSize: "18px", marginBottom: "0px" }}>
-              Thể loại: {book.category.nameCategory}
+              Category: {book.category.nameCategory}
             </p>
           )}
 
           <h2>{book.nameBook}</h2>
-          <p style={{ fontSize: "16px" }}>Tác Giả: {book.author}</p>
+          <p style={{ fontSize: "16px" }}>Author: {book.author}</p>
           <div
             style={{
               paddingTop: "80px",
@@ -182,7 +182,7 @@ function BookDetail() {
                 paddingTop: "100px",
               }}
             >
-              Số lượng
+              Number of books
             </p>
 
             {book.quantity > 0 && (
@@ -213,7 +213,7 @@ function BookDetail() {
                       fontSize: "18px",
                     }}
                   >
-                    Còn lại {book.quantity} cuốn
+                    Available: {book.quantity}
                   </p>
                 </div>
                 <Button
@@ -222,7 +222,7 @@ function BookDetail() {
                   onClick={() => onFinish(id || "", number.toString())}
                 >
                   <FontAwesomeIcon className="mr-2" icon={faCartPlus} />
-                  Thêm vào giỏ hàng
+                  Add To Cart Now
                 </Button>
               </>
             )}
@@ -254,7 +254,7 @@ function BookDetail() {
                       fontSize: "18px",
                     }}
                   >
-                    (Tạm Hết Hàng)
+                    (Out Of Stock)
                   </p>
                 </div>
                 <Button
@@ -263,7 +263,7 @@ function BookDetail() {
                   disabled
                 >
                   <FontAwesomeIcon className="mr-2" icon={faCartPlus} />
-                  Thêm vào giỏ hàng
+                  Add To Cart Now
                 </Button>
               </>
             )}
@@ -302,6 +302,7 @@ function BookDetail() {
                         style={{
                           display: "flex",
                           marginBottom: "0px",
+                          alignItems: "end",
                         }}
                       >
                         <p
@@ -322,8 +323,9 @@ function BookDetail() {
                                 color: "rgb(128, 128, 137) ",
 
                                 textDecoration: "line-through",
-                                paddingLeft: "8px",
+                                paddingLeft: "3px",
                                 marginBottom: "0",
+                                fontSize: "12px",
                               }}
                             >
                               {stringPrice(book.price)} ₫
