@@ -42,7 +42,6 @@ function Books() {
     const newNumber = number.toLocaleString(undefined, {
       maximumFractionDigits: 2,
     });
-    console.log(newNumber);
     return newNumber;
   };
 

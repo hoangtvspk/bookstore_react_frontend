@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import AppLayout from "./components/Layout/NavBar/NavBar";
+import OAuth2RedirectHandler from "./pages/Login/oauth2/OAuth2RedirectHandler";
 import { appComponentConfig, renderAppComponent } from "./routers/config";
 
 const App: FC = () => {
@@ -13,6 +14,8 @@ const App: FC = () => {
     <>
       <BrowserRouter>
         <AppLayout>{renderAppComponent(appComponentConfig, isAuth)}</AppLayout>
+       
+     
       </BrowserRouter>
     </>
   );

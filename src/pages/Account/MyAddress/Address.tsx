@@ -1,6 +1,6 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, message, Spin } from "antd";
+import { Button, message, Popconfirm, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -116,14 +116,16 @@ const Address = () => {
                   Edit
                 </u>
                 <p className="action-item-slice"> | </p>
-                <u
-                  className="action-item"
-                  onClick={() => {
+                <Popconfirm
+                  title="Are you sure to delete this address?"
+                  onConfirm={() => {
                     onDelete(address.id.toString());
                   }}
+                  okText="Yes"
+                  cancelText="No"
                 >
-                  Delete
-                </u>
+                  <u className="action-item">Delete</u>
+                </Popconfirm>
               </div>
             </div>
           ))}
