@@ -40,6 +40,6 @@ export const APP_API = {
   addReplyReview: "/users/reviewrep/add",
   cancelOrder: "/users/orders/canel/:id",
   orderVNpay: "/payment/vnpay",
-  orderVNpaytrue: "/payment/payonline/true",
+  orderVNpaytrue: "/payment/payonline/true/:transId",
   orderMomo: "/payment/momo",
 };

@@ -53,7 +53,7 @@ export const appRoutes = {
   address: "/myaddress",
   addAddress: "/myaddress/add",
   editAddress: "/myaddress/edit/:id",
-  vnpayorder: "/vnpayordersuccess",
+  vnpayorder: "/onlinepayordersuccess",
 };
 
 interface IAppComponentConfig {

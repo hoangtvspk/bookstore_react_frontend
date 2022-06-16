@@ -63,7 +63,12 @@ const VNPayOrder = () => {
       setIsSuccess(true);
       console.log(searchParams.get("vnp_ResponseCode"));
       httpClient()
-        .get(APP_API.orderVNpaytrue)
+        .get(
+          APP_API.orderVNpaytrue.replace(
+            ":transId",
+            searchParams.get("transId") || ""
+          )
+        )
         .then(() => {
           message.success("Thanh toán thành công");
           onSuccessLoading();
