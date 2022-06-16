@@ -1,4 +1,5 @@
 import { UserInfo } from "./auth";
+import { BookImage } from "./book";
 import { ReviewRep } from "./reviewRep";
 
 export interface Review{
@@ -10,4 +11,5 @@ export interface Review{
     date: string,
     message: string,
     rating: number,
+    reviewImages: BookImage[],
 }

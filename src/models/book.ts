@@ -36,6 +36,7 @@ export interface Book{
             date: string,
             message: string,
             rating: number,
+            reviewImages: BookImage[],
         }
         
     ],

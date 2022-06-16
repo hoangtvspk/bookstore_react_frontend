@@ -46,7 +46,7 @@ const Active = () => {
 
   return (
     <Spin spinning={submitting}>
-      <div className="backgroundlogin">
+      <div className="backgroundactive">
         <div className="site-layout-background site-layout-background-signin">
           <h2 className="d-flex justify-content-md-center mb-4">
             Active Your Account

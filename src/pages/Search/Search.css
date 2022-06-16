@@ -42,14 +42,14 @@
   color: "#404040";
   font-weight: bold;
 }
-.discountt {
+.relate-book-discount {
   margin-left: 3px;
   border: 1px solid rgb(255, 66, 78);
   border-radius: 2px;
   background-color: rgb(255, 240, 241);
   color: rgb(255, 66, 78);
   height: 22px;
-
+  
   margin-top: 0;
   display: flex;
   padding: 0px 4px;

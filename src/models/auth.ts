@@ -5,4 +5,5 @@ export interface UserInfo {
     phoneNumber: number;
     token: string;
     userRole: string;
+    image: string;
 }

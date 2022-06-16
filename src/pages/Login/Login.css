@@ -1,6 +1,6 @@
 .backgroundlogin {
   background: white !important;
-  height: 55vh;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,32 +10,45 @@
 .site-layout-background-signin {
   background: white !important;
   height: 100% !important;
-  padding: 20px 40px !important;
+  padding: 0px 0px !important;
+  
   margin-bottom: 0px !important;
-  border-radius: 20px !important;
+  /* border-radius: 20px !important;
   border: lightgray solid 1px !important;
-  box-shadow: 10px 10px 5px grey !important;
-  font-family: Georgia, "Times New Roman", Times, serif !important;
+  box-shadow: 10px 10px 5px grey !important; */
+  font-family:  "Times New Roman", Times, serif !important;
   min-height: calc(100vh - 600px) !important;
+  font-size: 26px !important;
+  
 }
 .btn-login {
-  margin-left: 30px;
+  
   padding: 0px 50px !important;
+  border-radius: 20px !important;
   background-color: tomato !important;
+  border-color: transparent !important;
+  font-size: 18px !important;
 }
 .continue {
-  margin-left: 40px;
+  
+
   margin-bottom: 0;
   font-size: 16px;
+  color: #555555 !important;
 }
 .img-login {
-  margin-left: 70px;
+
   width: 50px;
   height: 50px;
 }
 .form-item {
   margin-bottom: 0 !important;
+  font-size: 16px !important;
 }
 .input-signin {
-  margin-right: 60px !important;
+  /* display: flex;
+  justify-content: center; */
+}
+.ant-tabs-nav-list-login {
+  margin-left: 400px;
 }

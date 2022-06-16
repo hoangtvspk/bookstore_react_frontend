@@ -105,9 +105,7 @@ const Register = () => {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error(
-                        "The two passwords that you entered do not match!"
-                      )
+                      new Error("Mật khẩu xác nhận không chính xác!")
                     );
                   },
                 }),

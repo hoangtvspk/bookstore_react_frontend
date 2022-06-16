@@ -8,7 +8,7 @@ export const bookDetailSlice = createSlice({
   },
   reducers: {
     loadBookDetail: (state, action) => {
-        console.log(action.payload.reviews.length);
+        console.log(action.payload.nameBook);
       state.value = action.payload;
     },
   },

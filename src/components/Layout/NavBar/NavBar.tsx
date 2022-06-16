@@ -1,9 +1,14 @@
+import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import {
+  faAddressBook,
   faAddressCard,
   faBook,
   faCartArrowDown,
+  faCommentDollar,
   faHome,
+  faLocationArrow,
   faMoneyBill,
+  faSearchLocation,
   faSignInAlt,
   faSignOutAlt,
   faUser,
@@ -12,14 +17,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge, Col, Divider, Layout, Menu, Row } from "antd";
+import Search from "antd/lib/input/Search";
+import Sider from "antd/lib/layout/Sider";
 import SubMenu from "antd/lib/menu/SubMenu";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../../../image/book3.png";
-import { userLogOut } from "../../../redux/slices/authSlice";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../../../image/doubhlogo3.png";
+import { UserInfo } from "../../../models/auth";
+
+import {
+  closeAccountManage,
+  openAccountManage,
+  userLogOut,
+} from "../../../redux/slices/authSlice";
+import { updateKeySearch } from "../../../redux/slices/keySearchSlice";
 import { appRoutes } from "../../../routers/config";
 import BreadCrumb from "../../BreadCrumb";
+import PageFooter from "../../Footer/Footer";
 import "./NavBar.css";
 
 const { Header, Content } = Layout;
@@ -44,15 +59,48 @@ const NavBar: React.FC = ({ children }) => {
   const userName = useSelector((state: RootStateOrAny) => {
     if (state.authSlice.userInfo) {
       return (
-        state.authSlice.userInfo.firstName +
+        state.authSlice.userInfo.lastName +
         " " +
-        state.authSlice.userInfo.lastName
+        state.authSlice.userInfo.firstName
       );
     } else return "";
   });
-
+  const userInfo = useSelector((state: RootStateOrAny) => {
+    if (state.authSlice.userInfo) {
+      return state.authSlice.userInfo as UserInfo;
+    }
+  });
+  const booksSearch = useSelector((state: RootStateOrAny) => {
+    return state.keySearchSlice.booksSearch;
+  });
+  const isAccountManage = useSelector((state: RootStateOrAny) => {
+    return state.authSlice.isAccountManage;
+  });
   const dispatch = useDispatch();
+  // const onSearch = (key: String) => {
+  //   <Link to={appRoutes.books.replace(":search", key)}>
+  //     <img src={logo} alt="logo" className="logo" />
+  //   </Link>;
+  // };
+  const [keyWordSearch, setKeyWordSearch] = useState("");
+  const [bookSearch, setBookSearch] = useState({});
+  const onKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (booksSearch.keyWord != null) {
+      setKeyWordSearch(e.target.value);
+      console.log(booksSearch);
+      dispatch(
+        updateKeySearch({
+          idCategory: booksSearch.idCategory,
+          keyWord: e.target.value,
+          minPrice: 0,
+          maxPrice: 100000000,
+        })
+      );
+    }
+  };
 
+  const navigate = useNavigate();
+  useEffect(() => {}, [userInfo]);
   return (
     <Layout className="layout">
       <Header
@@ -60,15 +108,11 @@ const NavBar: React.FC = ({ children }) => {
           position: "fixed",
           zIndex: 1,
           width: "100%",
-          height: "160px",
+          height: "80px",
         }}
       >
-        <div className="nav-logo">
-          <img src={logo} alt="logo" className="logo" />
-        </div>
-
-        <Row>
-          <Col className="gutter-row menu" span="6">
+        <Row className="headerNavBar">
+          <Col className="gutter-row menu" span={4} pull={0.5}>
             <Menu
               mode="horizontal"
               triggerSubMenuAction="hover"
@@ -76,72 +120,163 @@ const NavBar: React.FC = ({ children }) => {
               className="bg-transparent"
             >
               <Menu.Item key="home" onClick={() => setSelectedMenu("home")}>
-                <Link to={appRoutes.home} className="font-text">
-                  <FontAwesomeIcon className="mr-2" icon={faHome} />
-                  Home
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="books" onClick={() => setSelectedMenu("books")}>
-                <Link to={appRoutes.books} className="font-text">
-                  <FontAwesomeIcon className="mr-2" icon={faBook} />
-                  All Books
+                <Link
+                  to={appRoutes.home}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  <img src={logo} alt="logo" className="logo" />
                 </Link>
               </Menu.Item>
             </Menu>
           </Col>
-          <Col className="gutter-row" span="7" offset="11">
+          <Col className="gutter-row menu bg-transparent" span={13} push={0}>
+            <Search
+              placeholder="Hôm nay bạn tìm sách gì..."
+              enterButton="Tìm Kiếm"
+              size="large"
+              onChange={onKeyChange}
+              onSearch={() => {
+                if (booksSearch.keyWord != null) {
+                  dispatch(
+                    updateKeySearch({
+                      idCategory: booksSearch.idCategory,
+                      keyWord: keyWordSearch,
+                      minPrice: 0,
+                      maxPrice: 100000000,
+                    })
+                  );
+                }
+                console.log(bookSearch);
+                navigate(appRoutes.books);
+                window.scrollTo(0, 0);
+              }}
+              className="bg-transparent"
+            />
+          </Col>
+
+          <Col className="gutter-row" span="7" push={1}>
             {isLoggedIn && (
               <>
                 <Menu
                   mode="horizontal"
                   style={{ background: "Transparent" }}
                   selectedKeys={[selectedMenu]}
+                  theme="dark"
                 >
                   <SubMenu
                     key="name"
                     title={userName}
-                    className="font-name"
+                    className=" font-text"
                     icon={
-                      <FontAwesomeIcon className="mr-2" icon={faUserCircle} />
+                      <>
+                        {
+                          <img
+                            src={userInfo?.image}
+                            height={30}
+                            width={30}
+                            style={{ borderRadius: "50%", objectFit: "cover" }}
+                          ></img>
+                        }
+                        &nbsp;
+                      </>
                     }
                   >
                     <Menu.Item key="my-account">
-                      <FontAwesomeIcon className="mr-2" icon={faUser} />
-                      <Link to={appRoutes.myAccount} className="font-submenu">
-                        My Account
+                      <Link
+                        to={appRoutes.myAccount}
+                        className="font-submenu"
+                        color="#555555"
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          className="mr-2"
+                          icon={faUser}
+                          color="#0099FF"
+                        />
+                        Thông Tin Cá Nhân
                       </Link>
                     </Menu.Item>
-                    <Divider className="m-0" />
-                    <Menu.Item key="address">
-                      <FontAwesomeIcon className="mr-2" icon={faAddressCard} />
-                      <Link to={appRoutes.address} className="font-submenu">
-                        Address Manage
+
+                    <Menu.Item
+                      key="address"
+                      onClick={() => dispatch(closeAccountManage())}
+                    >
+                      <Link
+                        to={appRoutes.address}
+                        className="font-submenu"
+                        color="#555555"
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          className="mr-2"
+                          icon={faSearchLocation}
+                          color="#339900"
+                        />
+                        Địa Chỉ
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="bill">
-                      <FontAwesomeIcon className="mr-2" icon={faMoneyBill} />
-                      <Link to={appRoutes.purchase} className="font-submenu">
-                        My Purchase
+
+                    <Menu.Item
+                      key="bill"
+                      onClick={() => dispatch(openAccountManage())}
+                    >
+                      <Link
+                        to={appRoutes.purchase}
+                        className="font-submenu"
+                        color="#555555"
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          className="mr-2"
+                          icon={faCommentDollar}
+                          color="#FF9900"
+                        />
+                        Đơn Hàng
                       </Link>
                     </Menu.Item>
                     <Menu.Item
                       key="logout"
                       onClick={() => dispatch(userLogOut())}
                     >
-                      <FontAwesomeIcon className="mr-2" icon={faSignOutAlt} />
-                      <Link to={appRoutes.login} className="font-submenu">
-                        Log Out
+                      <Link
+                        to={appRoutes.login}
+                        className="font-submenu"
+                        color="#555555"
+                        onClick={() => {
+                          window.scrollTo(0, 0);
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          className="mr-2"
+                          icon={faSignOutAlt}
+                          color="#CC6633"
+                        />
+                        Đăng Xuất
                       </Link>
                     </Menu.Item>
                   </SubMenu>
                   <Menu.Item key="cart">
-                    <Link to={appRoutes.cart}>
-                      <Badge count={totalCartItem}>
-                        <FontAwesomeIcon
-                          className="mr-2 text-white fa-2x"
-                          icon={faCartArrowDown}
+                    <Link
+                      to={appRoutes.cart}
+                      className=" font-text"
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                      }}
+                    >
+                      <Badge count={totalCartItem} className="mr-2">
+                        <ShoppingCartOutlined
+                          style={{ fontSize: 40, color: "white" }}
                         />
                       </Badge>
+                      Giỏ Hàng
                     </Link>
                   </Menu.Item>
                 </Menu>
@@ -162,32 +297,31 @@ const NavBar: React.FC = ({ children }) => {
                       className="mr-2  text-white"
                       icon={faSignInAlt}
                     />
-                    <Link to={appRoutes.login} className=" font-text">
-                      Login
+                    <Link
+                      to={appRoutes.login}
+                      className=" font-text"
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                      }}
+                    >
+                      Đăng Nhập/Đăng Ký
                     </Link>
                   </Menu.Item>
 
-                  <Menu.Item
-                    key="register"
-                    onClick={() => setSelectedMenu("register")}
-                  >
-                    <FontAwesomeIcon
-                      className="mr-2 text-white"
-                      icon={faUserPlus}
-                    />
-                    <Link to={appRoutes.register} className="  font-text">
-                      Register
-                    </Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="cart" onClick={() => setSelectedMenu("cart")}>
-                    <Link to={appRoutes.cart}>
-                      <Badge count={totalLocalCartItem}>
-                        <FontAwesomeIcon
-                          className="mr-2 text-white fa-2x"
-                          icon={faCartArrowDown}
+                  <Menu.Item key="cart">
+                    <Link
+                      to={appRoutes.cart}
+                      className=" font-text"
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                      }}
+                    >
+                      <Badge count={totalCartItem} className="mr-2">
+                        <ShoppingCartOutlined
+                          style={{ fontSize: 40, color: "white" }}
                         />
                       </Badge>
+                      Giỏ Hàng
                     </Link>
                   </Menu.Item>
                 </Menu>
@@ -200,7 +334,7 @@ const NavBar: React.FC = ({ children }) => {
       <Content
         className="site-layout-background"
         style={{
-          paddingTop: 160,
+          paddingTop: 75,
           paddingBottom: 0,
           paddingLeft: 150,
           paddingRight: 150,
@@ -208,7 +342,9 @@ const NavBar: React.FC = ({ children }) => {
         }}
       >
         <BreadCrumb></BreadCrumb>
-        <div style={{ marginTop: "0px", paddingTop: 0 }}>{children}</div>
+        {children}
+
+        <PageFooter></PageFooter>
       </Content>
     </Layout>
   );

@@ -54,7 +54,7 @@ const UpdatePassword = () => {
   return (
     <Spin spinning={submitting}>
       <div className="profile-background">
-        <PageTitle>Reset Your Password</PageTitle>
+        <PageTitle>Cập Nhật Mật Khẩu</PageTitle>
         <div
           className="site-layout-background d-flex align-items-center justify-content-center"
           // style={{ background: "red" }}
@@ -72,36 +72,36 @@ const UpdatePassword = () => {
             form={updatePassForm}
           >
             <Form.Item
-              label="Password"
+              label="Mật Khẩu Hiện Tại"
               name="password"
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <Input className="w-100" />
+              <Input.Password className="w-100" />
             </Form.Item>
             <Form.Item
-              label="New Password"
+              label="Mật Khẩu Mới"
               name="newPassword"
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <Input className="w-100" />
+              <Input.Password className="w-100" />
             </Form.Item>
             <Form.Item
-              label="Confirm Password"
+              label="Nhập Lại Mật Khẩu"
               name="newPassword2"
               rules={[
                 { required: true, message: "Please input confirm password!" },
               ]}
             >
-              <Input className="w-100" />
+              <Input.Password className="w-100" />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
-                Reset your password
+                Lưu Thay Đổi
               </Button>
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -113,7 +113,6 @@ const UpdatePassword = () => {
           </Form>
         </div>
       </div>
-      <PageFooter></PageFooter>
     </Spin>
   );
 };

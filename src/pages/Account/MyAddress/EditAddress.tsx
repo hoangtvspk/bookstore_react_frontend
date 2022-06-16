@@ -11,7 +11,10 @@ import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
 import { AddressOrder } from "../../../models/addressOrder";
 import { UserInfo } from "../../../models/auth";
-import { updateAddressData } from "../../../redux/slices/addressSlice";
+import {
+  updateAddressData,
+  updateAddressListData,
+} from "../../../redux/slices/addressSlice";
 import { appRoutes } from "../../../routers/config";
 import "./Address.css";
 
@@ -23,40 +26,55 @@ const layout = {
 /* eslint-disable no-template-curly-in-string */
 
 /* eslint-enable no-template-curly-in-string */
-
-const EditAddress = () => {
+interface EditAddressBoxProps {
+  id: string;
+}
+function EditAddress({ id }: EditAddressBoxProps) {
   const userInfo = useSelector(
     (state: RootStateOrAny) => state.authSlice.userInfo as UserInfo
   );
-  const { id } = useParams();
+
   const dispatch = useDispatch();
   const [addressForm] = useForm();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
-
+  const onLoadUserAddress = () => {
+    httpClient()
+      .get(APP_API.addressOrder)
+      .then((res) => {
+        console.log(res.data.length);
+        const address: AddressOrder = res.data[
+          res.data.length - 1
+        ] as AddressOrder;
+        dispatch(updateAddressData(address));
+        dispatch(updateAddressListData(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
-    if (id) {
-      httpClient()
-        .get(APP_API.getAddress.replace(":id", id))
-        .then((res) => {
-          console.log(res);
-          addressForm.setFieldsValue({
-            id: id,
-            provinceCity: res.data.provinceCity,
-            districtTown: res.data.districtTown,
-            neighborhoodVillage: res.data.neighborhoodVillage,
-            address: res.data.address,
-          });
-          dispatch(updateAddressData(res.data));
-          console.log(addressForm.getFieldsValue());
-        })
-        .catch((err) => {
-          console.log(err);
+    httpClient()
+      .get(APP_API.getAddress.replace(":id", id))
+      .then((res) => {
+        console.log(res);
+        addressForm.setFieldsValue({
+          id: id,
+          provinceCity: res.data.provinceCity,
+          districtTown: res.data.districtTown,
+          neighborhoodVillage: res.data.neighborhoodVillage,
+          address: res.data.address,
         });
-    }
-  }, []);
+
+        console.log(addressForm.getFieldsValue());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   const onFinish = (values: AddressOrder) => {
+    values.id = parseInt(id);
     setSubmitting(true);
     if (id) {
       httpClient()
@@ -64,7 +82,7 @@ const EditAddress = () => {
         .then((res) => {
           message.success("Update Successfully");
           navigate(appRoutes.address);
-          dispatch(updateAddressData(res.data));
+          onLoadUserAddress();
         })
         .catch((err) => {
           console.error(err);
@@ -74,64 +92,104 @@ const EditAddress = () => {
   };
 
   return (
-    <Spin spinning={submitting}>
-      <div className="address-background">
-        <PageTitle>Edit Address</PageTitle>
-        <div className="site-layout-background d-flex align-items-center justify-content-center ">
-          <Form
-            {...layout}
-            name="nest-messages"
-            form={addressForm}
-            onFinish={onFinish}
-          >
-            <Form.Item name="id" label="ID: " rules={[{ required: true }]}>
-              <Input disabled />
-            </Form.Item>
-            <Form.Item
-              name="provinceCity"
-              label="Province/City"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="districtTown"
-              label="District/Town"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="neighborhoodVillage"
-              label="Ward"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="address"
-              label="Address"
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Edit Address
-              </Button>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Link to={appRoutes.address}>
-                <FontAwesomeIcon className="mr-2" icon={faArrowLeft} />
-                Turn Back
-              </Link>
-            </Form.Item>
-          </Form>
-        </div>
+    <Form name="nest-messages" onFinish={onFinish} form={addressForm}>
+      <p
+        style={{
+          color: "#555555",
+          fontSize: "14px",
+          fontWeight: 400,
+          marginBottom: 0,
+        }}
+      >
+        Tỉnh/Thành Phố:{" "}
+      </p>
+      <Form.Item
+        name="provinceCity"
+        style={{ width: "100%", marginBottom: 0 }}
+        rules={[
+          {
+            required: true,
+            message: "Nhập Tỉnh/Thành Phố!",
+          },
+        ]}
+      >
+        <Input placeholder="Tỉnh/Thành Phố" />
+      </Form.Item>
+      <p
+        style={{
+          color: "#555555",
+          fontSize: "14px",
+          fontWeight: 400,
+          marginBottom: 0,
+        }}
+      >
+        Quận/Huyện/Thành Phố:{" "}
+      </p>
+      <Form.Item
+        name="districtTown"
+        style={{ width: "100%", marginBottom: 0 }}
+        rules={[
+          {
+            required: true,
+            message: "Nhập Quận/Huyện/Thành Phố!",
+          },
+        ]}
+      >
+        <Input placeholder="Quận/Huyện/Thành Phố" />
+      </Form.Item>
+      <p
+        style={{
+          color: "#555555",
+          fontSize: "14px",
+          fontWeight: 400,
+          marginBottom: 0,
+        }}
+      >
+        Xã/Phường:{" "}
+      </p>
+      <Form.Item
+        name="neighborhoodVillage"
+        style={{ width: "100%", marginBottom: 0 }}
+        rules={[
+          {
+            required: true,
+            message: "Nhập Xã/Phường!",
+          },
+        ]}
+      >
+        <Input placeholder="Xã/Phường" />
+      </Form.Item>
+      <p
+        style={{
+          color: "#555555",
+          fontSize: "14px",
+          fontWeight: 400,
+          marginBottom: 0,
+        }}
+      >
+        Địa Chỉ:{" "}
+      </p>
+      <Form.Item
+        name="address"
+        style={{ width: "100%", marginBottom: 0 }}
+        rules={[
+          {
+            required: true,
+            message: "Nhập Địa Chỉ!",
+          },
+        ]}
+      >
+        <Input placeholder="Tên người dùng" />
+      </Form.Item>
+      <div className="d-flex mt-3 d-flex justify-content-end">
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Lưu
+          </Button>
+        </Form.Item>
       </div>
-      <PageFooter></PageFooter>
-    </Spin>
+    </Form>
   );
-};
+}
 
 export default EditAddress;

@@ -99,7 +99,6 @@ const ResetPassword = () => {
           </Form>
         </div>
       </div>
-      <PageFooter></PageFooter>
     </Spin>
   );
 };

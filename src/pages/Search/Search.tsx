@@ -2,18 +2,20 @@ import { Card, Pagination, Radio, RadioChangeEvent, Rate, Space } from "antd";
 import Meta from "antd/lib/card/Meta";
 import Search from "antd/lib/input/Search";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import PageFooter from "../../components/Footer/Footer";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";
 import { Category } from "../../models/categoryBooks";
 import { appRoutes } from "../../routers/config";
-import "./Books.css";
+import "./Search.css";
+import { updateKeySearch } from "../../redux/slices/keySearchSlice";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 const DEFAULT_PAGE_SIZE = 32;
 
-function Books() {
+function SearchPage() {
   const [bookArray, setBookArray] = useState<Book[]>([]);
   const navigate = useNavigate();
   const [value, setValue] = useState(0);
@@ -25,6 +27,14 @@ function Books() {
   const [keyWordSearch, setKeyWordSearch] = useState("");
   const [maxPriceSearch, setMaxPriceSearch] = useState(10000000);
   const [minPriceSearch, setMinPriceSearch] = useState(0);
+
+  const booksSearch = useSelector((state: RootStateOrAny) => {
+    return state.keySearchSlice.booksSearch;
+  });
+  const keySearch = useSelector((state: RootStateOrAny) => {
+    return state.keySearchSlice.booksSearch.keySearch;
+  });
+  const dispatch = useDispatch();
 
   const onLoadBook = () => {
     httpClient()
@@ -47,141 +57,189 @@ function Books() {
 
   const onChange = (e: RadioChangeEvent) => {
     console.log(e.target.value);
-
-    // if (e.target.value == 0) {
-    //   onLoadBook();
-    // } else {
-    let bookSearch = {};
-    setCategorySearch(parseInt(e.target.value));
-    if (parseInt(e.target.value) == 0) {
-      bookSearch = {
-        idCategory: null,
-        keyWord: keyWordSearch,
-        minPrice: minPriceSearch,
-        maxPrice: maxPriceSearch,
-      };
-    } else {
-      bookSearch = {
-        idCategory: parseInt(e.target.value),
-        keyWord: keyWordSearch,
-        minPrice: minPriceSearch,
-        maxPrice: maxPriceSearch,
-      };
-    }
-
-    console.log(bookSearch);
-    setValue(e.target.value);
-    httpClient()
-      .post(APP_API.booksOfCate, bookSearch)
-      .then((res) => {
-        console.log(res);
-        setBookArray([...res.data]);
-        console.log(bookArray);
-        setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const onPriceChange = (e: RadioChangeEvent) => {
-    console.log(e.target.value);
-    setPriceValue(e.target.value);
-    let bookSearch = {};
-
-    const priceSearch = (min: number, max: number, id: number, key: string) => {
-      setMinPriceSearch(min);
-      setMaxPriceSearch(max);
-
-      if (value == 0) {
+    if (booksSearch.keyWord != null) {
+      dispatch(
+        updateKeySearch({
+          idCategory: e.target.value,
+          keyWord: booksSearch.keyWord,
+          minPrice: 0,
+          maxPrice: 100000000,
+        })
+      );
+      setValue(booksSearch.idCategory);
+      console.log(booksSearch.keyWord);
+      let bookSearch = {};
+      setCategorySearch(parseInt(e.target.value));
+      if (e.target.value == 0) {
+        dispatch(
+          updateKeySearch({
+            idCategory: null,
+            keyWord: booksSearch.keyWord,
+            minPrice: 0,
+            maxPrice: 100000000,
+          })
+        );
         bookSearch = {
           idCategory: null,
-          keyWord: key,
-          minPrice: min,
-          maxPrice: max,
+          keyWord: booksSearch.keyWord,
+          minPrice: minPriceSearch,
+          maxPrice: maxPriceSearch,
         };
       } else {
         bookSearch = {
-          idCategory: id,
-          keyWord: key,
-          minPrice: min,
-          maxPrice: max,
+          idCategory: parseInt(e.target.value),
+          keyWord: booksSearch.keyWord,
+          minPrice: minPriceSearch,
+          maxPrice: maxPriceSearch,
         };
       }
-    };
-
-    if (e.target.value == "all") {
-      priceSearch(0, 10000000, categorySearch, "");
-    } else if (e.target.value == "40") {
-      priceSearch(0, 40000, categorySearch, "");
-    } else if (e.target.value == "4070") {
-      priceSearch(40000, 70000, categorySearch, "");
-    } else if (e.target.value == "70100") {
-      priceSearch(70000, 100000, categorySearch, "");
-    } else if (e.target.value == "100150") {
-      priceSearch(100000, 150000, categorySearch, "");
-    } else if (e.target.value == "150") {
-      priceSearch(150000, 10000000, categorySearch, "");
+      console.log(bookSearch);
+      setValue(e.target.value);
+      httpClient()
+        .post(APP_API.booksOfCate, bookSearch)
+        .then((res) => {
+          console.log(res);
+          setBookArray([...res.data]);
+          console.log(bookArray);
+          setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+    // if (e.target.value == 0) {
+    //   onLoadBook();
+    // } else {
+  };
+  const onPriceChange = (e: RadioChangeEvent) => {
+    if (booksSearch.keyWord != null) {
+      console.log(e.target.value);
+      setPriceValue(e.target.value);
+      let bookSearch = {};
 
-    console.log(bookSearch);
+      const priceSearch = (
+        min: number,
+        max: number,
+        id: number,
+        key: string
+      ) => {
+        setMinPriceSearch(min);
+        setMaxPriceSearch(max);
 
-    httpClient()
-      .post(APP_API.booksOfCate, bookSearch)
-      .then((res) => {
-        console.log(res);
-        setBookArray([...res.data]);
-        console.log(bookArray);
-        setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        if (value == 0) {
+          bookSearch = {
+            idCategory: null,
+            keyWord: booksSearch.keyWord,
+            minPrice: min,
+            maxPrice: max,
+          };
+        } else {
+          bookSearch = {
+            idCategory: id,
+            keyWord: booksSearch.keyWord,
+            minPrice: min,
+            maxPrice: max,
+          };
+        }
+      };
+
+      if (e.target.value == "all") {
+        priceSearch(0, 10000000, categorySearch, "");
+      } else if (e.target.value == "40") {
+        priceSearch(0, 40000, categorySearch, "");
+      } else if (e.target.value == "4070") {
+        priceSearch(40000, 70000, categorySearch, "");
+      } else if (e.target.value == "70100") {
+        priceSearch(70000, 100000, categorySearch, "");
+      } else if (e.target.value == "100150") {
+        priceSearch(100000, 150000, categorySearch, "");
+      } else if (e.target.value == "150") {
+        priceSearch(150000, 10000000, categorySearch, "");
+      }
+
+      console.log(bookSearch);
+
+      httpClient()
+        .post(APP_API.booksOfCate, bookSearch)
+        .then((res) => {
+          console.log(res);
+          setBookArray([...res.data]);
+          console.log(bookArray);
+          setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
-  const onKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setKeyWordSearch(e.target.value);
-  };
-  const onSearch = (key: string) => {
-    let bookSearch = {};
-    if (value == 0) {
-      bookSearch = {
-        idCategory: null,
-        keyWord: key,
-        minPrice: minPriceSearch,
-        maxPrice: maxPriceSearch,
-      };
-    } else {
-      bookSearch = {
-        idCategory: categorySearch,
-        keyWord: key,
-        minPrice: minPriceSearch,
-        maxPrice: maxPriceSearch,
-      };
+  const onSearch = () => {
+    console.log(keyWordSearch);
+    if (booksSearch.keyWord != null) {
+      console.log(booksSearch);
+      if (booksSearch.idCategory == null) setValue(0);
+      else {
+        setValue(booksSearch.idCategory);
+      }
+      //setValue(booksSearch.idCategory);
+      setCategorySearch(booksSearch.idCategory);
+      let bookSearch = {};
+      if (value == 0 && booksSearch.idCategory != null) {
+        bookSearch = {
+          idCategory: booksSearch.idCategory,
+          keyWord: booksSearch.keyWord,
+          minPrice: minPriceSearch,
+          maxPrice: maxPriceSearch,
+        };
+      } else if (value == 0 && booksSearch.idCategory == null) {
+        bookSearch = {
+          idCategory: null,
+          keyWord: booksSearch.keyWord,
+          minPrice: minPriceSearch,
+          maxPrice: maxPriceSearch,
+        };
+      } else {
+        bookSearch = {
+          idCategory: booksSearch.idCategory,
+          keyWord: booksSearch.keyWord,
+          minPrice: minPriceSearch,
+          maxPrice: maxPriceSearch,
+        };
+      }
+      console.log(bookSearch);
+      httpClient()
+        .post(APP_API.booksOfCate, bookSearch)
+        .then((res) => {
+          console.log(res);
+          setBookArray([...res.data]);
+          console.log(bookArray);
+          setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-    httpClient()
-      .post(APP_API.booksOfCate, bookSearch)
-      .then((res) => {
-        console.log(res);
-        setBookArray([...res.data]);
-        console.log(bookArray);
-        setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
   const onCardClick = (id: string) => {
     navigate(appRoutes.bookDetail.replace(":id", id));
+    window.scrollTo(0, 0);
   };
   const onPageChange = (page: number, pageSize: number) => {
+    console.log(booksSearch);
     setCurPage(page);
     setShowingBook([
       ...bookArray.slice((page - 1) * pageSize, page * pageSize),
     ]);
   };
 
+  // const [_, setSearchParams] = useSearchParams();
   useEffect(() => {
-    onLoadBook();
+    // const searchParams = new URLSearchParams();
+    // searchParams.set("category", "12");
+    // setSearchParams(searchParams);
+    onSearch();
+    //onLoadBook();
+
     httpClient()
       .get(APP_API.categoryBooks)
       .then((res) => {
@@ -192,26 +250,26 @@ function Books() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [booksSearch]);
 
   return (
     <>
       <div className="d-flex bg-white pr-3">
         <div>
-          <div className="mt-5 mr-2 facet-list ">
+          {/* <div className="mt-5 mr-2 facet-list ">
             <Search
               placeholder="input search text"
               onChange={(e) => onKeyChange(e)}
-              onSearch={() => onSearch(keyWordSearch)}
+              onSearch={() => onSearch()}
               style={{
                 width: 230,
                 borderBottom: "1px solid #efefef",
                 paddingBottom: "20px",
               }}
             />
-          </div>
+          </div> */}
           <div className="pt-5 mr-2 facet-list">
-            <p className="font-cate-title"> Type of book:</p>
+            <p className="font-cate-title">Danh mục sách:</p>
             <Radio.Group key="category" onChange={onChange} value={value}>
               <Space
                 direction="vertical"
@@ -222,7 +280,7 @@ function Books() {
                 }}
               >
                 <Radio value={0} className="font-cate">
-                  All Books
+                  Tất cả
                 </Radio>
                 {categoryArray.length > 0 &&
                   categoryArray.map((category: Category) => (
@@ -234,7 +292,7 @@ function Books() {
             </Radio.Group>
           </div>
           <div className="pt-5 mr-2 facet-list">
-            <p className="font-cate-title"> Prices:</p>
+            <p className="font-cate-title">Giá:</p>
             <Radio.Group
               key="price"
               onChange={onPriceChange}
@@ -249,7 +307,7 @@ function Books() {
                 }}
               >
                 <Radio value="all" className="font-cate">
-                  All Prices
+                  Tất cả
                 </Radio>
                 <Radio value="40" className="font-cate">
                   Under 40.000đ
@@ -347,9 +405,8 @@ function Books() {
           </div>
         </div>
       </div>
-      <PageFooter></PageFooter>
     </>
   );
 }
 
-export default Books;
+export default SearchPage;

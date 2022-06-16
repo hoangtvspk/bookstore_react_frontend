@@ -59,7 +59,6 @@ const ForgotPassword = () => {
           </Form>
         </div>
       </div>
-      <PageFooter></PageFooter>
     </Spin>
   );
 };

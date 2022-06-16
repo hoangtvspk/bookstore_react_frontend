@@ -1,6 +1,21 @@
-import { faCartPlus, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBookOpen,
+  faCartPlus,
+  faMinus,
+  faPenAlt,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, Carousel, Input, message, Rate } from "antd";
+import {
+  Button,
+  Card,
+  Carousel,
+  Divider,
+  Image,
+  Input,
+  message,
+  Rate,
+} from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
@@ -14,6 +29,7 @@ import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
 import "./BookDetail.css";
+import ImageList from "./ImageList";
 import Reviews from "./Reviews";
 
 function BookDetail() {
@@ -23,6 +39,9 @@ function BookDetail() {
   const book = useSelector(
     (state: RootStateOrAny) => state.bookDetailSlice.value
   );
+  const bookName = useSelector(
+    (state: RootStateOrAny) => state.bookDetailSlice.value.bookName
+  );
 
   const onChange = () => {};
   const [number, setNumber] = useState(1);
@@ -31,6 +50,7 @@ function BookDetail() {
 
   const onIncrease = () => {
     if (number < book.quantity) {
+      console.log(book.nameBook);
       setNumber(number + 1);
     }
   };
@@ -46,6 +66,8 @@ function BookDetail() {
   };
   const onCardClick = (id: string) => {
     navigate(appRoutes.bookDetail.replace(":id", id));
+    window.scrollTo(0, 0);
+    setNumber(1);
   };
 
   const isLoggedIn = useSelector((state: RootStateOrAny) => {
@@ -131,10 +153,18 @@ function BookDetail() {
 
   return (
     <div>
-      <div className="d-flex p-5 bg-white">
+      <div className="d-flex p-5 bg-white" style={{ paddingLeft: "100" }}>
+        <div className="mr-3">
+          {/* <Image src={book.bookImages[0].image} height={100} /> */}
+
+          {book.bookImages?.map((img: BookImage) => (
+            <ImageList image={img}></ImageList>
+          ))}
+        </div>
         <Carousel afterChange={onChange} className="book-images mr-5">
           {Object.entries(book).length > 0 && (
             <ImageGallery
+              autoPlay
               showPlayButton={false}
               items={book.bookImages.map((img: BookImage) => {
                 return { original: img.image };
@@ -143,23 +173,65 @@ function BookDetail() {
           )}
         </Carousel>
         <div>
+          <p
+            style={{
+              color: "#555555",
+              fontSize: "26px",
+              fontWeight: 400,
+              marginBottom: 0,
+            }}
+          >
+            {book.nameBook}
+          </p>
+          <div className="d-flex align-justify-content-xl-end">
+            <Rate
+              style={{
+                fontSize: "20px",
+                color: "#FFCC00",
+                paddingRight: 10,
+              }}
+              allowHalf
+              value={book.rating}
+              disabled
+            />
+            {book.reviews && (
+              <p
+                style={{
+                  fontSize: "16px",
+                  alignSelf: "end",
+                  marginBottom: 0,
+                  color: "#FFCC00",
+                }}
+              >
+                ({book.reviews.length} đánh giá)
+              </p>
+            )}
+          </div>
           {book.category && (
-            <p style={{ fontSize: "18px", marginBottom: "0px" }}>
-              Category: {book.category.nameCategory}
+            <p style={{ fontSize: "16px", marginBottom: "0px" }}>
+              Thể Loại: {book.category.nameCategory}
             </p>
           )}
-
-          <h2>{book.nameBook}</h2>
-          <p style={{ fontSize: "16px" }}>Author: {book.author}</p>
           <div
             style={{
-              paddingTop: "80px",
+              fontSize: "16px",
+              color: "#008dff",
               display: "flex",
             }}
           >
-            <h1 style={{ color: "rgb(255, 66, 78)" }}>
-              {stringPrice(book.price - (book.price * book.discount) / 100)} ₫
-            </h1>
+            <p style={{ fontSize: "16px", color: "black" }}>Tác Giả:&nbsp;</p>
+            {book.author}
+          </div>
+
+          <div
+            style={{
+              paddingTop: "50px",
+              display: "flex",
+            }}
+          >
+            <h2 style={{ color: "rgb(255, 66, 78)" }}>
+              {stringPrice(book.price - (book.price * book.discount) / 100)}₫
+            </h2>
             {book.discount > 0 && (
               <>
                 <p
@@ -181,11 +253,14 @@ function BookDetail() {
             <p
               style={{
                 marginBottom: 0,
-                fontSize: "18px",
-                paddingTop: "100px",
+                fontSize: "16px",
+                paddingTop: "60px",
+                fontWeight: "500",
+                color: "#555555",
+                paddingBottom: "10px",
               }}
             >
-              Number of books
+              Số Lượng:
             </p>
 
             {book.quantity > 0 && (
@@ -213,10 +288,10 @@ function BookDetail() {
                       alignSelf: "end",
                       color: "red",
                       marginLeft: "10px",
-                      fontSize: "18px",
+                      fontSize: "16px",
                     }}
                   >
-                    Available: {book.quantity}
+                    (Còn lại {book.quantity} cuốn)
                   </p>
                 </div>
                 <Button
@@ -225,7 +300,7 @@ function BookDetail() {
                   onClick={() => onFinish(id || "", number.toString())}
                 >
                   <FontAwesomeIcon className="mr-2" icon={faCartPlus} />
-                  Add To Cart Now
+                  Thêm Vào Giỏ Hàng
                 </Button>
               </>
             )}
@@ -254,10 +329,10 @@ function BookDetail() {
                       alignSelf: "end",
                       color: "red",
                       marginLeft: "10px",
-                      fontSize: "18px",
+                      fontSize: "16px",
                     }}
                   >
-                    (Out Of Stock)
+                    (Hết hàng)
                   </p>
                 </div>
                 <Button
@@ -266,7 +341,7 @@ function BookDetail() {
                   disabled
                 >
                   <FontAwesomeIcon className="mr-2" icon={faCartPlus} />
-                  Add To Cart Now
+                  Thêm Vào Giỏ Hàng
                 </Button>
               </>
             )}
@@ -274,82 +349,102 @@ function BookDetail() {
         </div>
       </div>
       <div
-        className=" p-5 bg-white"
-        style={{ marginTop: "25px", alignSelf: "end" }}
+        className=" p-5 bg-white pt-4"
+        style={{ marginTop: "15px", alignSelf: "end" }}
       >
-        <h2>Book Description</h2>
-        <p style={{ fontSize: "20px" }}>{book.detail}</p>
+        <p
+          style={{
+            color: "#555555",
+            fontSize: "24px",
+            fontWeight: 400,
+            marginBottom: 0,
+          }}
+        >
+          <FontAwesomeIcon className="mr-2" icon={faPenAlt} color="#FF6633" />
+          Mô Tả Sản Phẩm
+        </p>
+        <Divider></Divider>
+        <p style={{ fontSize: "18px" }}>{book.detail}</p>
       </div>
-      <div className="p-5 bg-white " style={{ marginTop: "25px" }}>
-        <h2>Related Book</h2>
+      <div className="p-5 bg-white pt-4 " style={{ marginTop: "15px" }}>
+        <p
+          style={{
+            color: "#555555",
+            fontSize: "24px",
+            fontWeight: 400,
+            marginBottom: 0,
+          }}
+        >
+          <FontAwesomeIcon className="mr-2" icon={faBookOpen} color="#0099FF" />
+          Sản Phẩm Tương Tự
+        </p>
+        <Divider></Divider>
         <div className="related-book-list">
           {bookArray.length > 0 &&
-            bookArray.map((book: Book) => (
-              <Card
-                key={book.id}
-                hoverable
-                onClick={() => onCardClick(book.id.toString())}
-                cover={
-                  <img
-                    className="preview-image"
-                    alt={book.nameBook}
-                    src={book.bookImages[0]?.image}
-                  />
-                }
-              >
-                <Meta
-                  title={book.nameBook}
-                  description={
-                    <>
-                      <div
-                        style={{
-                          display: "flex",
-                          marginBottom: "0px",
-                          alignItems: "end",
-                        }}
-                      >
-                        <p
-                          style={{
-                            color: "rgb(255, 66, 78)",
-                            marginBottom: "0",
-                          }}
-                        >
-                          {stringPrice(
-                            book.price - (book.price * book.discount) / 100
-                          )}{" "}
-                          ₫
-                        </p>
-                        {book.discount > 0 && (
-                          <>
+            bookArray.map(
+              (book: Book, index) =>
+                book.id.toString() != id &&
+                index < 10 && (
+                  <Card
+                    key={book.id}
+                    hoverable
+                    onClick={() => onCardClick(book.id.toString())}
+                    cover={
+                      <img
+                        className="relate-preview-image"
+                        alt={book.nameBook}
+                        src={book.bookImages[0]?.image}
+                      />
+                    }
+                  >
+                    <Meta
+                      title={book.nameBook}
+                      description={
+                        <>
+                          <div
+                            style={{
+                              display: "flex",
+                              marginBottom: "0px",
+
+                              alignItems: "end",
+                            }}
+                          >
                             <p
                               style={{
-                                color: "rgb(128, 128, 137) ",
-
-                                textDecoration: "line-through",
-                                paddingLeft: "3px",
+                                color: "rgb(255, 66, 78)",
                                 marginBottom: "0",
-                                fontSize: "12px",
+                                paddingBottom: "0",
+                                fontSize: 16,
                               }}
                             >
-                              {stringPrice(book.price)} ₫
+                              {stringPrice(
+                                book.price - (book.price * book.discount) / 100
+                              )}{" "}
+                              ₫
                             </p>
-                            <p className="discountt">-{book.discount}%</p>
-                          </>
-                        )}
-                      </div>
-                      <div>
-                        <Rate value={book.rating} disabled></Rate>
-                      </div>
-                    </>
-                  }
-                />
-              </Card>
-            ))}
+                            {book.discount > 0 && (
+                              <>
+                                <p className="discountt">-{book.discount}%</p>
+                              </>
+                            )}
+                          </div>
+                          <div>
+                            <Rate
+                              style={{ fontSize: 15 }}
+                              value={book.rating}
+                              disabled
+                            ></Rate>
+                          </div>
+                        </>
+                      }
+                    />
+                  </Card>
+                )
+            )}
         </div>
       </div>
 
       <Reviews />
-      <PageFooter></PageFooter>
     </div>
   );
 }
