@@ -66,7 +66,9 @@ const VNPayOrder = () => {
         .get(
           APP_API.orderVNpaytrue.replace(
             ":transId",
-            searchParams.get("transId") || ""
+            searchParams.get("transId") ||
+              searchParams.get("vnp_TransactionNo") ||
+              ""
           )
         )
         .then(() => {
