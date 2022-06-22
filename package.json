@@ -2,6 +2,7 @@
   "name": "bookstore_react_frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/doubh-book-store",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",

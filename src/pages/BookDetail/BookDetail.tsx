@@ -29,6 +29,7 @@ import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
 import "./BookDetail.css";
+import FavouriteBook from "./FavouriteBook";
 import ImageList from "./ImageList";
 import Reviews from "./Reviews";
 
@@ -173,16 +174,19 @@ function BookDetail() {
           )}
         </Carousel>
         <div>
-          <p
-            style={{
-              color: "#555555",
-              fontSize: "26px",
-              fontWeight: 400,
-              marginBottom: 0,
-            }}
-          >
-            {book.nameBook}
-          </p>
+          <div className="d-flex ">
+            <p
+              style={{
+                color: "#555555",
+                fontSize: "26px",
+                fontWeight: 400,
+                marginBottom: 0,
+              }}
+            >
+              {book.nameBook}
+            </p>
+            <FavouriteBook book={book}></FavouriteBook>
+          </div>
           <div className="d-flex align-justify-content-xl-end">
             <Rate
               style={{

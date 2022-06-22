@@ -24,6 +24,7 @@ const OAuth2RedirectHandler = () => {
   const userRole: string | null = new URLSearchParams(url.search).get(
     "userRole"
   );
+  const image: string | null = new URLSearchParams(url.search).get("image");
 
   console.log(firstName);
   console.log(lastName);
@@ -31,37 +32,41 @@ const OAuth2RedirectHandler = () => {
   console.log(phoneNumber);
   console.log(userRole);
   console.log(token);
+  console.log(image);
 
-  if (token) {
-    localStorage.setItem("token", token);
-  }
-  if (firstName) {
-    localStorage.setItem("firstName", firstName);
-  }
-  if (lastName) {
-    localStorage.setItem("lastName", lastName);
-  }
-  if (email) {
-    localStorage.setItem("email", email);
-  }
-  if (phoneNumber) {
-    localStorage.setItem("phoneNumber", phoneNumber);
-  }
-  if (userRole) {
-    localStorage.setItem("userRole", userRole);
-  }
-
+  // if (token) {
+  //   localStorage.setItem("token", token);
+  // }
+  // if (firstName) {
+  //   localStorage.setItem("firstName", firstName);
+  // }
+  // if (lastName) {
+  //   localStorage.setItem("lastName", lastName);
+  // }
+  // if (email) {
+  //   localStorage.setItem("email", email);
+  // }
+  // if (phoneNumber) {
+  //   localStorage.setItem("phoneNumber", phoneNumber);
+  // }
+  // if (userRole) {
+  //   localStorage.setItem("userRole", userRole);
+  // }
+  // if (image) {
+  //   localStorage.setItem("image", image);
+  // }
   console.log("oke");
   const dispatch = useDispatch();
   const userInfo = {
-    firstName: localStorage.getItem("firstName"),
-    lastName: localStorage.getItem("lastName"),
-    email: localStorage.getItem("email"),
-    phoneNumber: localStorage.getItem("phoneNumber"),
-    token: localStorage.getItem("token"),
-    userRole: localStorage.getItem("userRole"),
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phoneNumber: phoneNumber,
+    token: token,
+    userRole: userRole,
+    image: image,
   };
-  dispatch(userLogIn(userInfo));
+  if (firstName) dispatch(userLogIn(userInfo));
 
   const onLoadUserCartItems = () => {
     httpClient()

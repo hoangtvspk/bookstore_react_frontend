@@ -42,4 +42,7 @@ export const APP_API = {
   orderVNpay: "/payment/vnpay",
   orderVNpaytrue: "/payment/payonline/true/:transId",
   orderMomo: "/payment/momo",
+  addToFavor: "/users/lovedbook/add/:id",
+  getMyFavor: "/users/lovedbook",
+  unFavor: "/users/lovedbook/remove/:id"
 };

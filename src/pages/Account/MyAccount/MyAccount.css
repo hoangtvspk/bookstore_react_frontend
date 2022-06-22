@@ -2,6 +2,7 @@
   background: white;
   width: 100%;
   padding-left: 50px;
+  min-height: 500px;
 }
 .label {
   font-size: 20px !important;

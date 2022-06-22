@@ -1,31 +1,21 @@
-import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import {
-  faAddressBook,
-  faAddressCard,
-  faBook,
-  faCartArrowDown,
   faCommentDollar,
-  faHome,
-  faLocationArrow,
-  faMoneyBill,
   faSearchLocation,
   faSignInAlt,
   faSignOutAlt,
   faUser,
-  faUserCircle,
-  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Badge, Col, Divider, Layout, Menu, Row } from "antd";
+import { Badge, Col, Layout, Menu, Row } from "antd";
 import Search from "antd/lib/input/Search";
-import Sider from "antd/lib/layout/Sider";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { ChangeEvent, useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../image/doubhlogo3.png";
+import background from "../../../image/back.jpg";
 import { UserInfo } from "../../../models/auth";
-
 import {
   closeAccountManage,
   openAccountManage,
@@ -36,6 +26,7 @@ import { appRoutes } from "../../../routers/config";
 import BreadCrumb from "../../BreadCrumb";
 import PageFooter from "../../Footer/Footer";
 import "./NavBar.css";
+import { url } from "inspector";
 
 const { Header, Content } = Layout;
 
@@ -339,6 +330,7 @@ const NavBar: React.FC = ({ children }) => {
           paddingLeft: 150,
           paddingRight: 150,
           margin: 0,
+          backgroundImage: "url(background)",
         }}
       >
         <BreadCrumb></BreadCrumb>

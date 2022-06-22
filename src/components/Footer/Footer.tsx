@@ -1,11 +1,9 @@
-import { faFacebookF, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import {
   faAddressCard,
   faMailBulk,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
 
 function PageFooter() {
   return (
@@ -41,6 +39,7 @@ function PageFooter() {
       </div>
       <div style={{ paddingLeft: "100px" }}>
         <iframe
+          title="fb"
           src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FdoubHBookStore&tabs&width=340&height=70&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
           width="340"
           height="70"

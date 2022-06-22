@@ -224,54 +224,56 @@ function Order() {
   const onFinish = (values: OrderForm) => {
     values.email = userInfo.email;
     values.lastName = "Trần Văn";
-    values.address =
-      address.address +
-      ", " +
-      address.neighborhoodVillage +
-      ", " +
-      address.districtTown +
-      ", " +
-      address.provinceCity;
-    setSubmitting(true);
-    if (payValue == "tienmat") {
-      httpClient()
-        .post(APP_API.order, values)
-        .then((res) => {
-          console.log(res);
-          message.success("Đặt Hàng Thành Công!");
-          navigate(appRoutes.cart);
-          dispatch(updateCartData([]));
-        })
-        .catch((err) => {
-          console.log(err);
-          message.error("Failed To Order");
-        })
-        .finally(() => setSubmitting(false));
-    } else if (payValue == "momo") {
-      httpClient()
-        .post(APP_API.orderMomo, values)
-        .then((res) => {
-          console.log(res);
-          window.location.replace(res.data.payUrl);
-        })
-        .catch((err) => {
-          console.log(err);
-          message.error("Failed To Order");
-        })
-        .finally(() => setSubmitting(false));
-    } else {
-      httpClient()
-        .post(APP_API.orderVNpay, values)
-        .then((res) => {
-          console.log(res);
-          window.location.replace(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-          message.error("Failed To Order");
-        })
-        .finally(() => setSubmitting(false));
-    }
+    if (address.address) {
+      values.address =
+        address.address +
+        ", " +
+        address.neighborhoodVillage +
+        ", " +
+        address.districtTown +
+        ", " +
+        address.provinceCity;
+      setSubmitting(true);
+      if (payValue == "tienmat") {
+        httpClient()
+          .post(APP_API.order, values)
+          .then((res) => {
+            console.log(res);
+            message.success("Đặt Hàng Thành Công!");
+            navigate(appRoutes.cart);
+            dispatch(updateCartData([]));
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error("Failed To Order");
+          })
+          .finally(() => setSubmitting(false));
+      } else if (payValue == "momo") {
+        httpClient()
+          .post(APP_API.orderMomo, values)
+          .then((res) => {
+            console.log(res);
+            window.location.replace(res.data.payUrl);
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error("Failed To Order");
+          })
+          .finally(() => setSubmitting(false));
+      } else {
+        httpClient()
+          .post(APP_API.orderVNpay, values)
+          .then((res) => {
+            console.log(res);
+            window.location.replace(res.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error("Failed To Order");
+          })
+          .finally(() => setSubmitting(false));
+      }
+    } else message.error("Vui lòng chọn địa chỉ giao hàng!");
   };
 
   return (

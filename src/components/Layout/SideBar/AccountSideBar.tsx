@@ -30,7 +30,7 @@ const AccountSideBar = (): JSX.Element => {
     (state: RootStateOrAny) => state.authSlice.userInfo as UserInfo
   );
   const dispatch = useDispatch();
-  const [myAvt, setMyAvt] = useState("");
+
   useEffect(() => {
     if (userInfo.image) console.log(userInfo.image);
     httpClient()
@@ -38,10 +38,9 @@ const AccountSideBar = (): JSX.Element => {
       .then((res) => {
         console.log(res);
 
-        setMyAvt(res.data.image);
         console.log(res.data.image);
       });
-  }, []);
+  }, [userInfo.image]);
   return (
     <Sider width={200} className="site-layout-background">
       <Menu
@@ -61,6 +60,7 @@ const AccountSideBar = (): JSX.Element => {
           }}
         >
           <img
+            alt="userInfoImage"
             src={userInfo!.image}
             height={30}
             width={30}
@@ -162,16 +162,16 @@ const AccountSideBar = (): JSX.Element => {
           </Link>
         </Menu.Item>
         <Menu.Item
-          key="myfavourite"
+          key="myfavouritebooks"
           onClick={() => dispatch(openAccountManage())}
         >
           <Link
-            to={appRoutes.purchase}
+            to={appRoutes.myFavouriteBooks}
             className="font-submenu"
             color="#555555"
             onClick={() => {
               window.scrollTo(0, 0);
-              setSelectedMenu("myfavourite");
+              setSelectedMenu("myfavouritebooks");
             }}
           >
             <FontAwesomeIcon className="mr-2" icon={faHeart} color="#CC3333" />{" "}

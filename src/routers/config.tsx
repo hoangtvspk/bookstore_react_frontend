@@ -32,6 +32,7 @@ import { Layout } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import OrderDetail from "../pages/Account/MyPurchase/OrderDetail";
 import VNPayOrder from "../pages/Order/VNPayOrder";
+import MyFavouriteBooks from "../pages/Account/MyFavouriteBooks/MyFavouriteBooks";
 
 export const appRoutes = {
   home: "/",
@@ -53,6 +54,7 @@ export const appRoutes = {
   address: "/myaddress",
   addAddress: "/myaddress/add",
   editAddress: "/myaddress/edit/:id",
+  myFavouriteBooks: "/myfavouritebooks",
   vnpayorder: "/onlinepayordersuccess",
 };
 
@@ -177,6 +179,11 @@ export const appComponentConfig: IAppComponentConfig[] = [
     path: appRoutes.vnpayorder,
     component: <VNPayOrder />,
     isAccountManage: false,
+  },
+  {
+    path: appRoutes.myFavouriteBooks,
+    component: <MyFavouriteBooks />,
+    isAccountManage: true,
   },
 ];
 
