@@ -2,7 +2,6 @@ import { Button, Form, Input, message, Spin, Tabs } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import PageFooter from "../../components/Footer/Footer";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { AddressOrder } from "../../models/addressOrder";
@@ -13,7 +12,7 @@ import {
   updateAddressData,
   updateAddressListData,
 } from "../../redux/slices/addressSlice";
-import { updateUserInfo, userLogIn } from "../../redux/slices/authSlice";
+import { userLogIn } from "../../redux/slices/authSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
 import "./Login.css";
@@ -196,6 +195,7 @@ const Login = () => {
                       <a href="http://localhost:8080/oauth2/authorize/google">
                         {" "}
                         <img
+                          alt="imglogin"
                           className="img-login "
                           src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
                         ></img>

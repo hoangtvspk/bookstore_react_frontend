@@ -1,16 +1,13 @@
-import { Book, Category } from "../../../models/book";
-import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { Card, Rate } from "antd";
 import Meta from "antd/lib/card/Meta";
-import { httpClient } from "../../../httpClient/httpServices";
-import { APP_API } from "../../../httpClient/config";
-import { updateKeySearch } from "../../../redux/slices/keySearchSlice";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../../routers/config";
+import PageTitle from "../../../components/Layout/PageTitle";
+import { APP_API } from "../../../httpClient/config";
+import { httpClient } from "../../../httpClient/httpServices";
 import NothingImg from "../../../image/bubbleNothing.jpg";
+import { Book } from "../../../models/book";
+import { appRoutes } from "../../../routers/config";
 
 function MyFavouriteBooks() {
   const [myFavorBooks, setMyFavorBooks] = useState<Book[]>([]);
@@ -26,7 +23,6 @@ function MyFavouriteBooks() {
       })
       .finally(() => {});
   };
-  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const stringPrice = (number: number) => {
@@ -43,9 +39,9 @@ function MyFavouriteBooks() {
 
   return (
     <>
-      <div className=" bg-white rounded-3 pt-3 min-vh-100">
+      <div className=" bg-white rounded-3 ">
         {/* {bookOfCategory(category.id)}; */}
-
+        <PageTitle>Sách Yêu Thích</PageTitle>
         <div className="home-book-list  pb-4">
           {myFavorBooks?.length > 0 &&
             myFavorBooks?.map((book: Book, index) => (
@@ -115,10 +111,10 @@ function MyFavouriteBooks() {
               </div>
             ))}
         </div>
-        {myFavorBooks.length == 0 && (
+        {myFavorBooks.length === 0 && (
           <div className="bg-white p-4 orderDetail-background-height d-flex justify-content-center align-items-center">
             <div>
-              <img src={NothingImg} height="300" width="500" />
+              <img alt="bookimage" src={NothingImg} height="300" width="500" />
               <h2 className="d-flex justify-content-center">
                 Chưa có sách yêu thích!
               </h2>

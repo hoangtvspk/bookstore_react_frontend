@@ -9,7 +9,6 @@ import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
 import NothingImg from "../../../image/bubbleNothing.jpg";
 import { AddressOrder } from "../../../models/addressOrder";
-import { UserInfo } from "../../../models/auth";
 import {
   updateAddressData,
   updateAddressListData,
@@ -55,7 +54,7 @@ const Address = () => {
         console.log(err);
       });
   }, []);
-  const [loading, setLoading] = useState(false);
+
   const reload = () => {
     httpClient()
       .get(APP_API.addressOrder)
@@ -84,9 +83,7 @@ const Address = () => {
       .finally(() => setSubmitting(false));
   };
   const handleAddOk = () => {
-    setLoading(true);
     setTimeout(() => {
-      setLoading(false);
       setAddVisible(false);
     }, 1000);
   };
@@ -95,16 +92,11 @@ const Address = () => {
     setAddVisible(false);
   };
   const handleEditOk = () => {
-    setLoading(true);
     setTimeout(() => {
-      setLoading(false);
       setEditVisible(false);
     }, 1000);
   };
 
-  const handleEditCancel = () => {
-    setEditVisible(false);
-  };
   const onEdit = (id: string) => {
     setSelectedId(id);
     //navigate(appRoutes.editAddress.replace(":id", id));
@@ -115,7 +107,7 @@ const Address = () => {
   };
   return (
     <Spin spinning={submitting}>
-      <div className="address-background">
+      <div className="address-background rounded-3">
         <PageTitle>Địa Chỉ Giao Hàng</PageTitle>
         <div className="btn-add-background">
           <p
@@ -192,7 +184,7 @@ const Address = () => {
               </div>
             </div>
           ))}
-        {addressList?.length == 0 && (
+        {addressList?.length === 0 && (
           <div className="bg-white p-4 orderDetail-background-height d-flex justify-content-center align-items-center">
             <div>
               <img alt="nothing" src={NothingImg} height="300" width="500" />

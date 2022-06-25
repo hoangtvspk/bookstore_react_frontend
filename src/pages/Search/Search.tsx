@@ -1,17 +1,15 @@
 import { Card, Pagination, Radio, RadioChangeEvent, Rate, Space } from "antd";
 import Meta from "antd/lib/card/Meta";
-import Search from "antd/lib/input/Search";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import PageFooter from "../../components/Footer/Footer";
+import { useEffect, useState } from "react";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book } from "../../models/book";
 import { Category } from "../../models/categoryBooks";
+import { updateKeySearch } from "../../redux/slices/keySearchSlice";
 import { appRoutes } from "../../routers/config";
 import "./Search.css";
-import { updateKeySearch } from "../../redux/slices/keySearchSlice";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 const DEFAULT_PAGE_SIZE = 32;
 
@@ -31,22 +29,8 @@ function SearchPage() {
   const booksSearch = useSelector((state: RootStateOrAny) => {
     return state.keySearchSlice.booksSearch;
   });
-  const keySearch = useSelector((state: RootStateOrAny) => {
-    return state.keySearchSlice.booksSearch.keySearch;
-  });
-  const dispatch = useDispatch();
 
-  const onLoadBook = () => {
-    httpClient()
-      .get("/books")
-      .then((res) => {
-        console.log(res);
-        setValue(0);
-        setBookArray([...res.data]);
-        console.log(bookArray);
-        setShowingBook([...res.data.slice(0, DEFAULT_PAGE_SIZE)]);
-      });
-  };
+  const dispatch = useDispatch();
 
   const stringPrice = (number: number) => {
     const newNumber = number.toLocaleString(undefined, {
@@ -70,7 +54,7 @@ function SearchPage() {
       console.log(booksSearch.keyWord);
       let bookSearch = {};
       setCategorySearch(parseInt(e.target.value));
-      if (e.target.value == 0) {
+      if (e.target.value === 0) {
         dispatch(
           updateKeySearch({
             idCategory: null,
@@ -126,7 +110,7 @@ function SearchPage() {
         setMinPriceSearch(min);
         setMaxPriceSearch(max);
 
-        if (value == 0) {
+        if (value === 0) {
           bookSearch = {
             idCategory: null,
             keyWord: booksSearch.keyWord,
@@ -143,17 +127,17 @@ function SearchPage() {
         }
       };
 
-      if (e.target.value == "all") {
+      if (e.target.value === "all") {
         priceSearch(0, 10000000, categorySearch, "");
-      } else if (e.target.value == "40") {
+      } else if (e.target.value === "40") {
         priceSearch(0, 40000, categorySearch, "");
-      } else if (e.target.value == "4070") {
+      } else if (e.target.value === "4070") {
         priceSearch(40000, 70000, categorySearch, "");
-      } else if (e.target.value == "70100") {
+      } else if (e.target.value === "70100") {
         priceSearch(70000, 100000, categorySearch, "");
-      } else if (e.target.value == "100150") {
+      } else if (e.target.value === "100150") {
         priceSearch(100000, 150000, categorySearch, "");
-      } else if (e.target.value == "150") {
+      } else if (e.target.value === "150") {
         priceSearch(150000, 10000000, categorySearch, "");
       }
 

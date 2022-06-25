@@ -2,7 +2,6 @@ import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import PageFooter from "../../components/Footer/Footer";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { ResetPasswordForm } from "../../models/resetPassword";

@@ -1,29 +1,12 @@
-import { Book, Category } from "../../models/book";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
-import {
-  Avatar,
-  Card,
-  Rate,
-  Comment,
-  Collapse,
-  Button,
-  Input,
-  Image,
-} from "antd";
-import Meta from "antd/lib/card/Meta";
-import { httpClient } from "../../httpClient/httpServices";
-import { APP_API } from "../../httpClient/config";
-import { updateKeySearch } from "../../redux/slices/keySearchSlice";
+import { Avatar, Button, Collapse, Comment, Image, Input, Rate } from "antd";
+import { ChangeEvent, useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routers/config";
-import { Review } from "../../models/reviews";
-import { ReviewRep } from "../../models/reviewRep";
-import TextArea from "antd/lib/input/TextArea";
-import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
+import { APP_API } from "../../httpClient/config";
+import { httpClient } from "../../httpClient/httpServices";
 import { UserInfo } from "../../models/auth";
+import { ReviewRep } from "../../models/reviewRep";
+import { Review } from "../../models/reviews";
+import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
 interface CommentBoxProps {
   review: Review;
 }
@@ -37,9 +20,7 @@ function CommentBox({ review }: CommentBoxProps) {
     return state.authSlice.isAuth;
   });
   const dispatch = useDispatch();
-  const book: Book = useSelector(
-    (state: RootStateOrAny) => state.bookDetailSlice.value as Book
-  );
+
   const [messageComment, setMassageComment] = useState("");
   const onRepCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMassageComment(e.target.value.toString());
@@ -60,19 +41,15 @@ function CommentBox({ review }: CommentBoxProps) {
       });
   };
 
-  const [myAvt, setMyAvt] = useState("");
   useEffect(() => {
     if (userInfo.image) console.log(userInfo.image);
     httpClient()
       .get(APP_API.userInfo)
       .then((res) => {
         console.log(res);
-
-        setMyAvt(res.data.image);
         console.log(res.data.image);
       });
-  }, []);
-  useEffect(() => {}, [review.id]);
+  }, [review.id, userInfo.image]);
 
   return (
     <>

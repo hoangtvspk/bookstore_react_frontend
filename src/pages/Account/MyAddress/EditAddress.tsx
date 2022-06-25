@@ -1,27 +1,17 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Form, Input, message, Spin } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { useEffect, useState } from "react";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import PageFooter from "../../../components/Footer/Footer";
-import PageTitle from "../../../components/Layout/PageTitle";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
 import { AddressOrder } from "../../../models/addressOrder";
-import { UserInfo } from "../../../models/auth";
 import {
   updateAddressData,
   updateAddressListData,
 } from "../../../redux/slices/addressSlice";
 import { appRoutes } from "../../../routers/config";
 import "./Address.css";
-
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
 
 /* eslint-disable no-template-curly-in-string */
 
@@ -30,14 +20,9 @@ interface EditAddressBoxProps {
   id: string;
 }
 function EditAddress({ id }: EditAddressBoxProps) {
-  const userInfo = useSelector(
-    (state: RootStateOrAny) => state.authSlice.userInfo as UserInfo
-  );
-
   const dispatch = useDispatch();
   const [addressForm] = useForm();
   const navigate = useNavigate();
-  const [submitting, setSubmitting] = useState(false);
   const onLoadUserAddress = () => {
     httpClient()
       .get(APP_API.addressOrder)
@@ -71,11 +56,11 @@ function EditAddress({ id }: EditAddressBoxProps) {
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+  }, [id, addressForm]);
 
   const onFinish = (values: AddressOrder) => {
     values.id = parseInt(id);
-    setSubmitting(true);
+
     if (id) {
       httpClient()
         .put(APP_API.updateAddress.replace(":id", id), values)
@@ -87,7 +72,7 @@ function EditAddress({ id }: EditAddressBoxProps) {
         .catch((err) => {
           console.error(err);
         })
-        .finally(() => setSubmitting(false));
+        .finally();
     }
   };
 

@@ -1,35 +1,5 @@
-import { Book, Category } from "../../models/book";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBookOpen,
-  faMinus,
-  faPlus,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  Avatar,
-  Card,
-  Rate,
-  Comment,
-  Collapse,
-  Button,
-  message,
-  Input,
-} from "antd";
-import Meta from "antd/lib/card/Meta";
-import { httpClient } from "../../httpClient/httpServices";
-import { APP_API } from "../../httpClient/config";
-import { updateKeySearch } from "../../redux/slices/keySearchSlice";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routers/config";
-import { Review } from "../../models/reviews";
-import { ReviewRep } from "../../models/reviewRep";
-import TextArea from "antd/lib/input/TextArea";
-import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
+import { useEffect } from "react";
 import { CartItem } from "../../models/cartItem";
-import { updateCartData } from "../../redux/slices/cartSlice";
 interface CommentBoxProps {
   cartItem: CartItem;
 }

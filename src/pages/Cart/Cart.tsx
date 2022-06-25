@@ -1,21 +1,16 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Divider, Input, message, Spin } from "antd";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import PageFooter from "../../components/Footer/Footer";
+import { Button, Spin } from "antd";
+import { useEffect, useState } from "react";
+import { RootStateOrAny, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import emptyCart from "../../image/emptycart.png";
 import { CartItem } from "../../models/cartItem";
-import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
 import "./Cart.css";
 import CartItems from "./CartItem";
 import TotalPrice from "./TotalPrice";
 import Voucher from "./Voucher";
-
-const DEFAULT_PAGE_SIZE = 30;
 
 function Cart() {
   const isLoggedIn = useSelector((state: RootStateOrAny) => {

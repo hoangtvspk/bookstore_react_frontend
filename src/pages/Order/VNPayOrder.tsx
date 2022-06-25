@@ -4,42 +4,30 @@ import {
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { faRemoveFormat } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, message, Popconfirm, Spin, Steps } from "antd";
-import { resolveSoa } from "dns";
+import { message, Steps } from "antd";
 import { useEffect, useState } from "react";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
+import OrderFailed from "../../image/sad-cat.jpg";
 import { CartItem } from "../../models/cartItem";
 import { GetOrder } from "../../models/getOrder";
-import OrderFailed from "../../image/sad-cat.jpg";
-import { useDispatch } from "react-redux";
 import { updateCartData } from "../../redux/slices/cartSlice";
 
 const VNPayOrder = () => {
-  const [loading, setLoading] = useState(true);
-  const [showError, setShowError] = useState(false);
-  const { vnp_ResponseCode } = useParams();
   const [searchParams, setParam] = useSearchParams();
   const [isSuccess, setIsSuccess] = useState(false);
-  const [orderArray, setOrderArray] = useState<GetOrder[]>([]);
+
   const [order, setOrder] = useState({} as GetOrder);
   const { Step } = Steps;
-  const navigate = useNavigate();
+
   const onSuccessLoading = () => {
     httpClient()
       .get(APP_API.purchase)
       .then((res) => {
         console.log(res);
         setOrder(res.data[res.data.length - 1]);
-        console.log(orderArray);
       })
       .catch((err) => {
         console.log(err);

@@ -14,7 +14,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../image/doubhlogo3.png";
-import background from "../../../image/back.jpg";
+import mainBackground from "../../../image/mainBackground.png";
 import { UserInfo } from "../../../models/auth";
 import {
   closeAccountManage,
@@ -26,7 +26,6 @@ import { appRoutes } from "../../../routers/config";
 import BreadCrumb from "../../BreadCrumb";
 import PageFooter from "../../Footer/Footer";
 import "./NavBar.css";
-import { url } from "inspector";
 
 const { Header, Content } = Layout;
 
@@ -42,10 +41,6 @@ const NavBar: React.FC = ({ children }) => {
   const totalCartItem = useSelector((state: RootStateOrAny) => {
     return state.cartSlice.total;
   });
-
-  const localNoAuthCart = localStorage.getItem("noAuthCart");
-  const cartLocalItemArray = JSON.parse(localNoAuthCart || "[]");
-  const totalLocalCartItem = Object.keys(cartLocalItemArray).length;
 
   const userName = useSelector((state: RootStateOrAny) => {
     if (state.authSlice.userInfo) {
@@ -64,9 +59,7 @@ const NavBar: React.FC = ({ children }) => {
   const booksSearch = useSelector((state: RootStateOrAny) => {
     return state.keySearchSlice.booksSearch;
   });
-  const isAccountManage = useSelector((state: RootStateOrAny) => {
-    return state.authSlice.isAccountManage;
-  });
+
   const dispatch = useDispatch();
   // const onSearch = (key: String) => {
   //   <Link to={appRoutes.books.replace(":search", key)}>
@@ -74,7 +67,7 @@ const NavBar: React.FC = ({ children }) => {
   //   </Link>;
   // };
   const [keyWordSearch, setKeyWordSearch] = useState("");
-  const [bookSearch, setBookSearch] = useState({});
+
   const onKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (booksSearch.keyWord != null) {
       setKeyWordSearch(e.target.value);
@@ -139,7 +132,7 @@ const NavBar: React.FC = ({ children }) => {
                     })
                   );
                 }
-                console.log(bookSearch);
+
                 navigate(appRoutes.books);
                 window.scrollTo(0, 0);
               }}
@@ -325,12 +318,14 @@ const NavBar: React.FC = ({ children }) => {
       <Content
         className="site-layout-background"
         style={{
-          paddingTop: 75,
+          width: "100%",
+          paddingTop: "5%",
           paddingBottom: 0,
-          paddingLeft: 150,
-          paddingRight: 150,
+          paddingLeft: "10%",
+          paddingRight: "10%",
           margin: 0,
-          backgroundImage: "url(background)",
+          backgroundImage:
+            'url("https://i.pinimg.com/originals/a0/e4/16/a0e416c3456f32ee898e79d573743436.jpg")',
         }}
       >
         <BreadCrumb></BreadCrumb>

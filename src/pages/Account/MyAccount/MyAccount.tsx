@@ -1,25 +1,18 @@
-import {
-  faArrowLeft,
-  faEdit,
-  faPenAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Image, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ChangeEvent, useEffect, useState } from "react";
-import { ImageListType, ImageType } from "react-images-uploading";
+import ImageUploading, { ImageListType } from "react-images-uploading";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import PageFooter from "../../../components/Footer/Footer";
+import { useNavigate } from "react-router-dom";
 import PageTitle from "../../../components/Layout/PageTitle";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
 import { UserInfo } from "../../../models/auth";
-import { UpdateProfileForm } from "../../../models/updateProfile";
 import { updateUserInfo } from "../../../redux/slices/authSlice";
 import { appRoutes } from "../../../routers/config";
 import "./MyAccount.css";
-import ImageUploading from "react-images-uploading";
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -39,7 +32,7 @@ const MyAccount = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [currentedImage, setCurrentedImage] = useState("");
-  const [image, setImage] = useState("");
+
   const firstNameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setFirstName(event.target.value);
   };
@@ -52,7 +45,6 @@ const MyAccount = () => {
     setPhoneNumber(event.target.value);
   };
   const [images, setImages] = useState([] as ImageListType);
-  const [nullImages, setNullImages] = useState({} as ImageType);
   const [isImageChange, setIsImageChange] = useState(false);
   const maxNumber = 10;
   const onChange = (
@@ -69,7 +61,7 @@ const MyAccount = () => {
   const [accountForm] = useForm();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
-  const onFinish = (values: UpdateProfileForm) => {
+  const onFinish = () => {
     const formData: FormData = new FormData();
     if (isImageChange) {
       formData.append(
@@ -149,7 +141,7 @@ const MyAccount = () => {
         setLastName(res.data.lastName);
         setPhoneNumber(res.data.phoneNumber);
         setEmail(res.data.email);
-        setImage(res.data.image);
+
         console.log(res.data.image);
         setImages([
           {
@@ -158,11 +150,11 @@ const MyAccount = () => {
         ]);
         setCurrentedImage(res.data.image);
       });
-  }, []);
+  }, [userInfo.image, accountForm]);
 
   return (
     <Spin spinning={submitting}>
-      <div className="profile-background">
+      <div className="profile-background rounded-3">
         <PageTitle>Thông Tin Cá Nhân</PageTitle>
         <div className="site-layout-background d-flex align-items-start justify-content-center ">
           <ImageUploading
@@ -174,12 +166,8 @@ const MyAccount = () => {
           >
             {({
               imageList,
-              onImageUpload,
-              onImageRemoveAll,
+
               onImageUpdate,
-              onImageRemove,
-              isDragging,
-              dragProps,
             }) => (
               // write your building UI
               <div

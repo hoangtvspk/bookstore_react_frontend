@@ -1,55 +1,20 @@
-import {
-  faCommentAlt,
-  faFileAlt,
-  faLink,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCommentAlt, faLink } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Button, Collapse, Comment, Input, Rate } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import React, { ChangeEvent, useState } from "react";
+import { Button, Input, Rate } from "antd";
+import { ChangeEvent, useState } from "react";
+import ImageUploading, { ImageListType } from "react-images-uploading";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
+import { UserInfo } from "../../models/auth";
 import { Book } from "../../models/book";
-import { ReviewRep } from "../../models/reviewRep";
 import { Review } from "../../models/reviews";
 import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
-import ImageUploading, { ImageListType } from "react-images-uploading";
 import "./BookDetail.css";
 import CommentBox from "./CommentBox";
-import { UserInfo } from "../../models/auth";
-const { Panel } = Collapse;
 
 const RenderReview = (reviews: any) => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const book: Book = useSelector(
-    (state: RootStateOrAny) => state.bookDetailSlice.value as Book
-  );
-
-  const [messageComment, setMassageComment] = useState("");
-
-  const onRepCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setMassageComment(e.target.value.toString());
-  };
-
-  const onSendRepComment = (reviewID: number) => {
-    const repCommentValue = {
-      reviewId: reviewID,
-      message: messageComment,
-    };
-    httpClient()
-      .post(APP_API.addReplyReview, repCommentValue)
-      .then((res) => {
-        dispatch(loadBookDetail(res.data));
-        setMassageComment("");
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
   console.log(reviews);
   return (
     <div>
@@ -182,30 +147,6 @@ function Reviews() {
       </div>
       {RenderReview(book.reviews)}
       <div>
-        {/* <TextArea
-          rows={4}
-          onChange={(e) => onCommentChange(e)}
-          value={messageComment}
-        ></TextArea>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            marginTop: "15px",
-          }}
-        >
-          <Button
-            style={{
-              backgroundColor: "orangered",
-              color: "white",
-              width: "100px",
-              height: "40px",
-              fontSize: "18px",
-            }}
-            onClick={() => onSendComment()}
-          >
-            Send
-          </Button> */}
         {isAuth && (
           <>
             <div className="d-flex align-items-center">
@@ -235,8 +176,7 @@ function Reviews() {
               {({
                 imageList,
                 onImageUpload,
-                onImageRemoveAll,
-                onImageUpdate,
+
                 onImageRemove,
                 isDragging,
                 dragProps,

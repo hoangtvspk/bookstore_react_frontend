@@ -1,16 +1,10 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Form, Input, message, Modal, Spin } from "antd";
-import { useForm } from "antd/lib/form/Form";
+import { Button, Form, Input, message } from "antd";
 import { useState } from "react";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import PageFooter from "../../../components/Footer/Footer";
-import PageTitle from "../../../components/Layout/PageTitle";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
 import { AddressOrder } from "../../../models/addressOrder";
-import { UserInfo } from "../../../models/auth";
 import {
   updateAddressData,
   updateAddressListData,
@@ -18,26 +12,14 @@ import {
 import { appRoutes } from "../../../routers/config";
 import "./Address.css";
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
-
 /* eslint-disable no-template-curly-in-string */
 
 /* eslint-enable no-template-curly-in-string */
 function AddAddress() {
-  const userInfo = useSelector(
-    (state: RootStateOrAny) => state.authSlice.userInfo as UserInfo
-  );
-  const address = useSelector(
-    (state: RootStateOrAny) => state.addressSlice.addressItems as AddressOrder
-  );
   const dispatch = useDispatch();
-  const [accountForm] = useForm();
+
   const navigate = useNavigate();
-  const [submitting, setSubmitting] = useState(false);
-  const [addVisible, setAddVisible] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const onLoadUserAddress = () => {
@@ -59,10 +41,8 @@ function AddAddress() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setAddVisible(false);
     }, 1000);
 
-    setSubmitting(true);
     httpClient()
       .post(APP_API.addAddress, values)
       .then((res) => {
@@ -73,7 +53,7 @@ function AddAddress() {
       .catch((err) => {
         console.error(err);
       })
-      .finally(() => setSubmitting(false));
+      .finally();
   };
   return (
     <Form name="nest-messages" onFinish={onAddAddress}>

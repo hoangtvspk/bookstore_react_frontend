@@ -6,22 +6,12 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Button,
-  Card,
-  Carousel,
-  Divider,
-  Image,
-  Input,
-  message,
-  Rate,
-} from "antd";
+import { Button, Card, Carousel, Divider, Input, message, Rate } from "antd";
 import Meta from "antd/lib/card/Meta";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import PageFooter from "../../components/Footer/Footer";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book, BookImage } from "../../models/book";
@@ -40,9 +30,6 @@ function BookDetail() {
   const book = useSelector(
     (state: RootStateOrAny) => state.bookDetailSlice.value
   );
-  const bookName = useSelector(
-    (state: RootStateOrAny) => state.bookDetailSlice.value.bookName
-  );
 
   const onChange = () => {};
   const [number, setNumber] = useState(1);
@@ -60,7 +47,6 @@ function BookDetail() {
       setNumber(number - 1);
     }
   };
-  const Cart = new Array();
 
   const onUpdateQuantity = (quantity: ChangeEvent<HTMLInputElement>) => {
     setNumber(parseInt(quantity.target.value));

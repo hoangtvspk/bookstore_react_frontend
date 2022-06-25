@@ -1,14 +1,13 @@
-import { Book, Category } from "../../models/book";
-import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Rate } from "antd";
 import Meta from "antd/lib/card/Meta";
-import { httpClient } from "../../httpClient/httpServices";
-import { APP_API } from "../../httpClient/config";
-import { updateKeySearch } from "../../redux/slices/keySearchSlice";
+import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { APP_API } from "../../httpClient/config";
+import { httpClient } from "../../httpClient/httpServices";
+import { Book, Category } from "../../models/book";
 import { appRoutes } from "../../routers/config";
 
 interface HomeCategoryProps {
@@ -16,10 +15,6 @@ interface HomeCategoryProps {
 }
 
 function HomeCategory({ category }: HomeCategoryProps) {
-  const booksSearch = useSelector((state: RootStateOrAny) => {
-    return state.keySearchSlice.booksSearch;
-  });
-  const dispatch = useDispatch();
   const [bookOfCate, setBookOfCate] = useState<Book[]>([]);
   const navigate = useNavigate();
   const stringPrice = (number: number) => {

@@ -42,9 +42,10 @@ const AccountSideBar = (): JSX.Element => {
       });
   }, [userInfo.image]);
   return (
-    <Sider width={200} className="site-layout-background">
+    <Sider width={200} className=" rounded-3">
       <Menu
         mode="inline"
+        className=" rounded-3"
         defaultSelectedKeys={["myprofile"]}
         style={{ height: "100%", borderRight: 0 }}
         selectedKeys={[selectedMenu]}

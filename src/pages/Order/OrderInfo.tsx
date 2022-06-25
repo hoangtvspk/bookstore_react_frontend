@@ -1,34 +1,8 @@
-import { Book, Category } from "../../models/book";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAddressBook,
-  faBookOpen,
-  faSeedling,
-  faTicketAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  Avatar,
-  Card,
-  Rate,
-  Comment,
-  Collapse,
-  Button,
-  Divider,
-  Form,
-  Input,
-} from "antd";
-import Meta from "antd/lib/card/Meta";
-import { httpClient } from "../../httpClient/httpServices";
-import { APP_API } from "../../httpClient/config";
-import { updateKeySearch } from "../../redux/slices/keySearchSlice";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routers/config";
-import { Review } from "../../models/reviews";
-import { ReviewRep } from "../../models/reviewRep";
-import TextArea from "antd/lib/input/TextArea";
-import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
+import { Divider, Form, Input } from "antd";
+import { useEffect } from "react";
+import { RootStateOrAny, useSelector } from "react-redux";
 import { AddressOrder } from "../../models/addressOrder";
 import { UserInfo } from "../../models/auth";
 

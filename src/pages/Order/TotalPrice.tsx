@@ -1,40 +1,13 @@
-import { Book, Category } from "../../models/book";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { faMoneyBillWaveAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAddressBook,
-  faBookOpen,
-  faMoneyBillAlt,
-  faMoneyBillWaveAlt,
-  faPenAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  Avatar,
-  Card,
-  Rate,
-  Comment,
-  Collapse,
-  Button,
-  Divider,
-  Radio,
-  Space,
-  RadioChangeEvent,
-  message,
-} from "antd";
-import Meta from "antd/lib/card/Meta";
-import { httpClient } from "../../httpClient/httpServices";
-import { APP_API } from "../../httpClient/config";
-import { updateKeySearch } from "../../redux/slices/keySearchSlice";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import { Divider, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { RootStateOrAny, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routers/config";
-import { Review } from "../../models/reviews";
-import { ReviewRep } from "../../models/reviewRep";
-import TextArea from "antd/lib/input/TextArea";
-import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
-import { CartItem } from "../../models/cartItem";
-import { faPaypal } from "@fortawesome/free-brands-svg-icons";
+import { APP_API } from "../../httpClient/config";
+import { httpClient } from "../../httpClient/httpServices";
 import { GetOrder } from "../../models/getOrder";
+import { appRoutes } from "../../routers/config";
 
 function TotalPrice() {
   const cartItemArray = useSelector((state: RootStateOrAny) => {

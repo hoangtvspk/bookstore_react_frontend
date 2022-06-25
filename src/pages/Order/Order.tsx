@@ -1,12 +1,8 @@
 import {
   faAddressBook,
-  faDollarSign,
   faMoneyBillAlt,
-  faMoneyBillWaveAlt,
-  faMoneyCheck,
   faPenAlt,
   faPlus,
-  faSeedling,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,29 +21,22 @@ import {
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import PageFooter from "../../components/Footer/Footer";
+import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
+import MomoLogo from "../../image/momoLogo.png";
+import VNPayLogo from "../../image/vnpaylogo.png";
 import { AddressOrder } from "../../models/addressOrder";
 import { UserInfo } from "../../models/auth";
 import { CartItem } from "../../models/cartItem";
 import { GetOrder } from "../../models/getOrder";
 import { OrderForm } from "../../models/order";
+import { updateAddressData } from "../../redux/slices/addressSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
-import { updateAddressData } from "../../redux/slices/addressSlice";
 import "./Order.css";
-import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import OrderItems from "./OrderItem";
 import TotalPrice from "./TotalPrice";
-import MomoLogo from "../../image/momoLogo.png";
-import VNPayLogo from "../../image/vnpaylogo.png";
-// import Dialog from "@mui/material/Dialog";
-// import DialogActions from "@mui/material/DialogActions";
-// import DialogContent from "@mui/material/DialogContent";
-// import DialogContentText from "@mui/material/DialogContentText";
-// import DialogTitle from "@mui/material/DialogTitle";
 
 const DEFAULT_PAGE_SIZE = 30;
 
@@ -62,17 +51,7 @@ function Order() {
   const [accountForm] = useForm();
   const [addressArray, setAddressArray] = useState<AddressOrder[]>([]);
   const [addressNumber, setAddressNumber] = useState(0);
-  const { Option } = Select;
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   const getMyAddress = () => {
     httpClient()
       .get(APP_API.addressOrder)

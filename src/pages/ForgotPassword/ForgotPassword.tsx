@@ -1,7 +1,6 @@
 import { Button, Form, Input, message, Spin } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PageFooter from "../../components/Footer/Footer";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { ForgotPasswordForm } from "../../models/forgotPassword";

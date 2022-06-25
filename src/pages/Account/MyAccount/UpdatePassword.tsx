@@ -4,7 +4,6 @@ import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import PageFooter from "../../../components/Footer/Footer";
 import PageTitle from "../../../components/Layout/PageTitle";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
@@ -53,7 +52,7 @@ const UpdatePassword = () => {
 
   return (
     <Spin spinning={submitting}>
-      <div className="profile-background">
+      <div className="profile-background rounded-3">
         <PageTitle>Cập Nhật Mật Khẩu</PageTitle>
         <div
           className="site-layout-background d-flex align-items-center justify-content-center"

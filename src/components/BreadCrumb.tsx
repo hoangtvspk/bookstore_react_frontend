@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
@@ -17,6 +16,7 @@ const BreadCrumb = () => {
             alignItems: "center",
             margin: "8px 0",
             fontSize: "16px",
+            color: "red",
             paddingBottom: "0",
             fontFamily: "Time New Romans",
           }}
@@ -35,8 +35,8 @@ const BreadCrumb = () => {
               case "Detail":
                 namePage = "Chi Tiết";
                 break;
-              case "Books":
-                namePage = "Cuốn Sách";
+              case "Search":
+                namePage = "Tìm Kiếm";
                 break;
               case "Cart":
                 namePage = "Giỏ Hàng";
@@ -77,8 +77,8 @@ const BreadCrumb = () => {
               case "Active":
                 namePage = "Xác Thực Tài Khoản";
                 break;
-              case "Password":
-                namePage = "Cập Nhật Mật Khẩu";
+              default:
+                namePage = capatilize(name);
                 break;
             }
             const isLast = index === pathnames.length - 1;

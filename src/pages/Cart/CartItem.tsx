@@ -1,33 +1,10 @@
-import { Book, Category } from "../../models/book";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBookOpen,
-  faMinus,
-  faPlus,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  Avatar,
-  Card,
-  Rate,
-  Comment,
-  Collapse,
-  Button,
-  message,
-  Input,
-} from "antd";
-import Meta from "antd/lib/card/Meta";
-import { httpClient } from "../../httpClient/httpServices";
+import { Button, Input, message } from "antd";
+import { ChangeEvent, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { APP_API } from "../../httpClient/config";
-import { updateKeySearch } from "../../redux/slices/keySearchSlice";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { appRoutes } from "../../routers/config";
-import { Review } from "../../models/reviews";
-import { ReviewRep } from "../../models/reviewRep";
-import TextArea from "antd/lib/input/TextArea";
-import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
+import { httpClient } from "../../httpClient/httpServices";
 import { CartItem } from "../../models/cartItem";
 import { updateCartData } from "../../redux/slices/cartSlice";
 interface CommentBoxProps {
@@ -36,10 +13,7 @@ interface CommentBoxProps {
 
 function CartItems({ cartItem }: CommentBoxProps) {
   const dispatch = useDispatch();
-  const book: Book = useSelector(
-    (state: RootStateOrAny) => state.bookDetailSlice.value as Book
-  );
-  const [messageComment, setMassageComment] = useState("");
+
   const stringPrice = (number: number) => {
     const newNumber = number.toLocaleString(undefined, {
       maximumFractionDigits: 2,
@@ -48,14 +22,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
     return newNumber;
   };
 
-  const navigate = useNavigate();
-  const [submitting, setSubmitting] = useState(false);
-
-  const [number, setNumber] = useState(0);
-  const emptyPrice = 0;
-
   const onDeleteItem = (id: string) => {
-    setSubmitting(true);
     httpClient()
       .delete(APP_API.deleteCartItem.replace(":id", id))
       .then((res) => {
@@ -63,7 +30,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
         dispatch(updateCartData(res.data));
       })
       .catch((err) => message.error("Cannot delete item"))
-      .finally(() => setSubmitting(false));
+      .finally();
   };
 
   const onUpdateItem = (
@@ -71,7 +38,6 @@ function CartItems({ cartItem }: CommentBoxProps) {
     quantity: ChangeEvent<HTMLInputElement>,
     maxQuantity: number
   ) => {
-    setSubmitting(true);
     const cartUp = new Array();
     cartUp[0] = {
       id: bookId,
@@ -79,13 +45,10 @@ function CartItems({ cartItem }: CommentBoxProps) {
     };
     if (parseInt(quantity.target.value) > maxQuantity) {
       message.error("Just " + maxQuantity + " Available Books");
-      setSubmitting(false);
     } else if (parseInt(quantity.target.value) < 1) {
       message.error("At Least 1");
-      setSubmitting(false);
     } else if (quantity.target.value == "") {
       message.error("Cannot Be Empty");
-      setSubmitting(false);
     } else {
       httpClient()
         .post(APP_API.updateCartItem, cartUp)
@@ -98,7 +61,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
           console.log(err);
           message.error("Cannot Update Item");
         })
-        .finally(() => setSubmitting(false));
+        .finally();
     }
   };
   const onIncrease = (
@@ -106,7 +69,6 @@ function CartItems({ cartItem }: CommentBoxProps) {
     quantity: number,
     maxQuantity: number
   ) => {
-    setSubmitting(true);
     const cartUp = new Array();
     cartUp[0] = {
       id: bookId,
@@ -127,14 +89,12 @@ function CartItems({ cartItem }: CommentBoxProps) {
           console.log(err);
           message.error("Cannot update cart");
         })
-        .finally(() => setSubmitting(false));
+        .finally();
     } else {
       message.error("Just " + maxQuantity + " Available Books");
-      setSubmitting(false);
     }
   };
   const onDecrease = (bookId: number, quantity: number) => {
-    setSubmitting(true);
     const cartUp = new Array();
     cartUp[0] = {
       id: bookId,
@@ -155,7 +115,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
           console.log(err);
           message.error("Cannot update cart");
         })
-        .finally(() => setSubmitting(false));
+        .finally();
     } else {
       onDeleteItem(bookId.toString());
     }
@@ -166,6 +126,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
     <>
       <div className="cartitem rounded-3">
         <img
+          alt="itemImage"
           className="item-image"
           src={cartItem.book.bookImages[0].image}
         ></img>

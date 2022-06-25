@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ChangeEvent, useEffect, useState } from "react";
-import { ImageListType, ImageType } from "react-images-uploading";
+import ImageUploading, {
+  ImageListType,
+  ImageType,
+} from "react-images-uploading";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import PageFooter from "../../../components/Footer/Footer";
 import PageTitle from "../../../components/Layout/PageTitle";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
@@ -15,7 +17,6 @@ import { UpdateProfileForm } from "../../../models/updateProfile";
 import { updateUserInfo } from "../../../redux/slices/authSlice";
 import { appRoutes } from "../../../routers/config";
 import "./MyAccount.css";
-import ImageUploading from "react-images-uploading";
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -35,7 +36,7 @@ const UpdateProfile = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [currentedImage, setCurrentedImage] = useState("");
-  const [image, setImage] = useState("");
+
   const firstNameInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setFirstName(event.target.value);
   };
@@ -48,7 +49,7 @@ const UpdateProfile = () => {
     setPhoneNumber(event.target.value);
   };
   const [images, setImages] = useState([] as ImageListType);
-  const [nullImages, setNullImages] = useState({} as ImageType);
+  
   const [isImageChange, setIsImageChange] = useState(false);
   const maxNumber = 10;
   const onChange = (
@@ -144,7 +145,7 @@ const UpdateProfile = () => {
         setLastName(res.data.lastName);
         setPhoneNumber(res.data.phoneNumber);
         setEmail(res.data.email);
-        setImage(res.data.image);
+
         console.log(res.data.image);
         setImages([
           {
@@ -153,7 +154,7 @@ const UpdateProfile = () => {
         ]);
         setCurrentedImage(res.data.image);
       });
-  }, []);
+  }, [userInfo.image, accountForm]);
 
   return (
     <Spin spinning={submitting}>

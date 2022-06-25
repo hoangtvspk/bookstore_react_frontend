@@ -1,7 +1,5 @@
 import {
   DeleteFilled,
-  LoadingOutlined,
-  ShoppingCartOutlined,
   SmileOutlined,
   SolutionOutlined,
   UserOutlined,
@@ -9,13 +7,12 @@ import {
 import { faRemoveFormat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, message, Popconfirm, Steps } from "antd";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
 import { CartItem } from "../../../models/cartItem";
 import { GetOrder } from "../../../models/getOrder";
-import { OrderForm } from "../../../models/order";
 
 function OrderDetail() {
   const { id: orderId } = useParams();
@@ -27,8 +24,7 @@ function OrderDetail() {
     console.log(newNumber);
     return newNumber;
   };
-  const [myAvt, setMyAvt] = useState("");
-  const getMyAddress = () => {};
+
   const { Step } = Steps;
   const onCancel = (id: number) => {
     if (id) {
@@ -67,7 +63,7 @@ function OrderDetail() {
 
   return (
     <div className="bg-white p-4">
-      {order.status == "Đặt hàng" && (
+      {order.status === "Đặt hàng" && (
         <Steps>
           <Step status="finish" title="Đặt Hàng" icon={<UserOutlined />} />
           <Step status="process" title="Giao Hàng" icon={<UserOutlined />} />
@@ -75,7 +71,7 @@ function OrderDetail() {
           <Step status="wait" title="Thanh Toán" icon={<SmileOutlined />} />
         </Steps>
       )}
-      {order.status == "Đã hủy" && (
+      {order.status === "Đã hủy" && (
         <Steps>
           <Step status="finish" title="Đặt Hàng" icon={<UserOutlined />} />
           <Step status="finish" title="Hủy Đơn" icon={<DeleteFilled />} />
@@ -232,7 +228,7 @@ function OrderDetail() {
             </div>
           </>
         ))}
-      {order.status == "Đặt hàng" && (
+      {order.status === "Đặt hàng" && (
         <>
           <Popconfirm
             title="Hủy đơn hàng này"

@@ -14,12 +14,21 @@ code {
 .layout-footer {
   display: flex;
   background-color: white;
-  margin-top: 20px;
+  margin-top: 1%;
   padding: 10px 30px;
-  right: 160px;
-  left: 160px;
-  height: 80px;
+
+  height: 10%;
   bottom: 0;
   border-top: lightsteelblue solid 0.5px;
   box-shadow: 0px -3px 10px -2px lightslategrey;
+}
+.ant-breadcrumb > span:last-child {
+  color: wheat !important;
+}
+.ant-breadcrumb-separator {
+  color: white !important;
+}
+.ant-breadcrumb a {
+  color: white !important;
+  transition: color 0.3s !important;
 }

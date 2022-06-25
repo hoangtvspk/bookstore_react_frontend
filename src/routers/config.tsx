@@ -1,38 +1,36 @@
-import React, { ReactElement } from "react";
+import { Layout } from "antd";
+import { Content } from "antd/lib/layout/layout";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import AccountSideBar from "../components/Layout/SideBar/AccountSideBar";
 import MyAccount from "../pages/Account/MyAccount/MyAccount";
-import UpdateProfile from "../pages/Account/MyAccount/UpdateProfile";
-import ActivateAccount from "../pages/Register/ActivateAccount";
-import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
-import ResetPassword from "../pages/ForgotPassword/ResetPassword";
-import Home from "../pages/HomePage/HomePage";
-import Login from "../pages/Login/Login";
-import Active from "../pages/Register/Active";
-import Register from "../pages/Register/Register";
 import UpdatePassword from "../pages/Account/MyAccount/UpdatePassword";
+import UpdateProfile from "../pages/Account/MyAccount/UpdateProfile";
+import Address from "../pages/Account/MyAddress/Address";
+import MyFavouriteBooks from "../pages/Account/MyFavouriteBooks/MyFavouriteBooks";
+import MyPurchase from "../pages/Account/MyPurchase/MyPurchase";
+import OrderDetail from "../pages/Account/MyPurchase/OrderDetail";
 import BookDetail from "../pages/BookDetail/BookDetail";
 import Cart from "../pages/Cart/Cart";
-import Order from "../pages/Order/Order";
-import SearchPage from "../pages/Search/Search";
-import Address from "../pages/Account/MyAddress/Address";
-import AddAddress from "../pages/Account/MyAddress/AddAddress";
-import EditAddress from "../pages/Account/MyAddress/EditAddress";
-import MyPurchase from "../pages/Account/MyPurchase/MyPurchase";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "../pages/ForgotPassword/ResetPassword";
+import {
+  default as Home,
+  default as HomePage,
+} from "../pages/HomePage/HomePage";
+import Login from "../pages/Login/Login";
 import OAuth2RedirectHandler from "../pages/Login/oauth2/OAuth2RedirectHandler";
-import HomePage from "../pages/HomePage/HomePage";
-import { updateKeySearch } from "../redux/slices/keySearchSlice";
-import { useDispatch } from "react-redux";
-import AccountSideBar from "../components/Layout/SideBar/AccountSideBar";
-
+import Order from "../pages/Order/Order";
+import VNPayOrder from "../pages/Order/VNPayOrder";
+import ActivateAccount from "../pages/Register/ActivateAccount";
+import Active from "../pages/Register/Active";
+import Register from "../pages/Register/Register";
+import SearchPage from "../pages/Search/Search";
 import {
   closeAccountManage,
   openAccountManage,
 } from "../redux/slices/authSlice";
-import { Layout } from "antd";
-import { Content } from "antd/lib/layout/layout";
-import OrderDetail from "../pages/Account/MyPurchase/OrderDetail";
-import VNPayOrder from "../pages/Order/VNPayOrder";
-import MyFavouriteBooks from "../pages/Account/MyFavouriteBooks/MyFavouriteBooks";
 
 export const appRoutes = {
   home: "/",
@@ -194,12 +192,17 @@ const renderComponent = (route: IAppComponentConfig): React.ReactElement => {
         <div style={{ marginTop: "0px", paddingTop: 0 }}>{route.component}</div>
       )}
       {route.isAccountManage && (
-        <Layout>
-          <div className="d-flex">
+        <Layout style={{ background: "transparent" }}>
+          <div className="d-flex" style={{ background: "transparent" }}>
             <AccountSideBar />
-            <Layout style={{ marginLeft: 30 }}>
+            <Layout
+              style={{
+                marginLeft: 20,
+                background: "transparent",
+                borderRadius: "20px",
+              }}
+            >
               <Content
-                className="site-layout-background"
                 style={{
                   margin: 0,
                   minHeight: 280,
