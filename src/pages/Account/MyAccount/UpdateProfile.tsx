@@ -3,10 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Input, message, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ChangeEvent, useEffect, useState } from "react";
-import ImageUploading, {
-  ImageListType,
-  ImageType,
-} from "react-images-uploading";
+import ImageUploading, { ImageListType } from "react-images-uploading";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "../../../components/Layout/PageTitle";
@@ -49,7 +46,7 @@ const UpdateProfile = () => {
     setPhoneNumber(event.target.value);
   };
   const [images, setImages] = useState([] as ImageListType);
-  
+
   const [isImageChange, setIsImageChange] = useState(false);
   const maxNumber = 10;
   const onChange = (
@@ -100,10 +97,7 @@ const UpdateProfile = () => {
           { type: "application/json" }
         )
       );
-      // for (let i = 0; i < images.length; i++) {
-      //   console.log(images[i]);
-      //   formData.append("file", images[i].file as string | Blob);
-      // }
+
       formData.append("file", "");
     }
     setSubmitting(true);

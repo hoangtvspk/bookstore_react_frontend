@@ -18,13 +18,13 @@ const ActivateAccount = () => {
         .get(APP_API.active1.replace(":activeCode", code))
         .then(() => {
           navigate(appRoutes.login);
-          message.success("Account activated! Please login again.");
+          message.success("Đăng Ký Tài Khoản Thành Công!");
         })
         .catch(() => {
-          console.error("Failed to activate account");
+          console.error("Xác Thực Tài Khoản Thất Bại!");
           setShowError(true);
           setLoading(false);
-          message.error("Error Activation!");
+          message.error("Xác Thực Tài Khoản Thất Bại!");
         });
     }
     // eslint-disable-next-line

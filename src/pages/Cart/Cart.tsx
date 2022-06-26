@@ -4,7 +4,7 @@ import { RootStateOrAny, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
-import emptyCart from "../../image/emptycart.png";
+import emptyCart from "../../image/emptyCart.jpg";
 import { CartItem } from "../../models/cartItem";
 import { appRoutes } from "../../routers/config";
 import "./Cart.css";
@@ -48,51 +48,68 @@ function Cart() {
   const [submitting, setSubmitting] = useState(false);
 
   return (
-    <Spin spinning={submitting}>
-      {isLoggedIn && (
-        <div>
-          {isEmpty() && (
-            <div className="empty-cart bg-white pt-5 pb-5">
-              <img src={emptyCart} height="400" width="600" />
+    <div>
+      <Spin spinning={submitting}>
+        {!isLoggedIn && (
+          <div className="empty-cart bg-white pt-5 pb-5 rounded-3">
+            <div>
+              {" "}
+              <img src={emptyCart} height="270" width="300" />
+              <h3 className="d-flex justify-content-center">Giỏ Hàng Trống</h3>
             </div>
-          )}
-          {!isEmpty() && (
-            <div className="d-flex">
-              <div className="cart-background">
-                <div className="cartitem rounded-3">
-                  <div className="item-image-header"></div>
-                  <div className="item-name"></div>
-
-                  <div className="item-totalquantity">Đơn Giá</div>
-                  <div className="item-quantity">Số lượng</div>
-                  <div className="item-totalprice">Thành Tiền</div>
-                </div>
-                {cartItemArray.length > 0 &&
-                  cartItemArray.map((cartItem: CartItem) => (
-                    <CartItems cartItem={cartItem}></CartItems>
-                  ))}
-              </div>
-              <div className="rightContent ">
-                <Voucher></Voucher>
-                <TotalPrice></TotalPrice>
-                <div className="order-btn-background">
-                  <Button
-                    className="order-btn"
-                    onClick={() => {
-                      navigate(appRoutes.order);
-
-                      window.scrollTo(0, 0);
-                    }}
-                  >
-                    Mua Hàng
-                  </Button>
+          </div>
+        )}
+        {isLoggedIn && (
+          <div>
+            {isEmpty() && (
+              <div className="empty-cart bg-white pt-5 pb-5 rounded-3">
+                <div>
+                  {" "}
+                  <img src={emptyCart} height="270" width="300" />
+                  <h3 className="d-flex justify-content-center">
+                    Giỏ Hàng Trống
+                  </h3>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      )}
-    </Spin>
+            )}
+            {!isEmpty() && (
+              <div className="d-flex">
+                <div className="cart-background ">
+                  <div className="cartitem rounded-3">
+                    <div className="item-image-header"></div>
+                    <div className="item-name"></div>
+
+                    <div className="item-totalquantity">Đơn Giá</div>
+                    <div className="item-quantity">Số lượng</div>
+                    <div className="item-totalprice">Thành Tiền</div>
+                  </div>
+                  {cartItemArray.length > 0 &&
+                    cartItemArray.map((cartItem: CartItem) => (
+                      <CartItems cartItem={cartItem}></CartItems>
+                    ))}
+                </div>
+                <div className="rightContent ">
+                  <Voucher></Voucher>
+                  <TotalPrice></TotalPrice>
+                  <div className="order-btn-background">
+                    <Button
+                      className="order-btn"
+                      onClick={() => {
+                        navigate(appRoutes.order);
+
+                        window.scrollTo(0, 0);
+                      }}
+                    >
+                      Mua Hàng
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </Spin>
+    </div>
   );
 }
 

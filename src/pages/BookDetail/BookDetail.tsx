@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Card, Carousel, Divider, Input, message, Rate } from "antd";
 import Meta from "antd/lib/card/Meta";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,6 +18,7 @@ import { Book, BookImage } from "../../models/book";
 import { loadBookDetail } from "../../redux/slices/bookDetailSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
+import BookCard from "../HomePage/BookCard";
 import "./BookDetail.css";
 import FavouriteBook from "./FavouriteBook";
 import ImageList from "./ImageList";
@@ -111,12 +112,8 @@ function BookDetail() {
     );
     navigate(appRoutes.bookDetail.replace(":id", id));
     if (!isLoggedIn) {
-      const localCartArray = JSON.parse(
-        localStorage.getItem("noAuthCart") || "[]"
-      );
-      localCartArray.push({ id: id, quantity: number });
-      localStorage.setItem("noAuthCart", JSON.stringify(localCartArray));
-      message.success("Thêm vào thành công");
+      navigate(appRoutes.login);
+      message.warn("Đăng Nhập Để Tiếp Tục");
     }
     if (isLoggedIn) {
       httpClient()
@@ -374,62 +371,7 @@ function BookDetail() {
             bookArray.map(
               (book: Book, index) =>
                 book.id.toString() != id &&
-                index < 10 && (
-                  <Card
-                    key={book.id}
-                    hoverable
-                    onClick={() => onCardClick(book.id.toString())}
-                    cover={
-                      <img
-                        className="relate-preview-image"
-                        alt={book.nameBook}
-                        src={book.bookImages[0]?.image}
-                      />
-                    }
-                  >
-                    <Meta
-                      title={book.nameBook}
-                      description={
-                        <>
-                          <div
-                            style={{
-                              display: "flex",
-                              marginBottom: "0px",
-
-                              alignItems: "end",
-                            }}
-                          >
-                            <p
-                              style={{
-                                color: "rgb(255, 66, 78)",
-                                marginBottom: "0",
-                                paddingBottom: "0",
-                                fontSize: 16,
-                              }}
-                            >
-                              {stringPrice(
-                                book.price - (book.price * book.discount) / 100
-                              )}{" "}
-                              ₫
-                            </p>
-                            {book.discount > 0 && (
-                              <>
-                                <p className="discountt">-{book.discount}%</p>
-                              </>
-                            )}
-                          </div>
-                          <div>
-                            <Rate
-                              style={{ fontSize: 15 }}
-                              value={book.rating}
-                              disabled
-                            ></Rate>
-                          </div>
-                        </>
-                      }
-                    />
-                  </Card>
-                )
+                index < 10 && <BookCard book={book}></BookCard>
             )}
         </div>
       </div>

@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input, message } from "antd";
 import { ChangeEvent, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { CartItem } from "../../models/cartItem";
 import { updateCartData } from "../../redux/slices/cartSlice";
+import { appRoutes } from "../../routers/config";
 interface CommentBoxProps {
   cartItem: CartItem;
 }
@@ -64,6 +66,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
         .finally();
     }
   };
+  const navigate = useNavigate();
   const onIncrease = (
     bookId: number,
     quantity: number,
@@ -126,12 +129,27 @@ function CartItems({ cartItem }: CommentBoxProps) {
     <>
       <div className="cartitem rounded-3">
         <img
+          onClick={() => {
+            navigate(
+              appRoutes.bookDetail.replace(":id", cartItem.book.id.toString())
+            );
+          }}
           alt="itemImage"
           className="item-image"
           src={cartItem.book.bookImages[0].image}
+          style={{ cursor: "pointer" }}
         ></img>
         <div className="item-name">
-          <p style={{ marginBottom: "0px" }}>{cartItem.book.nameBook}</p>
+          <p
+            onClick={() => {
+              navigate(
+                appRoutes.bookDetail.replace(":id", cartItem.book.id.toString())
+              );
+            }}
+            style={{ marginBottom: "0px", cursor: "pointer" }}
+          >
+            {cartItem.book.nameBook}
+          </p>
           <p
             style={{
               fontSize: "12px",
@@ -153,19 +171,11 @@ function CartItems({ cartItem }: CommentBoxProps) {
           <p style={{ fontSize: "12px", paddingTop: "0px" }}>
             Còn: {cartItem.book.quantity}
           </p>
+          {cartItem.book.quantity < 1 && (
+            <p style={{ fontSize: "12px", color: "red" }}>Sản phẩm đã hết!</p>
+          )}
         </div>
 
-        {cartItem.book.quantity < 1 && (
-          <div className="pt-5">
-            <div className="item-totalquantity">{cartItem.book.quantity}</div>
-            <div
-              className="item-totalquantity"
-              style={{ fontSize: "12px", color: "red" }}
-            >
-              You must remove this book to continue!
-            </div>
-          </div>
-        )}
         <div className="item-totalquantity">
           <p style={{ marginBottom: "0px" }}>
             {stringPrice(

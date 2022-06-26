@@ -120,11 +120,11 @@
   margin-top: 10px;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 500px;
 }
 .cart-background {
-  min-height: 70vh !important;
-  min-width: 60vw !important
+  min-height: calc(100vh - 200px);
+  min-width: 900px !important
 }
 .checkCountBox{
  

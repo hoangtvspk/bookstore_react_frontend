@@ -45,14 +45,7 @@ const Address = () => {
       });
   };
   useEffect(() => {
-    httpClient()
-      .get(APP_API.addressOrder)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    onLoadUserAddress();
   }, []);
 
   const reload = () => {
@@ -107,7 +100,7 @@ const Address = () => {
   };
   return (
     <Spin spinning={submitting}>
-      <div className="address-background rounded-3">
+      <div className="address-background rounded-3  ">
         <PageTitle>Địa Chỉ Giao Hàng</PageTitle>
         <div className="btn-add-background">
           <p

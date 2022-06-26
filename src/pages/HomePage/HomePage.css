@@ -115,6 +115,9 @@ padding-left: 10%;}
 }
 .ant-card-meta-title{
   font-size: 14px !important;
+  color: #555555 !important;
+  font-weight: 200 !important;
+  font-family:  Roboto,Helvetica,Arial,sans-serif !important;
 }
 .cateTitle{
   overflow: hidden;

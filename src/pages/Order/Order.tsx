@@ -14,7 +14,6 @@ import {
   Modal,
   Radio,
   RadioChangeEvent,
-  Select,
   Space,
   Spin,
 } from "antd";
@@ -31,14 +30,15 @@ import { UserInfo } from "../../models/auth";
 import { CartItem } from "../../models/cartItem";
 import { GetOrder } from "../../models/getOrder";
 import { OrderForm } from "../../models/order";
-import { updateAddressData } from "../../redux/slices/addressSlice";
+import {
+  updateAddressData,
+  updateAddressListData,
+} from "../../redux/slices/addressSlice";
 import { updateCartData } from "../../redux/slices/cartSlice";
 import { appRoutes } from "../../routers/config";
 import "./Order.css";
 import OrderItems from "./OrderItem";
 import TotalPrice from "./TotalPrice";
-
-const DEFAULT_PAGE_SIZE = 30;
 
 function Order() {
   const cartItemArray = useSelector((state: RootStateOrAny) => {
@@ -50,7 +50,6 @@ function Order() {
   const [order, setOrder] = useState({} as GetOrder);
   const [accountForm] = useForm();
   const [addressArray, setAddressArray] = useState<AddressOrder[]>([]);
-  const [addressNumber, setAddressNumber] = useState(0);
 
   const getMyAddress = () => {
     httpClient()
@@ -67,7 +66,7 @@ function Order() {
   const onAddressChange = (e: RadioChangeEvent) => {
     setAddressValue(e.target.value);
     addressArray.map((address: AddressOrder) => {
-      if (address.id == e.target.value) {
+      if (address.id === e.target.value) {
         setSelectedAddress(address);
       }
     });
@@ -150,7 +149,7 @@ function Order() {
         console.log(res);
         setAddressArray([...res.data]);
         addressArray.map((address: AddressOrder) => {
-          if (address.id == addressValue) {
+          if (address.id === addressValue) {
             setSelectedAddress(address);
           }
         });
@@ -170,9 +169,11 @@ function Order() {
       .get(APP_API.addressOrder)
       .then((res) => {
         console.log(res.data.length);
+        dispatch(updateAddressListData(res.data));
         const address: AddressOrder = res.data[
           res.data.length - 1
         ] as AddressOrder;
+        setSelectedAddress(address);
         dispatch(updateAddressData(address));
         setAddressValue(address.id);
       })
@@ -213,13 +214,13 @@ function Order() {
         ", " +
         address.provinceCity;
       setSubmitting(true);
-      if (payValue == "tienmat") {
+      if (payValue === "tienmat") {
         httpClient()
           .post(APP_API.order, values)
           .then((res) => {
             console.log(res);
             message.success("Đặt Hàng Thành Công!");
-            navigate(appRoutes.cart);
+            navigate(appRoutes.orderResult);
             dispatch(updateCartData([]));
           })
           .catch((err) => {
@@ -227,7 +228,7 @@ function Order() {
             message.error("Failed To Order");
           })
           .finally(() => setSubmitting(false));
-      } else if (payValue == "momo") {
+      } else if (payValue === "momo") {
         httpClient()
           .post(APP_API.orderMomo, values)
           .then((res) => {
@@ -371,18 +372,20 @@ function Order() {
               >
                 Địa chỉ giao hàng:{" "}
               </p>
+              {address.address && (
+                <p
+                  style={{
+                    color: "#555555",
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    marginBottom: 0,
+                  }}
+                >
+                  {address.address}, {address.neighborhoodVillage},{" "}
+                  {address.districtTown}, {address.provinceCity}
+                </p>
+              )}
 
-              <p
-                style={{
-                  color: "#555555",
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  marginBottom: 0,
-                }}
-              >
-                {address.address}, {address.neighborhoodVillage},{" "}
-                {address.districtTown}, {address.provinceCity}
-              </p>
               <p
                 onClick={showModal}
                 style={{ cursor: "pointer", color: "#0066FF" }}
@@ -392,7 +395,7 @@ function Order() {
                   icon={faPenAlt}
                   color="#0066FF"
                 />
-                Thay Đổi
+                Thay Đổi/Thêm
               </p>
             </div>
             <div className="bg-white checkCountBox  rounded-3">

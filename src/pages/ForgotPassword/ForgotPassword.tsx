@@ -17,7 +17,7 @@ const ForgotPassword = () => {
       .then((res) => {
         console.log(res);
         navigate(appRoutes.home);
-        message.success("Your Reset Code Was Send To Your Mail!");
+        message.success("Mã Xác Nhận Đã Được Gửi Tới Mail Của Bạn!");
       })
       .catch((err) => {
         console.log(err);
@@ -27,10 +27,10 @@ const ForgotPassword = () => {
 
   return (
     <Spin spinning={submitting}>
-      <div className="backgroundlogin">
+      <div className="backgroundlogin rounded-3">
         <div className="site-layout-background site-layout-background-signin">
           <h2 className="d-flex justify-content-md-center mb-4">
-            Forgot Password?
+            Quên Mật Khẩu?
           </h2>
 
           <Form
@@ -45,14 +45,14 @@ const ForgotPassword = () => {
             <Form.Item
               label="Email"
               name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[{ required: true, message: "Nhập email!" }]}
             >
               <Input className="w-100" />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit" className="btn-login">
-                Send
+                Gửi
               </Button>
             </Form.Item>
           </Form>

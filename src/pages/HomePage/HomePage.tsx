@@ -4,8 +4,7 @@ import {
   faShoppingBasket,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Card, Carousel, Rate, Tabs } from "antd";
-import Meta from "antd/lib/card/Meta";
+import { Carousel, Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +18,7 @@ import { Book } from "../../models/book";
 import { Category } from "../../models/categoryBooks";
 import { updateKeySearch } from "../../redux/slices/keySearchSlice";
 import { appRoutes } from "../../routers/config";
+import BookCard from "./BookCard";
 import HomeCategory from "./HomeCategory";
 import "./HomePage.css";
 
@@ -97,10 +97,10 @@ function HomePage() {
             Sự kiện đang diễn ra
           </h3>
           <Carousel autoplay>
-            <img className="image-banner" src={Banner2}></img>
-            <img className="image-banner" src={Banner1}></img>
-            <img className="image-banner" src={Banner3}></img>
-            <img className="image-banner" src={Banner4}></img>
+            <img alt="banner" className="image-banner" src={Banner2}></img>
+            <img alt="banner" className="image-banner" src={Banner1}></img>
+            <img alt="banner" className="image-banner" src={Banner3}></img>
+            <img alt="banner" className="image-banner" src={Banner4}></img>
           </Carousel>
         </div>
 
@@ -119,65 +119,8 @@ function HomePage() {
                 <div className="">
                   <div className="home-book-list">
                     {newBookArray.length > 0 &&
-                      newBookArray.map((book: Book) => (
-                        <Card
-                          key={book.id}
-                          hoverable
-                          onClick={() => onCardClick(book.id.toString())}
-                          cover={
-                            <img
-                              className="home-preview-image"
-                              alt={book.nameBook}
-                              src={book.bookImages[0]?.image}
-                            />
-                          }
-                        >
-                          <Meta
-                            title={book.nameBook}
-                            description={
-                              <>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    marginBottom: "0px",
-                                    alignItems: "end",
-                                  }}
-                                >
-                                  <p
-                                    style={{
-                                      color: "rgb(255, 66, 78)",
-                                      marginBottom: "0",
-                                      fontSize: "15px",
-                                      fontWeight: 500,
-                                    }}
-                                  >
-                                    {stringPrice(
-                                      book.price -
-                                        (book.price * book.discount) / 100
-                                    )}{" "}
-                                    ₫
-                                  </p>
-                                  {book.discount > 0 && (
-                                    <>
-                                      <p className="discountt">
-                                        -{book.discount}%
-                                      </p>
-                                    </>
-                                  )}
-                                </div>
-                                <div>
-                                  <Rate
-                                    value={book.rating}
-                                    disabled
-                                    style={{
-                                      fontSize: "15px",
-                                    }}
-                                  ></Rate>
-                                </div>
-                              </>
-                            }
-                          />
-                        </Card>
+                      newBookArray.map((book: Book, index) => (
+                        <>{index < 10 && <BookCard book={book}></BookCard>}</>
                       ))}
                   </div>
                 </div>
@@ -188,65 +131,8 @@ function HomePage() {
                 <div className="">
                   <div className="home-book-list">
                     {bestSellingBookArray.length > 0 &&
-                      bestSellingBookArray.map((book: Book) => (
-                        <Card
-                          key={book.id}
-                          hoverable
-                          onClick={() => onCardClick(book.id.toString())}
-                          cover={
-                            <img
-                              className="home-preview-image"
-                              alt={book.nameBook}
-                              src={book.bookImages[0]?.image}
-                            />
-                          }
-                        >
-                          <Meta
-                            title={book.nameBook}
-                            description={
-                              <>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    marginBottom: "0px",
-                                    alignItems: "end",
-                                  }}
-                                >
-                                  <p
-                                    style={{
-                                      color: "rgb(255, 66, 78)",
-                                      marginBottom: "0",
-                                      fontSize: "15px",
-                                      fontWeight: 500,
-                                    }}
-                                  >
-                                    {stringPrice(
-                                      book.price -
-                                        (book.price * book.discount) / 100
-                                    )}{" "}
-                                    ₫
-                                  </p>
-                                  {book.discount > 0 && (
-                                    <>
-                                      <p className="discountt">
-                                        -{book.discount}%
-                                      </p>
-                                    </>
-                                  )}
-                                </div>
-                                <div>
-                                  <Rate
-                                    value={book.rating}
-                                    disabled
-                                    style={{
-                                      fontSize: "15px",
-                                    }}
-                                  ></Rate>
-                                </div>
-                              </>
-                            }
-                          />
-                        </Card>
+                      bestSellingBookArray.map((book: Book, index) => (
+                        <>{index < 10 && <BookCard book={book}></BookCard>}</>
                       ))}
                   </div>
                 </div>
@@ -258,68 +144,7 @@ function HomePage() {
                   <div className="home-book-list">
                     {bestDiscountBookArray.length > 0 &&
                       bestDiscountBookArray.map((book: Book, index) => (
-                        <>
-                          {index < 10 && (
-                            <Card
-                              key={book.id}
-                              hoverable
-                              onClick={() => onCardClick(book.id.toString())}
-                              cover={
-                                <img
-                                  className="home-preview-image"
-                                  alt={book.nameBook}
-                                  src={book.bookImages[0]?.image}
-                                />
-                              }
-                            >
-                              <Meta
-                                title={book.nameBook}
-                                description={
-                                  <>
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        marginBottom: "0px",
-                                        alignItems: "end",
-                                      }}
-                                    >
-                                      <p
-                                        style={{
-                                          color: "rgb(255, 66, 78)",
-                                          marginBottom: "0",
-                                          fontSize: "15px",
-                                          fontWeight: 500,
-                                        }}
-                                      >
-                                        {stringPrice(
-                                          book.price -
-                                            (book.price * book.discount) / 100
-                                        )}{" "}
-                                        ₫
-                                      </p>
-                                      {book.discount > 0 && (
-                                        <>
-                                          <p className="discountt">
-                                            -{book.discount}%
-                                          </p>
-                                        </>
-                                      )}
-                                    </div>
-                                    <div>
-                                      <Rate
-                                        value={book.rating}
-                                        disabled
-                                        style={{
-                                          fontSize: "15px",
-                                        }}
-                                      ></Rate>
-                                    </div>
-                                  </>
-                                }
-                              />
-                            </Card>
-                          )}
-                        </>
+                        <>{index < 10 && <BookCard book={book}></BookCard>}</>
                       ))}
                   </div>
                 </div>

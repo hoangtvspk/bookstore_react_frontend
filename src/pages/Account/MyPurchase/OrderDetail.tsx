@@ -8,11 +8,12 @@ import { faRemoveFormat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, message, Popconfirm, Steps } from "antd";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
 import { CartItem } from "../../../models/cartItem";
 import { GetOrder } from "../../../models/getOrder";
+import { appRoutes } from "../../../routers/config";
 
 function OrderDetail() {
   const { id: orderId } = useParams();
@@ -57,12 +58,13 @@ function OrderDetail() {
         });
     }
   };
+  const navigate = useNavigate();
   useEffect(() => {
     loadPage();
   }, [orderId]);
 
   return (
-    <div className="bg-white p-4">
+    <div className="bg-white p-4" style={{ minHeight: "calc(100vh - 200px)" }}>
       {order.status === "Đặt hàng" && (
         <Steps>
           <Step status="finish" title="Đặt Hàng" icon={<UserOutlined />} />
@@ -118,31 +120,17 @@ function OrderDetail() {
       >
         Địa Chỉ: {order.address}
       </p>
-      <div className="purchase-order-info">
-        <p
-          style={{
-            fontSize: "14px",
-            paddingTop: "0px",
-            marginBottom: 0,
-            color: "	#555555",
-          }}
-        >
-          {order.orderItems?.length} sản phẩm:
-        </p>
-        <p
-          style={{
-            fontSize: "20px",
-            paddingTop: "0px",
-            marginBottom: 0,
-            color: "	#990000",
-          }}
-        >
-          Tổng đơn hàng:{" "}
-          {order.totalPrice &&
-            order.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          ₫
-        </p>
-      </div>
+      <p
+        style={{
+          fontSize: "14px",
+          paddingTop: "0px",
+          marginBottom: 0,
+          color: "	#555555",
+        }}
+      >
+        {order.orderItems?.length} sản phẩm:
+      </p>
+
       {order.orderItems?.length > 0 &&
         order.orderItems.map((item: CartItem) => (
           <>
@@ -150,9 +138,27 @@ function OrderDetail() {
               <img
                 className="item-image"
                 src={item.book.bookImages[0].image}
+                onClick={() => {
+                  navigate(
+                    appRoutes.bookDetail.replace(":id", item.book.id.toString())
+                  );
+                }}
+                style={{ cursor: "pointer" }}
               ></img>
               <div className="item-name">
-                <p style={{ marginBottom: "0px" }}>{item.book.nameBook}</p>
+                <p
+                  onClick={() => {
+                    navigate(
+                      appRoutes.bookDetail.replace(
+                        ":id",
+                        item.book.id.toString()
+                      )
+                    );
+                  }}
+                  style={{ marginBottom: "0px", cursor: "pointer" }}
+                >
+                  {item.book.nameBook}
+                </p>
                 <p
                   style={{
                     fontSize: "12px",
@@ -176,17 +182,6 @@ function OrderDetail() {
                 </p>
               </div>
 
-              {item.book.quantity < 1 && (
-                <div className="pt-5">
-                  <div className="item-totalquantity">{item.book.quantity}</div>
-                  <div
-                    className="item-totalquantity"
-                    style={{ fontSize: "12px", color: "red" }}
-                  >
-                    You must remove this book to continue!
-                  </div>
-                </div>
-              )}
               <div className="item-totalquantity">
                 <p style={{ marginBottom: "0px" }}>
                   {stringPrice(
@@ -215,7 +210,7 @@ function OrderDetail() {
               </div>
 
               <div className="item-quantity">
-                <p style={{ marginBottom: "0px" }}>{item.quantity}</p>
+                <p style={{ marginBottom: "0px" }}>x{item.quantity}</p>
               </div>
               <div className="item-totalprice">
                 {stringPrice(
@@ -228,6 +223,21 @@ function OrderDetail() {
             </div>
           </>
         ))}
+      <div className="purchase-order-info-detail">
+        <p
+          style={{
+            fontSize: "20px",
+            paddingTop: "0px",
+            marginBottom: 0,
+            color: "	#990000",
+          }}
+        >
+          Tổng đơn hàng:{" "}
+          {order.totalPrice &&
+            order.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          ₫
+        </p>
+      </div>
       {order.status === "Đặt hàng" && (
         <>
           <Popconfirm

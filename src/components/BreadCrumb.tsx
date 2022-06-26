@@ -42,7 +42,7 @@ const BreadCrumb = () => {
                 namePage = "Giỏ Hàng";
                 break;
               case "Checkout":
-                namePage = "Đặt Hàng";
+                namePage = "Tiến Hành Đặt Hàng";
                 break;
               case "Myprofile":
                 namePage = "Thông Tin Cá Nhân";
@@ -76,6 +76,12 @@ const BreadCrumb = () => {
                 break;
               case "Active":
                 namePage = "Xác Thực Tài Khoản";
+                break;
+              case "Myfavouritebooks":
+                namePage = "Yêu Thích";
+                break;
+              case "Onlinepayordersuccess":
+                namePage = "Đặt Hàng";
                 break;
               default:
                 namePage = capatilize(name);

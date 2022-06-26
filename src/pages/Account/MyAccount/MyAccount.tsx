@@ -69,8 +69,8 @@ const MyAccount = () => {
         new Blob(
           [
             JSON.stringify({
-              firstName,
               lastName,
+              firstName,
               phoneNumber,
               email,
             }),
@@ -85,8 +85,8 @@ const MyAccount = () => {
         new Blob(
           [
             JSON.stringify({
-              firstName,
               lastName,
+              firstName,
               phoneNumber,
               email,
               currentedImage,
@@ -111,12 +111,13 @@ const MyAccount = () => {
       })
       .then((res) => {
         const userInfo: UserInfo = res.data as UserInfo;
-        message.success("Update Successfully");
+        message.success("Cập Nhật Thành Công");
         dispatch(
           updateUserInfo({
             ...userInfo,
-            firstName: res.data.firstName,
+
             lastName: res.data.lastName,
+            firstName: res.data.firstName,
             phoneNumber: res.data.phoneNumber,
             image: res.data.image,
           })
@@ -137,8 +138,8 @@ const MyAccount = () => {
       .then((res) => {
         console.log(res);
         accountForm.setFieldsValue(res.data);
-        setFirstName(res.data.firstName);
         setLastName(res.data.lastName);
+        setFirstName(res.data.firstName);
         setPhoneNumber(res.data.phoneNumber);
         setEmail(res.data.email);
 
@@ -233,7 +234,7 @@ const MyAccount = () => {
             >
               <Input
                 onChange={(e) => {
-                  firstNameInputChange(e);
+                  lastNameInputChange(e);
                 }}
               />
             </Form.Item>
@@ -255,7 +256,7 @@ const MyAccount = () => {
             >
               <Input
                 onChange={(e) => {
-                  lastNameInputChange(e);
+                  firstNameInputChange(e);
                 }}
               />
             </Form.Item>

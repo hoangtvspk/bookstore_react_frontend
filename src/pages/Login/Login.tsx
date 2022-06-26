@@ -59,14 +59,14 @@ const Login = () => {
         const userInfo: UserInfo = res.data as UserInfo;
         dispatch(userLogIn(userInfo));
         navigate(appRoutes.home);
-        message.success("Log In Successfully");
+        message.success("Đăng Nhập Thành Công!");
         onLoadUserCartItems();
         onLoadUserAddress();
         console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
-        message.error("Incorrect Email Or Password");
+        message.error("Tài Khoản Hoặc Mật Khẩu Không Chính Xác!");
       })
       .finally(() => setSubmitting(false));
   };
@@ -90,7 +90,7 @@ const Login = () => {
   return (
     <Spin spinning={submitting}>
       <div>
-        <div className="backgroundlogin">
+        <div className="backgroundlogin rounded-3">
           <div style={{ paddingLeft: "20%" }}>
             <Tabs defaultActiveKey="1" className="bg-white">
               <TabPane
@@ -192,7 +192,7 @@ const Login = () => {
                         marginTop: 0,
                       }}
                     >
-                      <a href="http://localhost:8080/oauth2/authorize/google">
+                      <a href="https://tomcat.vanhtuan0409.com/Bookstore_springboot/oauth2/authorize/google">
                         {" "}
                         <img
                           alt="imglogin"
@@ -200,11 +200,6 @@ const Login = () => {
                           src="https://salt.tikicdn.com/ts/upload/1c/ac/e8/141c68302262747f5988df2aae7eb161.png"
                         ></img>
                       </a>
-                    </Form.Item>
-                    <Form.Item style={{ paddingLeft: 160 }}>
-                      <div>
-                        <Link to={appRoutes.register}>Tạo tài khoản</Link>
-                      </div>
                     </Form.Item>
                   </Form>
                 </div>

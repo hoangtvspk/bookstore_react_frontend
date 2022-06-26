@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Rate } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { useEffect, useState } from "react";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book, Category } from "../../models/book";
 import { appRoutes } from "../../routers/config";
+import BookCard from "./BookCard";
 
 interface HomeCategoryProps {
   category: Category;
@@ -52,84 +52,32 @@ function HomeCategory({ category }: HomeCategoryProps) {
 
   return (
     <>
-      <div className=" bg-white rounded-3">
-        {/* {bookOfCategory(category.id)}; */}
-        <h4 className=" shoppingNow mt-2 mb-0 pt-4 pb-0">
-          <FontAwesomeIcon className="mr-2" icon={faBookOpen} color="#CC99FF" />
+      {bookOfCate.length > 0 && (
+        <div className=" bg-white rounded-3">
+          {/* {bookOfCategory(category.id)}; */}
+          <h4 className=" shoppingNow mt-2 mb-0 pt-4 pb-0">
+            <FontAwesomeIcon
+              className="mr-2"
+              icon={faBookOpen}
+              color="#CC99FF"
+            />
 
-          {category.nameCategory}
-        </h4>
+            {category.nameCategory}
+          </h4>
 
-        <div className="home-book-list  pb-4">
-          {bookOfCate.length > 0 &&
-            bookOfCate.map((book: Book, index) => (
+          <div className="home-book-list  pb-4">
+            {bookOfCate.map((book: Book, index) => (
               <div>
                 {index < 10 && (
-                  <Card
-                    key={book.id}
-                    hoverable
-                    onClick={() => {
-                      navigate(
-                        appRoutes.bookDetail.replace(":id", book.id.toString())
-                      );
-                      window.scrollTo(0, 0);
-                    }}
-                    cover={
-                      <img
-                        className="home-preview-image"
-                        alt={book.nameBook}
-                        src={book.bookImages[0]?.image}
-                      />
-                    }
-                  >
-                    <Meta
-                      title={book.nameBook}
-                      description={
-                        <>
-                          <div
-                            style={{
-                              display: "flex",
-                              marginBottom: "0px",
-                              alignItems: "end",
-                            }}
-                          >
-                            <p
-                              style={{
-                                color: "rgb(255, 66, 78)",
-                                marginBottom: "0",
-                                fontSize: "15px",
-                                fontWeight: 500,
-                              }}
-                            >
-                              {stringPrice(
-                                book.price - (book.price * book.discount) / 100
-                              )}{" "}
-                              ₫
-                            </p>
-                            {book.discount > 0 && (
-                              <>
-                                <p className="discountt">-{book.discount}%</p>
-                              </>
-                            )}
-                          </div>
-                          <div>
-                            <Rate
-                              value={book.rating}
-                              disabled
-                              style={{
-                                fontSize: "15px",
-                              }}
-                            ></Rate>
-                          </div>
-                        </>
-                      }
-                    />
-                  </Card>
+                  <>
+                    <BookCard book={book}></BookCard>
+                  </>
                 )}
               </div>
             ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

@@ -46,7 +46,10 @@ function MyPurchase() {
     <Spin spinning={submitting}>
       <div>
         {orderArray.length > 0 && (
-          <div className="min-vh  " style={{ minHeight: "500px" }}>
+          <div
+            className="min-vh  "
+            style={{ minHeight: "calc(100vh - 200px)" }}
+          >
             {orderArray
               .slice(0)
               .reverse()

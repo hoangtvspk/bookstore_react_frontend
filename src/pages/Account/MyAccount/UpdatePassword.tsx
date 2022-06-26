@@ -26,7 +26,7 @@ const UpdatePassword = () => {
       .then((res) => {
         console.log(res);
         navigate(appRoutes.myAccount);
-        message.success("Update Successfully");
+        message.success("Cập Nhật Thành Công");
       })
       .catch((err) => {
         console.log(err);

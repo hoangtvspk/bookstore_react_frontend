@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../models/cartItem";
+import { appRoutes } from "../../routers/config";
 interface CommentBoxProps {
   cartItem: CartItem;
 }
@@ -12,7 +14,7 @@ function OrderItems({ cartItem }: CommentBoxProps) {
     console.log(newNumber);
     return newNumber;
   };
-
+  const navigate = useNavigate();
   useEffect(() => {}, [cartItem.id]);
 
   return (
@@ -21,9 +23,24 @@ function OrderItems({ cartItem }: CommentBoxProps) {
         <img
           className="item-image"
           src={cartItem.book.bookImages[0].image}
+          onClick={() => {
+            navigate(
+              appRoutes.bookDetail.replace(":id", cartItem.book.id.toString())
+            );
+          }}
+          style={{ cursor: "pointer" }}
         ></img>
         <div className="item-name">
-          <p style={{ marginBottom: "0px" }}>{cartItem.book.nameBook}</p>
+          <p
+            onClick={() => {
+              navigate(
+                appRoutes.bookDetail.replace(":id", cartItem.book.id.toString())
+              );
+            }}
+            style={{ marginBottom: "0px", cursor: "pointer" }}
+          >
+            {cartItem.book.nameBook}
+          </p>
           <p
             style={{
               fontSize: "12px",

@@ -39,7 +39,10 @@ function MyFavouriteBooks() {
 
   return (
     <>
-      <div className=" bg-white rounded-3 ">
+      <div
+        className=" bg-white rounded-3 "
+        style={{ minHeight: "calc(100vh - 200px)" }}
+      >
         {/* {bookOfCategory(category.id)}; */}
         <PageTitle>Sách Yêu Thích</PageTitle>
         <div className="home-book-list  pb-4">

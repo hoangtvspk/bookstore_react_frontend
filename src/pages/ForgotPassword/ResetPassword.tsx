@@ -22,7 +22,7 @@ const ResetPassword = () => {
       .then((res) => {
         console.log(res);
         navigate(appRoutes.login);
-        message.success("Change Password Successfully");
+        message.success("Đổi Mật Khẩu Thành Công");
       })
       .catch((err) => {
         console.log(err);
@@ -40,7 +40,7 @@ const ResetPassword = () => {
         })
         .catch((err) => {
           console.error(err);
-          message.error("Couldn't fetch user info");
+          message.error("Thông Tin Người Dùng Không Hợp Lệ!");
         });
     }
     // eslint-disable-next-line
@@ -48,10 +48,10 @@ const ResetPassword = () => {
 
   return (
     <Spin spinning={submitting}>
-      <div className="backgroundlogin">
+      <div className="backgroundlogin rounded-3">
         <div className="site-layout-background site-layout-background-signin">
           <h2 className="d-flex justify-content-md-center mb-4">
-            Reset Your Password
+            Cập Nhật Mật Khẩu
           </h2>
 
           <Form
@@ -67,32 +67,28 @@ const ResetPassword = () => {
             <Form.Item
               label="Email"
               name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[{ required: true, message: "Nhập email!" }]}
             >
               <Input disabled className="w-100" />
             </Form.Item>
             <Form.Item
-              label="Password"
+              label="Mật Khẩu Mới"
               name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              rules={[{ required: true, message: "Nhập mật khẩu mới!" }]}
             >
               <Input className="w-100" />
             </Form.Item>
             <Form.Item
-              label="Confirm Password"
+              label="Xác Nhận Mật Khẩu"
               name="password2"
-              rules={[
-                { required: true, message: "Please input confirm password!" },
-              ]}
+              rules={[{ required: true, message: "Nhập xác nhận mật khẩu!" }]}
             >
               <Input className="w-100" />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
-                Reset your password
+                Cập Nhật Mật Khẩu
               </Button>
             </Form.Item>
           </Form>

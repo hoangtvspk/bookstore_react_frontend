@@ -4,6 +4,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../../httpClient/config";
 import { httpClient } from "../../../httpClient/httpServices";
+import { AddressOrder } from "../../../models/addressOrder";
+import {
+  updateAddressData,
+  updateAddressListData,
+} from "../../../redux/slices/addressSlice";
 import { userLogIn } from "../../../redux/slices/authSlice";
 import { updateCartData } from "../../../redux/slices/cartSlice";
 
@@ -67,10 +72,24 @@ const OAuth2RedirectHandler = () => {
     image: image,
   };
   if (firstName) dispatch(userLogIn(userInfo));
-
+  const onLoadUserAddress = () => {
+    httpClient()
+      .get(APP_API.addressOrder)
+      .then((res) => {
+        console.log(res.data.length);
+        const address: AddressOrder = res.data[
+          res.data.length - 1
+        ] as AddressOrder;
+        dispatch(updateAddressData(address || {}));
+        dispatch(updateAddressListData(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const onLoadUserCartItems = () => {
     httpClient()
-      .post(APP_API.getCart, localStorage.getItem("noAuthCart") || [])
+      .post(APP_API.getCart, [])
       .then((res) => {
         dispatch(updateCartData(res.data));
         localStorage.removeItem("noAuthCart");
@@ -78,6 +97,7 @@ const OAuth2RedirectHandler = () => {
       .catch((err) => message.error("Cannot load cart data"));
   };
   onLoadUserCartItems();
+  onLoadUserAddress();
 
   return <>{navigate("/account")}</>;
 };

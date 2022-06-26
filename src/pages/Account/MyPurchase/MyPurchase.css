@@ -56,6 +56,12 @@
   padding: 10px 0px;
   align-items: center;
 }
+.purchase-order-info-detail {
+  display: flex;
+  justify-content: end;
+  padding: 10px 0px;
+  align-items: center;
+}
 .purchase-order-total-layout-border {
   border: rgb(255, 66, 78) solid 1px;
   padding: 0px 20px;

@@ -1,4 +1,4 @@
-import  { FC } from "react";
+import { FC } from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import AppLayout from "./components/Layout/NavBar/NavBar";

@@ -29,6 +29,7 @@
     "react-dom": "^17.0.2",
     "react-image-gallery": "^1.2.7",
     "react-images-uploading": "^3.1.6",
+    "react-messenger-customer-chat": "^0.8.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
@@ -42,8 +43,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy":"npm run build",
-    "deploy":"aws --profile weed --endpoint-url https://s3.vanhtuan0409.com s3 sync ./build s3://doubh-book-store --delete"
+    "predeploy": "npm run build",
+    "deploy": "aws --profile weed --endpoint-url https://s3.vanhtuan0409.com s3 sync ./build s3://doubh-book-store --delete"
   },
   "eslintConfig": {
     "extends": [

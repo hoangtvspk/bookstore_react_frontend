@@ -43,7 +43,7 @@ function PageFooter() {
           18110289@student.hcmute.edu.vn
         </p>
       </div>
-      <div style={{ paddingLeft: "70px" }}>
+      <div style={{ paddingLeft: "10px" }}>
         <p
           style={{ paddingLeft: "10px", marginBottom: "2px", fontSize: "13px" }}
         >
@@ -65,7 +65,7 @@ function PageFooter() {
             icon={faAddressCard}
             color="	#3366CC"
           />{" "}
-          01 Võ Văn Ngân, Phường Linh Xuân, Thành Phố Thủ Đức, Thành phố Hồ Chí
+          01 Võ Văn Ngân, Phường Linh Chiểu, Thành Phố Thủ Đức, Thành phố Hồ Chí
           Minh
         </p>
       </div>

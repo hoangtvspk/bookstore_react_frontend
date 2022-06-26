@@ -2,7 +2,7 @@ import { Layout } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import AccountSideBar from "../components/Layout/SideBar/AccountSideBar";
 import MyAccount from "../pages/Account/MyAccount/MyAccount";
 import UpdatePassword from "../pages/Account/MyAccount/UpdatePassword";
@@ -13,6 +13,7 @@ import MyPurchase from "../pages/Account/MyPurchase/MyPurchase";
 import OrderDetail from "../pages/Account/MyPurchase/OrderDetail";
 import BookDetail from "../pages/BookDetail/BookDetail";
 import Cart from "../pages/Cart/Cart";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import {
@@ -22,6 +23,7 @@ import {
 import Login from "../pages/Login/Login";
 import OAuth2RedirectHandler from "../pages/Login/oauth2/OAuth2RedirectHandler";
 import Order from "../pages/Order/Order";
+import OrderResult from "../pages/Order/OrderResult";
 import VNPayOrder from "../pages/Order/VNPayOrder";
 import ActivateAccount from "../pages/Register/ActivateAccount";
 import Active from "../pages/Register/Active";
@@ -54,6 +56,7 @@ export const appRoutes = {
   editAddress: "/myaddress/edit/:id",
   myFavouriteBooks: "/myfavouritebooks",
   vnpayorder: "/onlinepayordersuccess",
+  orderResult: "/orderresult",
 };
 
 interface IAppComponentConfig {
@@ -183,6 +186,11 @@ export const appComponentConfig: IAppComponentConfig[] = [
     component: <MyFavouriteBooks />,
     isAccountManage: true,
   },
+  {
+    path: appRoutes.orderResult,
+    component: <OrderResult />,
+    isAccountManage: false,
+  },
 ];
 
 const renderComponent = (route: IAppComponentConfig): React.ReactElement => {
@@ -249,6 +257,7 @@ export const renderAppComponent = (
           <Route path={route.path} element={renderComponent(route)}></Route>
         );
       })}
+      <Route path="*" element={<ErrorPage />}></Route>
     </Routes>
   );
 };
