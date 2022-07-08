@@ -1,6 +1,6 @@
 import { faBook, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { message, Spin } from "antd";
+import { message, Spin, Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../../httpClient/config";
@@ -9,12 +9,20 @@ import NothingImg from "../../../image/bubbleNothing.jpg";
 import { GetOrder } from "../../../models/getOrder";
 import { appRoutes } from "../../../routers/config";
 import "./MyPurchase.css";
+import OrderList from "./OrderList";
 
 function MyPurchase() {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [orderArray, setOrderArray] = useState<GetOrder[]>([]);
-
+  const [confirmOrderArray, setConfirmOrderArray] = useState<GetOrder[]>([]);
+  const [prepareOrderArray, setPrepareOrderArray] = useState<GetOrder[]>([]);
+  const [shippingOrderArray, setShippingOrderArray] = useState<GetOrder[]>([]);
+  const [receivedOrderArray, setReceivedOrderArray] = useState<GetOrder[]>([]);
+  const [successfulOrderArray, setSuccessfulOrderArray] = useState<GetOrder[]>(
+    []
+  );
+  const [canceledOrderArray, setCanceledOrderArray] = useState<GetOrder[]>([]);
   const stringPrice = (number: number) => {
     const newNumber = number.toLocaleString(undefined, {
       maximumFractionDigits: 2,
@@ -29,6 +37,28 @@ function MyPurchase() {
       .then((res) => {
         console.log(res);
         setOrderArray(res.data);
+        res.data.map((order: GetOrder) => {
+          switch (order.status) {
+            case "Chờ duyệt":
+              setConfirmOrderArray((state) => [...state, order]);
+              break;
+            case "Đang chuẩn bị":
+              setPrepareOrderArray((state) => [...state, order]);
+              break;
+            case "Đang giao":
+              setShippingOrderArray((state) => [...state, order]);
+              break;
+            case "Đã nhận":
+              setReceivedOrderArray((state) => [...state, order]);
+              break;
+            case "Thành công":
+              setSuccessfulOrderArray((state) => [...state, order]);
+              break;
+            case "Đã hủy":
+              setCanceledOrderArray((state) => [...state, order]);
+              break;
+          }
+        });
         console.log(orderArray);
       })
       .catch((err) => {
@@ -37,207 +67,54 @@ function MyPurchase() {
         navigate(appRoutes.cart);
       });
   };
-
+  const { TabPane } = Tabs;
   useEffect(() => {
     onLoading();
   }, []);
 
   return (
     <Spin spinning={submitting}>
-      <div>
-        {orderArray.length > 0 && (
-          <div
-            className="min-vh  "
-            style={{ minHeight: "calc(100vh - 200px)" }}
-          >
-            {orderArray
-              .slice(0)
-              .reverse()
-              .map((purchaseItem: GetOrder) => (
-                <div
-                  className="order-array-item rounded-3"
-                  onClick={() => {
-                    navigate(
-                      appRoutes.orderDetail.replace(
-                        ":id",
-                        purchaseItem.id.toString()
-                      )
-                    );
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div className="purchase-order-info">
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        paddingTop: "0px",
-                        marginBottom: 0,
-                        color: "	#555555",
-                      }}
-                    >
-                      {purchaseItem.date}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: "16px",
-                        paddingTop: "0px",
-                        marginBottom: 0,
-                        color: "	#990000",
-                      }}
-                    >
-                      {purchaseItem.status}
-                    </p>
-                  </div>
-                  <div className="purchase-item-title">
-                    <div className="item-image-header"></div>
-                    <div className="item-name"></div>
-
-                    <div
-                      className="item-totalquantity"
-                      style={{ borderLeft: "lightsteelblue solid 0.3px" }}
-                    >
-                      Đơn Giá
-                    </div>
-                    <div
-                      className="item-quantity"
-                      style={{ borderLeft: "lightsteelblue solid 0.3px" }}
-                    >
-                      Số lượng
-                    </div>
-                    <div
-                      className="item-totalprice"
-                      style={{ borderLeft: "lightsteelblue solid 0.3px" }}
-                    >
-                      Thành Tiền
-                    </div>
-                  </div>
-                  <div className="purchase-item">
-                    <img
-                      alt="itemimage"
-                      className="item-image"
-                      src={purchaseItem.orderItems[0].book.bookImages[0].image}
-                    ></img>
-                    <div className="item-name">
-                      <p style={{ marginBottom: "0px" }}>
-                        {purchaseItem.orderItems[0].book.nameBook}
-                      </p>
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          paddingTop: "0px",
-                          marginBottom: 0,
-                        }}
-                      >
-                        Thể loại:{" "}
-                        {purchaseItem.orderItems[0].book.category.nameCategory}
-                      </p>
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          paddingTop: "0px",
-                          marginBottom: 0,
-                        }}
-                      >
-                        Tác giả: {purchaseItem.orderItems[0].book.author}
-                      </p>
-                      <p style={{ fontSize: "12px", paddingTop: "0px" }}>
-                        Còn: {purchaseItem.orderItems[0].book.quantity}
-                      </p>
-                    </div>
-
-                    <div className="item-totalquantity">
-                      <p style={{ marginBottom: "0px" }}>
-                        {stringPrice(
-                          purchaseItem.orderItems[0].book.price -
-                            (purchaseItem.orderItems[0].book.price *
-                              purchaseItem.orderItems[0].book.discount) /
-                              100
-                        )}{" "}
-                        ₫
-                      </p>
-                      {purchaseItem.orderItems[0].book.discount > 0 && (
-                        <>
-                          <p
-                            style={{
-                              color: "rgb(128, 128, 137) ",
-                              marginTop: "8px",
-                              fontSize: "15px",
-                              textDecoration: "line-through",
-                              paddingLeft: "8px",
-                              marginBottom: "0px",
-                            }}
-                          >
-                            {stringPrice(purchaseItem.orderItems[0].book.price)}{" "}
-                            ₫
-                          </p>
-                          <p className="discountt">
-                            -{purchaseItem.orderItems[0].book.discount}%
-                          </p>
-                        </>
-                      )}
-                    </div>
-
-                    <div className="item-quantity">
-                      <p style={{ marginBottom: "0px" }}>
-                        {purchaseItem.orderItems[0].quantity}
-                      </p>
-                    </div>
-                    <div className="item-totalprice">
-                      {stringPrice(
-                        purchaseItem.orderItems[0].quantity *
-                          (purchaseItem.orderItems[0].book.price -
-                            (purchaseItem.orderItems[0].book.price *
-                              purchaseItem.orderItems[0].book.discount) /
-                              100)
-                      )}{" "}
-                      ₫
-                    </div>
-                  </div>
-
-                  <p
-                    style={{
-                      fontSize: "13px",
-                      paddingTop: "0px",
-                      marginBottom: 0,
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      className="mr-1"
-                      icon={faBook}
-                      color="#3366FF"
-                    ></FontAwesomeIcon>
-                    {purchaseItem.orderItems.length} sản phẩm
-                  </p>
-                  <div className="purchase-order-total-layout">
-                    <div className="purchase-order-total-layout-border">
-                      <p className="purchase-order-total-title">
-                        <FontAwesomeIcon
-                          className="mr-2"
-                          style={{ color: "red" }}
-                          icon={faDollarSign}
-                        />
-                        Tổng Đơn Hàng:{" "}
-                      </p>
-                      <p className="purchase-order-total">
-                        {stringPrice(purchaseItem.totalPrice)} ₫
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-        )}
-      </div>
-      {orderArray?.length === 0 && (
-        <div className="bg-white p-4 orderDetail-background-height d-flex justify-content-center align-items-center">
-          <div>
-            <img alt="nothing" src={NothingImg} height="300" width="500" />
-            <h2 className="d-flex justify-content-center">
-              Chưa có đơn hàng nào!
-            </h2>
-          </div>
-        </div>
-      )}
+      <Tabs
+        defaultActiveKey="1"
+        className=" rounded-3"
+        tabBarStyle={{
+          backgroundColor: "white",
+          paddingBottom: "10px",
+          borderRadius: "3px",
+          marginBottom: 6,
+        }}
+      >
+        <TabPane tab="Tất Cả" key="1">
+          <OrderList orderArray={orderArray} />
+        </TabPane>
+        <TabPane tab="&nbsp;&nbsp;&nbsp;Chờ Xác Nhận&nbsp;&nbsp;&nbsp;" key="2">
+          <OrderList orderArray={confirmOrderArray} />
+        </TabPane>
+        <TabPane tab="&nbsp;&nbsp;&nbsp;Đợi Lấy Hàng&nbsp;&nbsp;&nbsp;" key="3">
+          <OrderList orderArray={prepareOrderArray} />
+        </TabPane>
+        <TabPane
+          tab="&nbsp;&nbsp;&nbsp;&nbsp;Đang Giao&nbsp;&nbsp;&nbsp;&nbsp;"
+          key="4"
+        >
+          <OrderList orderArray={shippingOrderArray} />
+        </TabPane>
+        <TabPane
+          tab="&nbsp;&nbsp;&nbsp;&nbsp;Đã Nhận&nbsp;&nbsp;&nbsp;&nbsp;"
+          key="5"
+        >
+          <OrderList orderArray={receivedOrderArray} />
+        </TabPane>
+        <TabPane
+          tab="&nbsp;&nbsp;&nbsp;&nbsp;Hoàn Thành&nbsp;&nbsp;&nbsp;&nbsp;"
+          key="6"
+        >
+          <OrderList orderArray={successfulOrderArray} />
+        </TabPane>
+        <TabPane tab="Đã Hủy" key="7">
+          <OrderList orderArray={canceledOrderArray} />
+        </TabPane>
+      </Tabs>
     </Spin>
   );
 }

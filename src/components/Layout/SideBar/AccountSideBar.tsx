@@ -100,7 +100,7 @@ const AccountSideBar = (): JSX.Element => {
         <Menu.Item key="myprofile">
           <Link
             to={appRoutes.myAccount}
-            className="font-submenu-side-bar"
+            className="font-menu-side-bar"
             color="#555555"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -114,7 +114,7 @@ const AccountSideBar = (): JSX.Element => {
         <Menu.Item key="password" onClick={() => dispatch(openAccountManage())}>
           <Link
             to={appRoutes.updatePassword}
-            className="font-submenu-side-bar"
+            className="font-menu-side-bar"
             color="#555555"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -128,7 +128,7 @@ const AccountSideBar = (): JSX.Element => {
         <Menu.Item key="myaddress">
           <Link
             to={appRoutes.address}
-            className="font-submenu-side-bar"
+            className="font-menu-side-bar"
             color="#555555"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -147,7 +147,7 @@ const AccountSideBar = (): JSX.Element => {
         <Menu.Item key="mybill" onClick={() => dispatch(openAccountManage())}>
           <Link
             to={appRoutes.purchase}
-            className="font-submenu"
+            className="font-menu-side-bar"
             color="#555555"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -168,7 +168,7 @@ const AccountSideBar = (): JSX.Element => {
         >
           <Link
             to={appRoutes.myFavouriteBooks}
-            className="font-submenu"
+            className="font-menu-side-bar"
             color="#555555"
             onClick={() => {
               window.scrollTo(0, 0);

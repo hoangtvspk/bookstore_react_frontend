@@ -4,4 +4,5 @@ export interface OrderForm{
     lastName: string,
     email: string,
     phoneNumber: number,
+    couponCode: string,
 }

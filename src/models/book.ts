@@ -40,4 +40,15 @@ export interface Book{
         }
         
     ],
+    bookForEvents:[
+        {
+            id: {
+                eventId: number,
+                bookId: number,
+            },
+            event: Event
+            discountValue: number,
+            discountPercentValue: number
+        }
+    ]
 }

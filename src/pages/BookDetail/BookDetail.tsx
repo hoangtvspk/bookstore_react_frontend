@@ -145,17 +145,19 @@ function BookDetail() {
             <ImageList image={img}></ImageList>
           ))}
         </div>
-        <Carousel afterChange={onChange} className="book-images mr-5">
-          {Object.entries(book).length > 0 && (
-            <ImageGallery
-              autoPlay
-              showPlayButton={false}
-              items={book.bookImages.map((img: BookImage) => {
-                return { original: img.image };
-              })}
-            ></ImageGallery>
-          )}
-        </Carousel>
+        <div className="book-images mr-5">
+          <Carousel afterChange={onChange}>
+            {Object.entries(book).length > 0 && (
+              <ImageGallery
+                autoPlay
+                showPlayButton={false}
+                items={book.bookImages.map((img: BookImage) => {
+                  return { original: img.image };
+                })}
+              ></ImageGallery>
+            )}
+          </Carousel>
+        </div>
         <div>
           <div className="d-flex ">
             <p
@@ -216,23 +218,84 @@ function BookDetail() {
               display: "flex",
             }}
           >
-            <h2 style={{ color: "rgb(255, 66, 78)" }}>
-              {stringPrice(book.price - (book.price * book.discount) / 100)}₫
-            </h2>
-            {book.discount > 0 && (
+            {book.bookForEvents?.length < 1 && (
               <>
-                <p
-                  style={{
-                    color: "rgb(128, 128, 137) ",
-                    alignSelf: "end",
-                    fontSize: "16px",
-                    textDecoration: "line-through",
-                    paddingLeft: "8px",
-                  }}
-                >
-                  {stringPrice(book.price)} ₫
-                </p>
-                <p className="discount">-{book.discount}%</p>
+                <h2 style={{ color: "rgb(255, 66, 78)" }}>
+                  {stringPrice(book.price - (book.price * book.discount) / 100)}
+                  ₫
+                </h2>
+                {book.discount > 0 && (
+                  <>
+                    <p
+                      style={{
+                        color: "rgb(128, 128, 137) ",
+                        alignSelf: "end",
+                        fontSize: "16px",
+                        textDecoration: "line-through",
+                        paddingLeft: "8px",
+                      }}
+                    >
+                      {stringPrice(book.price)} ₫
+                    </p>
+                    <p className="discount">-{book.discount}%</p>
+                  </>
+                )}
+              </>
+            )}
+            {book.bookForEvents?.length > 0 && (
+              <>
+                {book.bookForEvents[0].discountPercentValue && (
+                  <>
+                    <h2 style={{ color: "rgb(255, 66, 78)" }}>
+                      {stringPrice(
+                        book.price -
+                          (book.price *
+                            book.bookForEvents[0].discountPercentValue) /
+                            100
+                      )}{" "}
+                      ₫
+                    </h2>
+                    <p
+                      style={{
+                        color: "rgb(128, 128, 137) ",
+                        alignSelf: "end",
+                        fontSize: "16px",
+                        textDecoration: "line-through",
+                        paddingLeft: "8px",
+                      }}
+                    >
+                      {stringPrice(book.price)} ₫
+                    </p>
+                    <p className="discount">
+                      -{book.bookForEvents[0].discountPercentValue}%
+                    </p>
+                  </>
+                )}
+
+                {book.bookForEvents[0].discountValue && (
+                  <>
+                    <h2 style={{ color: "rgb(255, 66, 78)" }}>
+                      {stringPrice(
+                        book.price - book.bookForEvents[0].discountValue
+                      )}
+                      ₫
+                    </h2>
+                    <p
+                      style={{
+                        color: "rgb(128, 128, 137) ",
+                        alignSelf: "end",
+                        fontSize: "16px",
+                        textDecoration: "line-through",
+                        paddingLeft: "8px",
+                      }}
+                    >
+                      {stringPrice(book.price)} ₫
+                    </p>
+                    <p className="discount">
+                      -{book.bookForEvents[0].discountValue}đ
+                    </p>
+                  </>
+                )}
               </>
             )}
           </div>
@@ -368,11 +431,14 @@ function BookDetail() {
         <Divider></Divider>
         <div className="related-book-list">
           {bookArray.length > 0 &&
-            bookArray.map(
-              (book: Book, index) =>
-                book.id.toString() != id &&
-                index < 10 && <BookCard book={book}></BookCard>
-            )}
+            bookArray
+              .slice()
+              .reverse()
+              .map(
+                (book: Book, index) =>
+                  book.id.toString() != id &&
+                  index < 10 && <BookCard book={book}></BookCard>
+              )}
         </div>
       </div>
 

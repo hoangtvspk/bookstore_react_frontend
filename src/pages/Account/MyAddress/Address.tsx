@@ -65,7 +65,7 @@ const Address = () => {
       .delete(APP_API.deleteAddress.replace(":id", id))
       .then((res) => {
         console.log(res);
-        message.success("Delete Successfully");
+        message.success("Xóa thành công!");
         navigate(appRoutes.address);
         onLoadUserAddress();
         reload();

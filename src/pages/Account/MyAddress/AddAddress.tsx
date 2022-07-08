@@ -147,7 +147,12 @@ function AddAddress() {
       </Form.Item>
       <div className="d-flex mt-3 d-flex justify-content-end">
         <Form.Item>
-          <Button type="primary" loading={loading} htmlType="submit">
+          <Button
+            type="primary"
+            loading={loading}
+            htmlType="submit"
+            style={{ backgroundColor: "#ff7f50", border: 0 }}
+          >
             Lưu
           </Button>
         </Form.Item>

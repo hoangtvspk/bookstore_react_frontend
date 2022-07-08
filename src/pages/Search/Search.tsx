@@ -1,6 +1,15 @@
-import { Card, Pagination, Radio, RadioChangeEvent, Rate, Space } from "antd";
+import {
+  Button,
+  Card,
+  Pagination,
+  Radio,
+  RadioChangeEvent,
+  Rate,
+  Space,
+} from "antd";
 import Meta from "antd/lib/card/Meta";
-import { useEffect, useState } from "react";
+import Search from "antd/lib/input/Search";
+import { ChangeEvent, useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
@@ -9,6 +18,7 @@ import { Book } from "../../models/book";
 import { Category } from "../../models/categoryBooks";
 import { updateKeySearch } from "../../redux/slices/keySearchSlice";
 import { appRoutes } from "../../routers/config";
+import BookCard from "../HomePage/BookCard";
 import "./Search.css";
 
 const DEFAULT_PAGE_SIZE = 32;
@@ -204,10 +214,7 @@ function SearchPage() {
         });
     }
   };
-  const onCardClick = (id: string) => {
-    navigate(appRoutes.bookDetail.replace(":id", id));
-    window.scrollTo(0, 0);
-  };
+
   const onPageChange = (page: number, pageSize: number) => {
     console.log(booksSearch);
     setCurPage(page);
@@ -215,15 +222,23 @@ function SearchPage() {
       ...bookArray.slice((page - 1) * pageSize, page * pageSize),
     ]);
   };
-
+  const onKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (booksSearch.keyWord != null) {
+      setKeyWordSearch(e.target.value);
+      console.log(booksSearch);
+      dispatch(
+        updateKeySearch({
+          idCategory: booksSearch.idCategory,
+          keyWord: e.target.value,
+          minPrice: 0,
+          maxPrice: 100000000,
+        })
+      );
+    }
+  };
   // const [_, setSearchParams] = useSearchParams();
   useEffect(() => {
-    // const searchParams = new URLSearchParams();
-    // searchParams.set("category", "12");
-    // setSearchParams(searchParams);
     onSearch();
-    //onLoadBook();
-
     httpClient()
       .get(APP_API.categoryBooks)
       .then((res) => {
@@ -238,29 +253,40 @@ function SearchPage() {
 
   return (
     <>
-      <div className="d-flex bg-white pr-3">
+      <div className="d-flex bg-white pr-3 rounded-3">
         <div>
-          {/* <div className="mt-5 mr-2 facet-list ">
-            <Search
-              placeholder="input search text"
-              onChange={(e) => onKeyChange(e)}
-              onSearch={() => onSearch()}
-              style={{
-                width: 230,
-                borderBottom: "1px solid #efefef",
-                paddingBottom: "20px",
-              }}
-            />
-          </div> */}
           <div className="pt-5 mr-2 facet-list">
-            <p className="font-cate-title">Danh mục sách:</p>
+            <div style={{ paddingRight: "10px" }} className="mb-4">
+              <Search
+                placeholder="Tìm kiếm..."
+                onChange={onKeyChange}
+                onSearch={() => {
+                  if (booksSearch.keyWord != null) {
+                    dispatch(
+                      updateKeySearch({
+                        idCategory: booksSearch.idCategory,
+                        keyWord: keyWordSearch,
+                        minPrice: 0,
+                        maxPrice: 100000000,
+                      })
+                    );
+                  }
+
+                  navigate(appRoutes.books);
+                  window.scrollTo(0, 0);
+                }}
+                className="bg-transparent mr-6"
+              />
+            </div>
+
+            <p className="font-cate-title">Thể Loại:</p>
             <Radio.Group key="category" onChange={onChange} value={value}>
               <Space
                 direction="vertical"
                 style={{
-                  gap: "0px",
+                  gap: "1px",
                   borderBottom: "1px solid #efefef",
-                  paddingBottom: "20px",
+                  paddingBottom: "10px",
                 }}
               >
                 <Radio value={0} className="font-cate">
@@ -275,7 +301,7 @@ function SearchPage() {
               </Space>
             </Radio.Group>
           </div>
-          <div className="pt-5 mr-2 facet-list">
+          <div className="pt-1 mr-2 facet-list">
             <p className="font-cate-title">Giá:</p>
             <Radio.Group
               key="price"
@@ -285,7 +311,7 @@ function SearchPage() {
               <Space
                 direction="vertical"
                 style={{
-                  gap: "0px",
+                  gap: "1px",
                   borderBottom: "1px solid #efefef",
                   paddingBottom: "20px",
                 }}
@@ -294,19 +320,19 @@ function SearchPage() {
                   Tất cả
                 </Radio>
                 <Radio value="40" className="font-cate">
-                  Under 40.000đ
+                  Dưới 40.000đ
                 </Radio>
                 <Radio value="4070" className="font-cate">
-                  40.000đ to 70.000đ
+                  40.000đ tới 70.000đ
                 </Radio>
                 <Radio value="70100" className="font-cate">
-                  70.000đ to 100.000đ
+                  70.000đ tới 100.000đ
                 </Radio>
                 <Radio value="100150" className="font-cate">
-                  100.000đ to 150.000đ
+                  100.000đ tới 150.000đ
                 </Radio>
                 <Radio value="150" className="font-cate">
-                  Above 150.000đ
+                  Trên 150.000đ
                 </Radio>
               </Space>
             </Radio.Group>
@@ -316,65 +342,7 @@ function SearchPage() {
           <div className="book-list">
             {showingBook.length > 0 &&
               showingBook.map((book: Book) => (
-                <Card
-                  key={book.id}
-                  hoverable
-                  onClick={() => onCardClick(book.id.toString())}
-                  cover={
-                    <img
-                      className="preview-image"
-                      alt={book.nameBook}
-                      src={book.bookImages[0]?.image}
-                    />
-                  }
-                >
-                  <Meta
-                    title={book.nameBook}
-                    description={
-                      <>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginBottom: "0px",
-                            alignItems: "end",
-                          }}
-                        >
-                          <p
-                            style={{
-                              color: "rgb(255, 66, 78)",
-                              marginBottom: "0",
-                            }}
-                          >
-                            {stringPrice(
-                              book.price - (book.price * book.discount) / 100
-                            )}{" "}
-                            ₫
-                          </p>
-                          {book.discount > 0 && (
-                            <>
-                              <p
-                                style={{
-                                  color: "rgb(128, 128, 137) ",
-
-                                  textDecoration: "line-through",
-                                  paddingLeft: "3px",
-                                  marginBottom: "0",
-                                  fontSize: "12px",
-                                }}
-                              >
-                                {stringPrice(book.price)}₫
-                              </p>
-                              <p className="discountt">-{book.discount}%</p>
-                            </>
-                          )}
-                        </div>
-                        <div>
-                          <Rate value={book.rating} disabled></Rate>
-                        </div>
-                      </>
-                    }
-                  />
-                </Card>
+                <BookCard book={book}></BookCard>
               ))}
           </div>
           <div className="text-center">

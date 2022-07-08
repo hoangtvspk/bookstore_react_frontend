@@ -1,7 +1,7 @@
 import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Input, message } from "antd";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
@@ -23,7 +23,9 @@ function CartItems({ cartItem }: CommentBoxProps) {
     console.log(newNumber);
     return newNumber;
   };
-
+  const [itemSale, setItemSale] = useState(0);
+  const [itemSalePrice, setItemSalePrice] = useState(0);
+  const [itemTotalPrice, setItemTotalPrice] = useState(0);
   const onDeleteItem = (id: string) => {
     httpClient()
       .delete(APP_API.deleteCartItem.replace(":id", id))
@@ -123,7 +125,46 @@ function CartItems({ cartItem }: CommentBoxProps) {
       onDeleteItem(bookId.toString());
     }
   };
-  useEffect(() => {}, [cartItem.id]);
+  useEffect(() => {
+    if (cartItem.book.bookForEvents.length > 0) {
+      if (cartItem.book.bookForEvents[0].discountPercentValue) {
+        setItemSalePrice(
+          cartItem.book.price -
+            (cartItem.book.price *
+              cartItem.book.bookForEvents[0].discountPercentValue) /
+              100
+        );
+        setItemSale(cartItem.book.bookForEvents[0].discountPercentValue);
+        setItemTotalPrice(
+          (cartItem.book.price -
+            (cartItem.book.price *
+              cartItem.book.bookForEvents[0].discountPercentValue) /
+              100) *
+            cartItem.quantity
+        );
+      }
+      if (cartItem.book.bookForEvents[0].discountValue) {
+        setItemSalePrice(
+          cartItem.book.price - cartItem.book.bookForEvents[0].discountValue
+        );
+        setItemSale(cartItem.book.bookForEvents[0].discountValue);
+        setItemTotalPrice(
+          (cartItem.book.price - cartItem.book.bookForEvents[0].discountValue) *
+            cartItem.quantity
+        );
+      }
+    } else {
+      if (cartItem.book.discount > 0) {
+        setItemTotalPrice(
+          (cartItem.book.price -
+            (cartItem.book.price * cartItem.book.discount) / 100) *
+            cartItem.quantity
+        );
+      } else {
+        setItemTotalPrice(cartItem.book.price * cartItem.quantity);
+      }
+    }
+  }, [cartItem.id]);
 
   return (
     <>
@@ -177,15 +218,40 @@ function CartItems({ cartItem }: CommentBoxProps) {
         </div>
 
         <div className="item-totalquantity">
-          <p style={{ marginBottom: "0px" }}>
-            {stringPrice(
-              cartItem.book.price -
-                (cartItem.book.price * cartItem.book.discount) / 100
-            )}{" "}
-            ₫
-          </p>
-          {cartItem.book.discount > 0 && (
+          {cartItem.book.bookForEvents?.length < 1 && (
             <>
+              <p style={{ marginBottom: "0px" }}>
+                {stringPrice(
+                  cartItem.book.price -
+                    (cartItem.book.price * cartItem.book.discount) / 100
+                )}{" "}
+                ₫
+              </p>
+
+              {cartItem.book.discount > 0 && (
+                <>
+                  <p
+                    style={{
+                      color: "rgb(128, 128, 137) ",
+                      marginTop: "8px",
+                      fontSize: "15px",
+                      textDecoration: "line-through",
+                      paddingLeft: "8px",
+                      marginBottom: "0px",
+                    }}
+                  >
+                    {stringPrice(cartItem.book.price)} ₫
+                  </p>
+                  <p className="discountt">-{cartItem.book.discount}%</p>
+                </>
+              )}
+            </>
+          )}
+          {cartItem.book.bookForEvents?.length > 0 && (
+            <>
+              <p style={{ marginBottom: "0px" }}>
+                {stringPrice(itemSalePrice)} ₫
+              </p>
               <p
                 style={{
                   color: "rgb(128, 128, 137) ",
@@ -198,7 +264,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
               >
                 {stringPrice(cartItem.book.price)} ₫
               </p>
-              <p className="discountt">-{cartItem.book.discount}%</p>
+              <p className="discountt"> -{itemSale}%</p>
             </>
           )}
         </div>
@@ -230,14 +296,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
             <FontAwesomeIcon className="mr-2" icon={faPlus} />
           </Button>
         </div>
-        <div className="item-totalprice">
-          {stringPrice(
-            cartItem.quantity *
-              (cartItem.book.price -
-                (cartItem.book.price * cartItem.book.discount) / 100)
-          )}{" "}
-          ₫
-        </div>
+        <div className="item-totalprice">{stringPrice(itemTotalPrice)} ₫</div>
         <div className="item-delete">
           <span onClick={() => onDeleteItem(cartItem.id.bookId.toString())}>
             <FontAwesomeIcon className="mr-2" icon={faTrash} color="#CCCCCC" />

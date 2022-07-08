@@ -46,7 +46,7 @@ function TotalPrice() {
           }}
         >
           Tạm Tính:{" "}
-          {cartItemArray.length > 0 &&
+          {/* {cartItemArray.length > 0 &&
             cartItemArray
               .map(
                 (item: CartItem) =>
@@ -58,7 +58,14 @@ function TotalPrice() {
                 return total + itemPrice;
               })
               .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
+          {cartItemArray.length > 0 && (
+            <>
+              {cartItemArray[0].total
+                ?.toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </>
+          )}
           ₫
         </p>
         <p
@@ -86,19 +93,14 @@ function TotalPrice() {
           </p>
 
           <p className="order-total">
-            {cartItemArray.length > 0 &&
-              cartItemArray
-                .map(
-                  (item: CartItem) =>
-                    item.quantity *
-                    (item.book.price -
-                      (item.book.price * item.book.discount) / 100)
-                )
-                .reduce((total: number, itemPrice: number) => {
-                  return total + itemPrice;
-                })
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {" "}
+            {cartItemArray.length > 0 && (
+              <>
+                {cartItemArray[0].total
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </>
+            )}
             ₫
           </p>
         </div>

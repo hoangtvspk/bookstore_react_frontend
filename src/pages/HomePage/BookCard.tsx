@@ -19,7 +19,7 @@ function BookCard({ book }: BookCardProps) {
     const newNumber = number.toLocaleString(undefined, {
       maximumFractionDigits: 2,
     });
-    console.log(newNumber);
+
     return newNumber;
   };
   useEffect(() => {}, [book]);
@@ -29,6 +29,7 @@ function BookCard({ book }: BookCardProps) {
       <Card
         key={book.id}
         hoverable
+        bordered
         onClick={() => {
           navigate(appRoutes.bookDetail.replace(":id", book.id.toString()));
           window.scrollTo(0, 0);
@@ -52,20 +53,74 @@ function BookCard({ book }: BookCardProps) {
                   alignItems: "end",
                 }}
               >
-                <p
-                  style={{
-                    color: "rgb(255, 66, 78)",
-                    marginBottom: "0",
-                    fontSize: "15px",
-                    fontWeight: 500,
-                  }}
-                >
-                  {stringPrice(book.price - (book.price * book.discount) / 100)}{" "}
-                  ₫
-                </p>
-                {book.discount > 0 && (
+                {book.bookForEvents.length < 1 && (
                   <>
-                    <p className="discountt">-{book.discount}%</p>
+                    <p
+                      style={{
+                        color: "rgb(255, 66, 78)",
+                        marginBottom: "0",
+                        fontSize: "15px",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {stringPrice(
+                        book.price - (book.price * book.discount) / 100
+                      )}{" "}
+                      ₫
+                    </p>
+                    {book.discount > 0 && (
+                      <>
+                        <p className="discountt">-{book.discount}%</p>
+                      </>
+                    )}
+                  </>
+                )}
+                {book.bookForEvents.length > 0 && (
+                  <>
+                    {book.bookForEvents[0].discountPercentValue && (
+                      <>
+                        <p
+                          style={{
+                            color: "rgb(255, 66, 78)",
+                            marginBottom: "0",
+                            fontSize: "15px",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {stringPrice(
+                            book.price -
+                              (book.price *
+                                book.bookForEvents[0].discountPercentValue) /
+                                100
+                          )}{" "}
+                          ₫
+                        </p>
+                        <p className="discountt">
+                          -{book.bookForEvents[0].discountPercentValue}%
+                        </p>
+                      </>
+                    )}
+
+                    {book.bookForEvents[0].discountValue && (
+                      <>
+                        <p
+                          style={{
+                            color: "rgb(255, 66, 78)",
+                            marginBottom: "0",
+                            fontSize: "15px",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {stringPrice(
+                            book.price - book.bookForEvents[0].discountValue
+                          )}
+                          ₫
+                        </p>
+                        <p className="discountt">
+                          -{book.bookForEvents[0].discountValue}đ
+                        </p>
+                      </>
+                    )}
                   </>
                 )}
               </div>

@@ -1,13 +1,10 @@
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Card, Rate } from "antd";
-import Meta from "antd/lib/card/Meta";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { Book, Category } from "../../models/book";
-import { appRoutes } from "../../routers/config";
 import BookCard from "./BookCard";
 
 interface HomeCategoryProps {
@@ -16,14 +13,7 @@ interface HomeCategoryProps {
 
 function HomeCategory({ category }: HomeCategoryProps) {
   const [bookOfCate, setBookOfCate] = useState<Book[]>([]);
-  const navigate = useNavigate();
-  const stringPrice = (number: number) => {
-    const newNumber = number.toLocaleString(undefined, {
-      maximumFractionDigits: 2,
-    });
-    console.log(newNumber);
-    return newNumber;
-  };
+
   const fetchCategoryBooks = (categoryId: number) => {
     console.log(category);
 
@@ -36,7 +26,7 @@ function HomeCategory({ category }: HomeCategoryProps) {
     httpClient()
       .post(APP_API.booksOfCate, bookSearch)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setBookOfCate([...res.data]);
       })
       .catch((err) => {
@@ -53,9 +43,9 @@ function HomeCategory({ category }: HomeCategoryProps) {
   return (
     <>
       {bookOfCate.length > 0 && (
-        <div className=" bg-white rounded-3">
+        <div className=" bg-white rounded-3 pt-4  mt-2 ">
           {/* {bookOfCategory(category.id)}; */}
-          <h4 className=" shoppingNow mt-2 mb-0 pt-4 pb-0">
+          <h4 className=" shoppingNow  ">
             <FontAwesomeIcon
               className="mr-2"
               icon={faBookOpen}
@@ -68,7 +58,7 @@ function HomeCategory({ category }: HomeCategoryProps) {
           <div className="home-book-list  pb-4">
             {bookOfCate.map((book: Book, index) => (
               <div>
-                {index < 10 && (
+                {index < 12 && (
                   <>
                     <BookCard book={book}></BookCard>
                   </>

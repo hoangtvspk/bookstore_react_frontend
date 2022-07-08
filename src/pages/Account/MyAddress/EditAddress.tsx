@@ -168,7 +168,11 @@ function EditAddress({ id }: EditAddressBoxProps) {
       </Form.Item>
       <div className="d-flex mt-3 d-flex justify-content-end">
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ backgroundColor: "#ff7f50", border: 0 }}
+          >
             Lưu
           </Button>
         </Form.Item>

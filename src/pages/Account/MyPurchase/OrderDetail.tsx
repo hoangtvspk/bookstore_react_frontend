@@ -1,5 +1,10 @@
 import {
+  CheckOutlined,
+  CloseCircleOutlined,
   DeleteFilled,
+  FileDoneOutlined,
+  LoadingOutlined,
+  RotateRightOutlined,
   SmileOutlined,
   SolutionOutlined,
   UserOutlined,
@@ -14,6 +19,9 @@ import { httpClient } from "../../../httpClient/httpServices";
 import { CartItem } from "../../../models/cartItem";
 import { GetOrder } from "../../../models/getOrder";
 import { appRoutes } from "../../../routers/config";
+import OrderAction from "./OrderActions";
+import OrderItems from "./OrderItems";
+import OrderStatus from "./OrderStatus";
 
 function OrderDetail() {
   const { id: orderId } = useParams();
@@ -65,21 +73,7 @@ function OrderDetail() {
 
   return (
     <div className="bg-white p-4" style={{ minHeight: "calc(100vh - 200px)" }}>
-      {order.status === "Đặt hàng" && (
-        <Steps>
-          <Step status="finish" title="Đặt Hàng" icon={<UserOutlined />} />
-          <Step status="process" title="Giao Hàng" icon={<UserOutlined />} />
-          <Step status="wait" title="Nhận Hàng" icon={<SolutionOutlined />} />
-          <Step status="wait" title="Thanh Toán" icon={<SmileOutlined />} />
-        </Steps>
-      )}
-      {order.status === "Đã hủy" && (
-        <Steps>
-          <Step status="finish" title="Đặt Hàng" icon={<UserOutlined />} />
-          <Step status="finish" title="Hủy Đơn" icon={<DeleteFilled />} />
-        </Steps>
-      )}
-
+      {order && <OrderStatus order={order}></OrderStatus>}
       <p
         style={{
           fontSize: "14px",
@@ -123,7 +117,7 @@ function OrderDetail() {
       <p
         style={{
           fontSize: "14px",
-          paddingTop: "0px",
+          paddingTop: "20px",
           marginBottom: 0,
           color: "	#555555",
         }}
@@ -131,98 +125,45 @@ function OrderDetail() {
         {order.orderItems?.length} sản phẩm:
       </p>
 
-      {order.orderItems?.length > 0 &&
-        order.orderItems.map((item: CartItem) => (
-          <>
-            <div className="d-flex bg-white pl-5 pb-2">
-              <img
-                className="item-image"
-                src={item.book.bookImages[0].image}
-                onClick={() => {
-                  navigate(
-                    appRoutes.bookDetail.replace(":id", item.book.id.toString())
-                  );
-                }}
-                style={{ cursor: "pointer" }}
-              ></img>
-              <div className="item-name">
-                <p
-                  onClick={() => {
-                    navigate(
-                      appRoutes.bookDetail.replace(
-                        ":id",
-                        item.book.id.toString()
-                      )
-                    );
-                  }}
-                  style={{ marginBottom: "0px", cursor: "pointer" }}
-                >
-                  {item.book.nameBook}
-                </p>
-                <p
-                  style={{
-                    fontSize: "12px",
-                    paddingTop: "0px",
-                    marginBottom: 0,
-                  }}
-                >
-                  Thể loại: {item.book.category.nameCategory}
-                </p>
-                <p
-                  style={{
-                    fontSize: "12px",
-                    paddingTop: "0px",
-                    marginBottom: 0,
-                  }}
-                >
-                  Tác giả: {item.book.author}
-                </p>
-                <p style={{ fontSize: "12px", paddingTop: "0px" }}>
-                  Còn: {item.book.quantity}
-                </p>
-              </div>
-
-              <div className="item-totalquantity">
-                <p style={{ marginBottom: "0px" }}>
-                  {stringPrice(
-                    item.book.price -
-                      (item.book.price * item.book.discount) / 100
-                  )}{" "}
-                  ₫
-                </p>
-                {item.book.discount > 0 && (
-                  <>
-                    <p
-                      style={{
-                        color: "rgb(128, 128, 137) ",
-                        marginTop: "8px",
-                        fontSize: "15px",
-                        textDecoration: "line-through",
-                        paddingLeft: "8px",
-                        marginBottom: "0px",
-                      }}
-                    >
-                      {stringPrice(item.book.price)} ₫
-                    </p>
-                    <p className="discountt">-{item.book.discount}%</p>
-                  </>
-                )}
-              </div>
-
-              <div className="item-quantity">
-                <p style={{ marginBottom: "0px" }}>x{item.quantity}</p>
-              </div>
-              <div className="item-totalprice">
-                {stringPrice(
-                  item.quantity *
-                    (item.book.price -
-                      (item.book.price * item.book.discount) / 100)
-                )}{" "}
-                ₫
-              </div>
-            </div>
-          </>
-        ))}
+      <OrderItems order={order}></OrderItems>
+      <div className="d-flex justify-content-end">
+        <div>
+          <p
+            style={{
+              fontSize: "14px",
+              paddingTop: "0px",
+              marginBottom: 0,
+              color: "	#555555",
+            }}
+          >
+            Phí Vận Chuyển: 0đ
+          </p>
+          {order.coupon?.discountPercentValue && (
+            <p
+              style={{
+                fontSize: "14px",
+                paddingTop: "0px",
+                marginBottom: 0,
+                color: "	#555555",
+              }}
+            >
+              Voucher: -{order.coupon.discountPercentValue}%
+            </p>
+          )}
+          {order.coupon?.discountValue && (
+            <p
+              style={{
+                fontSize: "14px",
+                paddingTop: "0px",
+                marginBottom: 0,
+                color: "	#555555",
+              }}
+            >
+              Voucher: -{order.coupon.discountValue}đ
+            </p>
+          )}
+        </div>
+      </div>
       <div className="purchase-order-info-detail">
         <p
           style={{
@@ -257,6 +198,7 @@ function OrderDetail() {
           </Popconfirm>
         </>
       )}
+      <OrderAction loadPage={loadPage} order={order}></OrderAction>
     </div>
   );
 }

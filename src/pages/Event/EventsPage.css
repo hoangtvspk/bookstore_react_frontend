@@ -19,40 +19,33 @@
   width: 100%;
 }
 
-.home-book-list {
-  padding-left: 4%;
-  padding-top: 5px;
-  padding-right: 4%;
+.event-book-list {
+
   /* border-top: 2px solid #efefef !important; */
   display: grid;
-  grid-template-columns: repeat(auto-fit, 160px);
+  grid-template-columns: repeat(auto-fit, 170px);
   /* grid-template-rows: repeat(5, 420px); */
   grid-row-gap: 20px;
   grid-column-gap: 27px;
 }
 .home-cate-list {
-  padding-left: 4%;
+  padding-left: 10%;
   padding-top: 5px;
-  padding-right: 4%;
+  padding-right: 10%;
   /* border-top: 2px solid #efefef !important; */
   display: grid;
-  grid-template-columns: repeat(auto-fit, 155px);
+  grid-template-columns: repeat(auto-fit, 120px);
   /* grid-template-rows: repeat(5, 420px); */
-  grid-row-gap: 22px;
-  grid-column-gap: 30px;
+  grid-row-gap: 20px;
+  grid-column-gap: 45px;
 }
 .home-preview-image {
-  height: 250px;
+  height: 270px;
   background-size: cover;
-  
 }
 .cate-preview-image {
-  height: 150px;
-  width: 150px;
-  background-size: cover;
-  border-radius: 50%;
-  object-fit: cover,
-
+  height: 200px;
+  width: 120px;
 }
 .home-type-book-image {
   height: 700px;
@@ -61,16 +54,12 @@
 .home-title-text {
   color: dimgrey !important;
   margin-bottom: 10px;
-  font-family: Helvetica !important;
+  font-family: Georgia, "Times New Roman", Times, serif !important;
   
   
-}
-.events-image {
-  width:820px !important;
- 
 }
 .ant-tabs-nav-wrap {
-padding-left: 4%;}
+padding-left: 10%;}
 .ant-tabs-tab {
   font-size: 16px;
 }
@@ -79,8 +68,8 @@ padding-left: 4%;}
 }
 
 .image-banner {
- 
-  width: 500px;
+  display: flex;
+  width: 100%;
   height: 300px;
   padding-left: 10%;
   padding-right: 10%;
@@ -91,10 +80,9 @@ padding-left: 4%;}
   width: calc(100% - 280px);
 }
 .home-title {
-  font-family: Helvetica !important;
+  font-family:  Helvetica !important;
   padding-left: 10%;
   padding-top: 2%;
-  color:#555555
 }
 .banner-left {
   height: 300px;
@@ -120,12 +108,8 @@ padding-left: 4%;}
   padding-left: 40px;
 }
 .shoppingNow {
-  padding-left:4%;
-  font-family:  Helvetica !important;
-  color: #555555 !important;
-  background-color: #FFCC99 ;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-left: 10%;
+  font-family:  "Times New Roman", Times, serif !important;
 }
 .ant-card-meta-title{
   font-size: 14px !important;
@@ -140,4 +124,19 @@ padding-left: 4%;}
   font-size: 16px;
   white-space: unset !important;
   text-overflow: ellipsis;
+}
+.strokeme {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.image-event-shadow{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.time-remain-strokeme {
+  color: white;
+  text-shadow: -1px -1px 0 	#00CC00, 1px -1px 0 	#00CC00, -1px 1px 0 	#00CC00, 1px 1px 0 	#00CC00;
+  font-size: 24px;
+  background-color: aquamarine;
+  width: 500px;
+  border:rgba(0, 0, 0, 0.19) solid 1px
 }

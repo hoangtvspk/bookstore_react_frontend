@@ -60,7 +60,7 @@ const MyAccount = () => {
 
   const [accountForm] = useForm();
   const navigate = useNavigate();
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(true);
   const onFinish = () => {
     const formData: FormData = new FormData();
     if (isImageChange) {
@@ -150,7 +150,8 @@ const MyAccount = () => {
           },
         ]);
         setCurrentedImage(res.data.image);
-      });
+      })
+      .finally(() => setSubmitting(false));
   }, [userInfo.image, accountForm]);
 
   return (
@@ -302,7 +303,11 @@ const MyAccount = () => {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ backgroundColor: "#ff7f50", border: 0 }}
+              >
                 Lưu Thay Đổi
               </Button>
             </Form.Item>

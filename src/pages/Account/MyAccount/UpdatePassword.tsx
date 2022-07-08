@@ -99,15 +99,13 @@ const UpdatePassword = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ backgroundColor: "#ff7f50", border: 0 }}
+              >
                 Lưu Thay Đổi
               </Button>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Link to={appRoutes.myAccount}>
-                <FontAwesomeIcon className="mr-2" icon={faArrowLeft} />
-                Turn Back
-              </Link>
             </Form.Item>
           </Form>
         </div>

@@ -7,9 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
 import { GetOrder } from "../../models/getOrder";
+import { VoucherModel } from "../../models/voucher";
 import { appRoutes } from "../../routers/config";
-
-function TotalPrice() {
+interface VoucherProps {
+  totalPrice: number;
+  voucherValue: string;
+}
+function TotalPrice({ totalPrice, voucherValue }: VoucherProps) {
   const cartItemArray = useSelector((state: RootStateOrAny) => {
     return state.cartSlice.cartItems;
   });
@@ -23,7 +27,7 @@ function TotalPrice() {
       .then((res) => {
         console.log(res);
         setOrder(res.data);
-        console.log(order);
+        console.log(order.totalPrice);
       })
       .catch((err) => {
         console.log(err);
@@ -92,7 +96,7 @@ function TotalPrice() {
             marginBottom: 0,
           }}
         >
-          Mã Giảm Giá: -0₫
+          Mã Giảm Giá: {voucherValue}
         </p>
 
         <Divider className="mt-1 mb-1"></Divider>
@@ -109,8 +113,8 @@ function TotalPrice() {
           </p>
 
           <p className="order-total">
-            {order.totalPrice &&
-              order.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {totalPrice &&
+              totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             ₫
           </p>
         </div>

@@ -231,7 +231,7 @@ const Login = () => {
                     <Form.Item
                       className="input-signin form-item pt-2 pb-2"
                       name="firstName"
-                      rules={[{ required: true }]}
+                      rules={[{ required: true, message: "Nhập tên" }]}
                     >
                       <Input />
                     </Form.Item>
@@ -249,7 +249,7 @@ const Login = () => {
                     <Form.Item
                       className="input-signin form-item pt-2 pb-2"
                       name="lastName"
-                      rules={[{ required: true }]}
+                      rules={[{ required: true, message: "Nhập họ" }]}
                     >
                       <Input />
                     </Form.Item>
@@ -267,7 +267,13 @@ const Login = () => {
                     <Form.Item
                       className="input-signin form-item pt-2 pb-2"
                       name="email"
-                      rules={[{ type: "email", required: true }]}
+                      rules={[
+                        {
+                          type: "email",
+                          required: true,
+                          message: "Nhập Email",
+                        },
+                      ]}
                     >
                       <Input />
                     </Form.Item>
@@ -285,7 +291,7 @@ const Login = () => {
                     <Form.Item
                       className="input-signin form-item pt-2 pb-2"
                       name="password"
-                      rules={[{ required: true }]}
+                      rules={[{ required: true, message: "Nhập password" }]}
                     >
                       <Input.Password />
                     </Form.Item>
@@ -314,9 +320,7 @@ const Login = () => {
                               return Promise.resolve();
                             }
                             return Promise.reject(
-                              new Error(
-                                "The two passwords that you entered do not match!"
-                              )
+                              new Error("Mật khẩu chưa trùng khớp!")
                             );
                           },
                         }),

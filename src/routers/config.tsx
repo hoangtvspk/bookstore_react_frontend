@@ -14,6 +14,8 @@ import OrderDetail from "../pages/Account/MyPurchase/OrderDetail";
 import BookDetail from "../pages/BookDetail/BookDetail";
 import Cart from "../pages/Cart/Cart";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Events from "../pages/Event/EventsList";
+import EventDetail from "../pages/Event/EventsPage";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import {
@@ -57,6 +59,8 @@ export const appRoutes = {
   myFavouriteBooks: "/myfavouritebooks",
   vnpayorder: "/onlinepayordersuccess",
   orderResult: "/orderresult",
+  eventDetail: "/eventDetail/:id",
+  eventList: "/eventslist",
 };
 
 interface IAppComponentConfig {
@@ -189,6 +193,16 @@ export const appComponentConfig: IAppComponentConfig[] = [
   {
     path: appRoutes.orderResult,
     component: <OrderResult />,
+    isAccountManage: false,
+  },
+  {
+    path: appRoutes.eventDetail,
+    component: <EventDetail />,
+    isAccountManage: false,
+  },
+  {
+    path: appRoutes.eventList,
+    component: <Events />,
     isAccountManage: false,
   },
 ];

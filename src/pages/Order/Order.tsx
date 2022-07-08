@@ -30,6 +30,7 @@ import { UserInfo } from "../../models/auth";
 import { CartItem } from "../../models/cartItem";
 import { GetOrder } from "../../models/getOrder";
 import { OrderForm } from "../../models/order";
+import { VoucherModel } from "../../models/voucher";
 import {
   updateAddressData,
   updateAddressListData,
@@ -39,6 +40,7 @@ import { appRoutes } from "../../routers/config";
 import "./Order.css";
 import OrderItems from "./OrderItem";
 import TotalPrice from "./TotalPrice";
+import Voucher from "./Voucher";
 
 function Order() {
   const cartItemArray = useSelector((state: RootStateOrAny) => {
@@ -127,6 +129,7 @@ function Order() {
         console.log(res);
         setOrder(res.data);
         console.log(order);
+        setTotalPrice(res.data.totalPrice);
       })
       .catch((err) => {
         console.log(err);
@@ -200,9 +203,50 @@ function Order() {
       })
       .finally(() => setSubmitting(false));
   };
-
+  const [voucher, setVoucher] = useState({} as VoucherModel);
+  const [voucherCode, setVoucherCode] = useState("");
+  const [voucherValue, setVoucherValue] = useState("-0VNĐ");
+  const stringPrice = (number: number) => {
+    const newNumber = number.toLocaleString(undefined, {
+      maximumFractionDigits: 2,
+    });
+    console.log(newNumber);
+    return newNumber;
+  };
+  const [totalPrice, setTotalPrice] = useState(0);
+  const getVoucherValue = (vcherCode: string) => {
+    setVoucherValue("-0VNĐ");
+    setTotalPrice(order.totalPrice);
+    setVoucherCode("");
+    httpClient()
+      .get(APP_API.getVoucher.replace(":id", vcherCode))
+      .then((res) => {
+        handleCancel();
+        console.log(res);
+        setVoucher(res.data);
+        setVoucherCode(res.data.couponCode);
+        if (res.data.discountPercentValue) {
+          setVoucherValue("-" + res.data.discountPercentValue + "%");
+          setTotalPrice(
+            order.totalPrice -
+              (res.data.discountPercentValue * order.totalPrice) / 100
+          );
+        }
+        if (res.data.discountValue) {
+          setVoucherValue("-" + stringPrice(res.data.discountValue) + "VNĐ");
+          setTotalPrice(order.totalPrice - res.data.discountValue);
+        }
+        if (!res.data.discountPercentValue && !res.data.discountValue) {
+          setTotalPrice(order.totalPrice);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const onFinish = (values: OrderForm) => {
     values.email = userInfo.email;
+    if (voucherCode != "") values.couponCode = voucherCode;
     values.lastName = "Trần Văn";
     if (address.address) {
       values.address =
@@ -474,7 +518,11 @@ function Order() {
                 </Space>
               </Radio.Group>
             </div>
-            <TotalPrice></TotalPrice>
+            <Voucher getVoucherValue={getVoucherValue}></Voucher>
+            <TotalPrice
+              totalPrice={totalPrice}
+              voucherValue={voucherValue}
+            ></TotalPrice>
             <div className="order-btn-background">
               <Button
                 className="order-btn"

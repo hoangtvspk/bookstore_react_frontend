@@ -4,7 +4,7 @@ import {
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { message, Steps } from "antd";
+import { Divider, message, Spin, Steps } from "antd";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
@@ -12,6 +12,7 @@ import { httpClient } from "../../httpClient/httpServices";
 import OrderFailed from "../../image/sad-cat.jpg";
 import { CartItem } from "../../models/cartItem";
 import { GetOrder } from "../../models/getOrder";
+import OrderItems from "./OrderItem";
 
 const OrderResult = () => {
   const [searchParams, setParam] = useSearchParams();
@@ -27,25 +28,27 @@ const OrderResult = () => {
     console.log(newNumber);
     return newNumber;
   };
-
+  const [submitting, setSubmitting] = useState(false);
   useEffect(() => {
+    setSubmitting(true);
     httpClient()
       .get(APP_API.purchase)
       .then((res) => {
         setIsSuccess(true);
         console.log(res);
-        setOrder(res.data[res.data.length - 1]);
+        if (res.data.length > 0) setOrder(res.data[res.data.length - 1]);
       })
       .catch((err) => {
         console.log(err);
         message.error(err.response.data);
-      });
+      })
+      .finally(() => setSubmitting(false));
 
     // eslint-disable-next-line
   }, [searchParams.get("vnp_ResponseCode") || searchParams.get("message")]);
 
   return (
-    <>
+    <Spin spinning={submitting}>
       {isSuccess && (
         <>
           <div className="bg-white p-4 orderDetail-background-height">
@@ -121,6 +124,40 @@ const OrderResult = () => {
             >
               Địa Chỉ: {order.address}
             </p>
+            <p
+              style={{
+                fontSize: "14px",
+                paddingTop: "0px",
+                marginBottom: 0,
+                color: "	#555555",
+              }}
+            >
+              Phí Vận Chuyển: 0đ
+            </p>
+            {order.coupon?.discountPercentValue && (
+              <p
+                style={{
+                  fontSize: "14px",
+                  paddingTop: "0px",
+                  marginBottom: 0,
+                  color: "	#555555",
+                }}
+              >
+                Voucher: -{order.coupon.discountPercentValue}%
+              </p>
+            )}
+            {order.coupon?.discountValue && (
+              <p
+                style={{
+                  fontSize: "14px",
+                  paddingTop: "0px",
+                  marginBottom: 0,
+                  color: "	#555555",
+                }}
+              >
+                Voucher: -{order.coupon.discountValue}đ
+              </p>
+            )}
             <div className="purchase-order-info">
               <p
                 style={{
@@ -148,79 +185,34 @@ const OrderResult = () => {
                 ₫
               </p>
             </div>
+            <Divider></Divider>
+            <div className="cartitem rounded-3">
+              <div className="item-image-header"></div>
+              <div className="item-name"></div>
+
+              <div
+                className="item-totalquantity"
+                style={{ borderLeft: "lightsteelblue solid 0.3px" }}
+              >
+                Đơn Giá
+              </div>
+              <div
+                className="item-quantity"
+                style={{ borderLeft: "lightsteelblue solid 0.3px" }}
+              >
+                Số lượng
+              </div>
+              <div
+                className="item-totalprice"
+                style={{ borderLeft: "lightsteelblue solid 0.3px" }}
+              >
+                Thành Tiền
+              </div>
+            </div>
             {order.orderItems?.length > 0 &&
               order.orderItems.map((item: CartItem) => (
                 <>
-                  <div className="d-flex bg-white pl-5 pb-2">
-                    <img
-                      className="item-image"
-                      src={item.book.bookImages[0].image}
-                    ></img>
-                    <div className="item-name">
-                      <p style={{ marginBottom: "0px" }}>
-                        {item.book.nameBook}
-                      </p>
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          paddingTop: "0px",
-                          marginBottom: 0,
-                        }}
-                      >
-                        Thể loại: {item.book.category.nameCategory}
-                      </p>
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          paddingTop: "0px",
-                          marginBottom: 0,
-                        }}
-                      >
-                        Tác giả: {item.book.author}
-                      </p>
-                      <p style={{ fontSize: "12px", paddingTop: "0px" }}>
-                        Còn: {item.book.quantity}
-                      </p>
-                    </div>
-                    <div className="item-totalquantity">
-                      <p style={{ marginBottom: "0px" }}>
-                        {stringPrice(
-                          item.book.price -
-                            (item.book.price * item.book.discount) / 100
-                        )}{" "}
-                        ₫
-                      </p>
-                      {item.book.discount > 0 && (
-                        <>
-                          <p
-                            style={{
-                              color: "rgb(128, 128, 137) ",
-                              marginTop: "8px",
-                              fontSize: "15px",
-                              textDecoration: "line-through",
-                              paddingLeft: "8px",
-                              marginBottom: "0px",
-                            }}
-                          >
-                            {stringPrice(item.book.price)} ₫
-                          </p>
-                          <p className="discountt">-{item.book.discount}%</p>
-                        </>
-                      )}
-                    </div>
-
-                    <div className="item-quantity">
-                      <p style={{ marginBottom: "0px" }}>{item.quantity}</p>
-                    </div>
-                    <div className="item-totalprice">
-                      {stringPrice(
-                        item.quantity *
-                          (item.book.price -
-                            (item.book.price * item.book.discount) / 100)
-                      )}{" "}
-                      ₫
-                    </div>
-                  </div>
+                  <OrderItems cartItem={item}></OrderItems>
                 </>
               ))}
           </div>
@@ -238,7 +230,7 @@ const OrderResult = () => {
           </div>
         </>
       )}
-    </>
+    </Spin>
   );
 };
 

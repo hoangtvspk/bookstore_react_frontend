@@ -31,9 +31,10 @@
   padding-right: 3% !important;
   padding-bottom: 0 !important;
   line-height: 40px !important;
-  background: rgb(26, 148, 255) !important;
-  /* opacity: 94%; */
+  background: rgb(244, 164, 96,0.4) !important;
+  position: relative;
 }
+
 .font-submenu {
   font-size: 16px;
  
@@ -42,6 +43,11 @@
 .font-submenu-side-bar{
   font-size: 14px;
  
+  font-family:  "Times New Roman", Times, serif !important;
+}
+.font-menu-side-bar{
+  font-size: 15px;
+  color: #555555 !important;
   font-family:  "Times New Roman", Times, serif !important;
 }
 .font-name {

@@ -10,7 +10,6 @@ import { appRoutes } from "../../routers/config";
 import "./Cart.css";
 import CartItems from "./CartItem";
 import TotalPrice from "./TotalPrice";
-import Voucher from "./Voucher";
 
 function Cart() {
   const isLoggedIn = useSelector((state: RootStateOrAny) => {
@@ -89,7 +88,6 @@ function Cart() {
                     ))}
                 </div>
                 <div className="rightContent ">
-                  <Voucher></Voucher>
                   <TotalPrice></TotalPrice>
                   <div className="order-btn-background">
                     <Button

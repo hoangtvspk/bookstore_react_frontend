@@ -4,7 +4,7 @@
 .cartitem {
   display: flex;
   background-color: white;
-  margin-top: 10px;
+  margin-top: 5px;
   padding: 10px 30px;
 }
 .item-image {
@@ -133,6 +133,6 @@
 }
 .rightContent{
   margin-left: 1%;
-  margin-top: 10px;
+  margin-top: 5px;
   height: 100%;
 }

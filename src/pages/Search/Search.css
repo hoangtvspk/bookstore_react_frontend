@@ -22,23 +22,24 @@
 
 .book-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 210px);
+  grid-template-columns: repeat(auto-fit, 180px);
   /* grid-template-rows: repeat(5, 420px); */
   grid-row-gap: 20px;
   grid-column-gap: 30px;
 }
 .preview-image {
-  height: 330px;
+  height: 300px;
   background-size: cover;
 }
 .font-cate {
   font-family: Roboto, Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   color: "#404040";
+  
 }
 .font-cate-title {
   font-family: Roboto, Helvetica, Arial, sans-serif !important;
-  font-size: 18px !important;
+  font-size: 14px !important;
   color: "#404040";
   font-weight: bold;
 }
@@ -56,4 +57,7 @@
 }
 .cover-book-card {
   display: block;
+}
+.element.style {
+  gap:2px !important
 }

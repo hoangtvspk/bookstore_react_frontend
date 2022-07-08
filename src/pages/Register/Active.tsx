@@ -49,7 +49,7 @@ const Active = () => {
       <div className="backgroundactive">
         <div className="site-layout-background site-layout-background-signin">
           <h2 className="d-flex justify-content-md-center mb-4">
-            Active Your Account
+            Kích Hoạt Tài Khoản
           </h2>
           <Form
             {...layout}
@@ -57,19 +57,19 @@ const Active = () => {
             onFinish={onFinish}
             validateMessages={validateMessages}
           >
-            <div>
-              Your activation code was sent to your email, check it now!
+            <div style={{ marginLeft: "120px" }}>
+              Mã Kích Hoạt Đã Được Gửi Đến Email Của Bạn, Kiểm Tra Ngay!
             </div>
             <Form.Item
               name="code"
-              label="Enter Active Code"
-              rules={[{ required: true }]}
+              label="Nhập mã kích hoạt"
+              rules={[{ required: true, message: "Nhập mã kích hoạt" }]}
             >
               <Input />
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <Button className="btn-active" type="primary" htmlType="submit">
-                Active
+                kích hoạt
               </Button>
             </Form.Item>
           </Form>

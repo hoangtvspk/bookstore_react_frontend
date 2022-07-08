@@ -5,7 +5,8 @@ export const authSlice = createSlice({
   initialState: {
     isAuth: !!localStorage.getItem("userInfo"),
     userInfo: JSON.parse(localStorage.getItem("userInfo") || "{}"),
-    isAccountManage: false
+    isAccountManage: false,
+    
   },
   reducers: {
     userLogIn: (state, payload) => {

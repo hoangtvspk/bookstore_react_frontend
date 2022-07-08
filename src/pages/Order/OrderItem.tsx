@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../models/cartItem";
 import { appRoutes } from "../../routers/config";
@@ -14,8 +14,40 @@ function OrderItems({ cartItem }: CommentBoxProps) {
     console.log(newNumber);
     return newNumber;
   };
+  const [itemSale, setItemSale] = useState(0);
+  const [itemSalePrice, setItemSalePrice] = useState(0);
+  const [itemTotalPrice, setItemTotalPrice] = useState(0);
   const navigate = useNavigate();
-  useEffect(() => {}, [cartItem.id]);
+  useEffect(() => {
+    if (cartItem.book.bookForEvents.length > 0) {
+      if (cartItem.book.bookForEvents[0].discountPercentValue) {
+        setItemSalePrice(
+          cartItem.book.price -
+            (cartItem.book.price *
+              cartItem.book.bookForEvents[0].discountPercentValue) /
+              100
+        );
+        setItemSale(cartItem.book.bookForEvents[0].discountPercentValue);
+        setItemTotalPrice(
+          (cartItem.book.price -
+            (cartItem.book.price *
+              cartItem.book.bookForEvents[0].discountPercentValue) /
+              100) *
+            cartItem.quantity
+        );
+      }
+      if (cartItem.book.bookForEvents[0].discountValue) {
+        setItemSalePrice(
+          cartItem.book.price - cartItem.book.bookForEvents[0].discountValue
+        );
+        setItemSale(cartItem.book.bookForEvents[0].discountValue);
+        setItemTotalPrice(
+          (cartItem.book.price - cartItem.book.bookForEvents[0].discountValue) *
+            cartItem.quantity
+        );
+      }
+    }
+  }, [cartItem.id]);
 
   return (
     <>
@@ -64,27 +96,41 @@ function OrderItems({ cartItem }: CommentBoxProps) {
           </p>
         </div>
 
-        {cartItem.book.quantity < 1 && (
-          <div className="pt-5">
-            <div className="item-totalquantity">{cartItem.book.quantity}</div>
-            <div
-              className="item-totalquantity"
-              style={{ fontSize: "12px", color: "red" }}
-            >
-              You must remove this book to continue!
-            </div>
-          </div>
-        )}
         <div className="item-totalquantity">
-          <p style={{ marginBottom: "0px" }}>
-            {stringPrice(
-              cartItem.book.price -
-                (cartItem.book.price * cartItem.book.discount) / 100
-            )}{" "}
-            ₫
-          </p>
-          {cartItem.book.discount > 0 && (
+          {cartItem.book.bookForEvents?.length < 1 && (
             <>
+              <p style={{ marginBottom: "0px" }}>
+                {stringPrice(
+                  cartItem.book.price -
+                    (cartItem.book.price * cartItem.book.discount) / 100
+                )}{" "}
+                ₫
+              </p>
+
+              {cartItem.book.discount > 0 && (
+                <>
+                  <p
+                    style={{
+                      color: "rgb(128, 128, 137) ",
+                      marginTop: "8px",
+                      fontSize: "15px",
+                      textDecoration: "line-through",
+                      paddingLeft: "8px",
+                      marginBottom: "0px",
+                    }}
+                  >
+                    {stringPrice(cartItem.book.price)} ₫
+                  </p>
+                  <p className="discountt">-{cartItem.book.discount}%</p>
+                </>
+              )}
+            </>
+          )}
+          {cartItem.book.bookForEvents?.length > 0 && (
+            <>
+              <p style={{ marginBottom: "0px" }}>
+                {stringPrice(itemSalePrice)} ₫
+              </p>
               <p
                 style={{
                   color: "rgb(128, 128, 137) ",
@@ -97,7 +143,7 @@ function OrderItems({ cartItem }: CommentBoxProps) {
               >
                 {stringPrice(cartItem.book.price)} ₫
               </p>
-              <p className="discountt">-{cartItem.book.discount}%</p>
+              <p className="discountt"> -{itemSale}%</p>
             </>
           )}
         </div>
@@ -105,14 +151,7 @@ function OrderItems({ cartItem }: CommentBoxProps) {
         <div className="item-quantity">
           <p style={{ marginBottom: "0px" }}>{cartItem.quantity}</p>
         </div>
-        <div className="item-totalprice">
-          {stringPrice(
-            cartItem.quantity *
-              (cartItem.book.price -
-                (cartItem.book.price * cartItem.book.discount) / 100)
-          )}{" "}
-          ₫
-        </div>
+        <div className="item-totalprice">{stringPrice(itemTotalPrice)} ₫</div>
       </div>
     </>
   );

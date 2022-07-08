@@ -8,6 +8,7 @@ import { httpClient } from "../../../httpClient/httpServices";
 import NothingImg from "../../../image/bubbleNothing.jpg";
 import { Book } from "../../../models/book";
 import { appRoutes } from "../../../routers/config";
+import BookCard from "../../HomePage/BookCard";
 
 function MyFavouriteBooks() {
   const [myFavorBooks, setMyFavorBooks] = useState<Book[]>([]);
@@ -48,70 +49,7 @@ function MyFavouriteBooks() {
         <div className="home-book-list  pb-4">
           {myFavorBooks?.length > 0 &&
             myFavorBooks?.map((book: Book, index) => (
-              <div>
-                {index < 10 && (
-                  <Card
-                    key={book.id}
-                    hoverable
-                    onClick={() => {
-                      navigate(
-                        appRoutes.bookDetail.replace(":id", book.id.toString())
-                      );
-                      window.scrollTo(0, 0);
-                    }}
-                    cover={
-                      <img
-                        className="home-preview-image"
-                        alt={book.nameBook}
-                        src={book.bookImages[0]?.image}
-                      />
-                    }
-                  >
-                    <Meta
-                      title={book.nameBook}
-                      description={
-                        <>
-                          <div
-                            style={{
-                              display: "flex",
-                              marginBottom: "0px",
-                              alignItems: "end",
-                            }}
-                          >
-                            <p
-                              style={{
-                                color: "rgb(255, 66, 78)",
-                                marginBottom: "0",
-                                fontSize: "15px",
-                                fontWeight: 500,
-                              }}
-                            >
-                              {stringPrice(
-                                book.price - (book.price * book.discount) / 100
-                              )}{" "}
-                              ₫
-                            </p>
-                            {book.discount > 0 && (
-                              <>
-                                <p className="discountt">-{book.discount}%</p>
-                              </>
-                            )}
-                          </div>
-                          <div>
-                            <Rate
-                              value={book.rating}
-                              disabled
-                              style={{
-                                fontSize: "15px",
-                              }}
-                            ></Rate>
-                          </div>
-                        </>
-                      }
-                    />
-                  </Card>
-                )}
-              </div>
+              <div>{index < 10 && <BookCard book={book}></BookCard>}</div>
             ))}
         </div>
         {myFavorBooks.length === 0 && (
