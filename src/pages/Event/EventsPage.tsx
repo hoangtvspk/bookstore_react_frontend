@@ -27,6 +27,7 @@ function EventDetail() {
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(true);
   const [bookForEvent, setBookForEvent] = useState<EventBooksModel[]>([]);
+  
   // const [timestampDayjs, setTimeStampDayjs] = useState("");
   const getEventDetail = () => {
     setSubmitting(true);

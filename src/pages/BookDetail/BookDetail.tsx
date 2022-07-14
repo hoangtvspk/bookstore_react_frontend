@@ -6,8 +6,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, Carousel, Divider, Input, message, Rate } from "antd";
-import Meta from "antd/lib/card/Meta";
+import { Button, Carousel, Divider, Input, message, Rate } from "antd";
 import { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
@@ -166,6 +165,7 @@ function BookDetail() {
                 fontSize: "26px",
                 fontWeight: 400,
                 marginBottom: 0,
+                width: "350px",
               }}
             >
               {book.nameBook}

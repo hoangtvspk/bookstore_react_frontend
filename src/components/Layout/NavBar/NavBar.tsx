@@ -7,7 +7,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Badge, Button, Col, Layout, Menu, Row } from "antd";
+import { Badge, Button, Col, Layout, Menu, message, Row } from "antd";
 import Search from "antd/lib/input/Search";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -284,36 +284,26 @@ const NavBar: React.FC = ({ children }) => {
           {!isLoggedIn && (
             <>
               <div style={{ minWidth: "15%" }}>
-                <Menu
-                  mode="horizontal"
-                  style={{ background: "Transparent" }}
-                  selectedKeys={[selectedMenu]}
+                <Link
+                  to={appRoutes.login}
+                  className=" font-text"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
                 >
-                  <Menu.Item
-                    key="login"
-                    onClick={() => setSelectedMenu("login")}
-                  >
-                    <FontAwesomeIcon
-                      className="mr-2  text-white"
-                      icon={faSignInAlt}
-                    />
-                    <Link
-                      to={appRoutes.login}
-                      className=" font-text"
-                      onClick={() => {
-                        window.scrollTo(0, 0);
-                      }}
-                    >
-                      Đăng Nhập/Đăng Ký
-                    </Link>
-                  </Menu.Item>
-                </Menu>
+                  <FontAwesomeIcon
+                    className="mr-2  text-white"
+                    icon={faSignInAlt}
+                  />
+                  Đăng Nhập/Đăng Ký
+                </Link>
               </div>
               <Link
-                to={appRoutes.cart}
+                to={appRoutes.login}
                 className=" font-text"
                 onClick={() => {
                   window.scrollTo(0, 0);
+                  message.info("Đăng nhập để tiếp tục");
                 }}
               >
                 <ShoppingCartOutlined

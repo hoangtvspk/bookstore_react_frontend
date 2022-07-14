@@ -19,6 +19,7 @@ import { Category } from "../../models/categoryBooks";
 import { updateKeySearch } from "../../redux/slices/keySearchSlice";
 import { appRoutes } from "../../routers/config";
 import BookCard from "../HomePage/BookCard";
+import EmptySearchResult from "../../image/emptySearchResult.png";
 import "./Search.css";
 
 const DEFAULT_PAGE_SIZE = 32;
@@ -337,25 +338,45 @@ function SearchPage() {
               </Space>
             </Radio.Group>
           </div>
-        </div>
-        <div className="right-content">
-          <div className="book-list">
-            {showingBook.length > 0 &&
-              showingBook.map((book: Book) => (
-                <BookCard book={book}></BookCard>
-              ))}
+        </div>{" "}
+        {showingBook.length > 0 && (
+          <>
+            <div className="right-content">
+              <div className="book-list">
+                {showingBook.map((book: Book) => (
+                  <BookCard book={book}></BookCard>
+                ))}
+              </div>
+
+              <div className="text-center">
+                <Pagination
+                  className="p-3 mb-4"
+                  total={bookArray.length}
+                  onChange={onPageChange}
+                  defaultPageSize={DEFAULT_PAGE_SIZE}
+                  current={curPage}
+                  showSizeChanger={false}
+                />
+              </div>
+            </div>{" "}
+          </>
+        )}
+        {showingBook.length < 1 && (
+          <div
+            style={{ width: "100%" }}
+            className=" bg-white d-flex justify-content-center align-items-center"
+          >
+            <div>
+              {" "}
+              <div className=" ">
+                <img src={EmptySearchResult}></img>
+              </div>
+              <h4 className="d-flex justify-content-center align-items-center">
+                Không tìm thấy sản phẩm
+              </h4>
+            </div>
           </div>
-          <div className="text-center">
-            <Pagination
-              className="p-3 mb-4"
-              total={bookArray.length}
-              onChange={onPageChange}
-              defaultPageSize={DEFAULT_PAGE_SIZE}
-              current={curPage}
-              showSizeChanger={false}
-            />
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

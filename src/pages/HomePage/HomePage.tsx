@@ -1,16 +1,16 @@
 import {
-  faBars,
-  faGifts,
-  faShoppingBasket,
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Carousel, Image, Tabs } from "antd";
+import { Carousel, Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { APP_API } from "../../httpClient/config";
 import { httpClient } from "../../httpClient/httpServices";
-import ImageGallery from "react-image-gallery";
+import NewBooksIcon from "../../image/newBooksIcon.png";
+import SaleBooksIcon from "../../image/sale.png";
+import TredingBooksIcon from "../../image/trending.png";
 import { Book } from "../../models/book";
 import { Category } from "../../models/categoryBooks";
 import { Event } from "../../models/event";
@@ -19,10 +19,6 @@ import { appRoutes } from "../../routers/config";
 import BookCard from "./BookCard";
 import HomeCategory from "./HomeCategory";
 import "./HomePage.css";
-import { Link } from "react-router-dom";
-import NewBooksIcon from "../../image/newBooksIcon.png";
-import TredingBooksIcon from "../../image/trending.png";
-import SaleBooksIcon from "../../image/sale.png";
 
 const { TabPane } = Tabs;
 
