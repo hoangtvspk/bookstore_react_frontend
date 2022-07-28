@@ -6,7 +6,8 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Carousel, Divider, Input, message, Rate } from "antd";
+import { Button, Card, Carousel, Divider, Input, message, Rate } from "antd";
+import Meta from "antd/lib/card/Meta";
 import { ChangeEvent, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
@@ -437,7 +438,136 @@ function BookDetail() {
               .map(
                 (book: Book, index) =>
                   book.id.toString() != id &&
-                  index < 10 && <BookCard book={book}></BookCard>
+                  index < 10 && (
+                    <Card
+                      key={book.id}
+                      hoverable
+                      bordered
+                      onClick={() => {
+                        navigate(
+                          appRoutes.bookDetail.replace(
+                            ":id",
+                            book.id.toString()
+                          )
+                        );
+                        window.scrollTo(0, 0);
+                        setNumber(1);
+                      }}
+                      cover={
+                        <img
+                          className="home-preview-image"
+                          alt={book.nameBook}
+                          src={book.bookImages[0]?.image}
+                        />
+                      }
+                    >
+                      <Meta
+                        title={book.nameBook}
+                        description={
+                          <>
+                            <div
+                              style={{
+                                display: "flex",
+                                marginBottom: "0px",
+                                alignItems: "end",
+                              }}
+                            >
+                              {book.bookForEvents.length < 1 && (
+                                <>
+                                  <p
+                                    style={{
+                                      color: "rgb(255, 66, 78)",
+                                      marginBottom: "0",
+                                      fontSize: "15px",
+                                      fontWeight: 500,
+                                    }}
+                                  >
+                                    {stringPrice(
+                                      book.price -
+                                        (book.price * book.discount) / 100
+                                    )}{" "}
+                                    ₫
+                                  </p>
+                                  {book.discount > 0 && (
+                                    <>
+                                      <p className="discountt">
+                                        -{book.discount}%
+                                      </p>
+                                    </>
+                                  )}
+                                </>
+                              )}
+                              {book.bookForEvents.length > 0 && (
+                                <>
+                                  {book.bookForEvents[0]
+                                    .discountPercentValue && (
+                                    <>
+                                      <p
+                                        style={{
+                                          color: "rgb(255, 66, 78)",
+                                          marginBottom: "0",
+                                          fontSize: "15px",
+                                          fontWeight: 500,
+                                        }}
+                                      >
+                                        {stringPrice(
+                                          book.price -
+                                            (book.price *
+                                              book.bookForEvents[0]
+                                                .discountPercentValue) /
+                                              100
+                                        )}{" "}
+                                        ₫
+                                      </p>
+                                      <p className="discountt">
+                                        -
+                                        {
+                                          book.bookForEvents[0]
+                                            .discountPercentValue
+                                        }
+                                        %
+                                      </p>
+                                    </>
+                                  )}
+
+                                  {book.bookForEvents[0].discountValue && (
+                                    <>
+                                      <p
+                                        style={{
+                                          color: "rgb(255, 66, 78)",
+                                          marginBottom: "0",
+                                          fontSize: "15px",
+                                          fontWeight: 500,
+                                        }}
+                                      >
+                                        {stringPrice(
+                                          book.price -
+                                            book.bookForEvents[0].discountValue
+                                        )}
+                                        ₫
+                                      </p>
+                                      <p className="discountt">
+                                        -{book.bookForEvents[0].discountValue}đ
+                                      </p>
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            </div>
+                            <div>
+                              <Rate
+                                value={book.rating}
+                                disabled
+                                style={{
+                                  fontSize: "15px",
+                                }}
+                              ></Rate>
+                            </div>
+                          </>
+                        }
+                      />
+                    </Card>
+                  )
               )}
         </div>
       </div>

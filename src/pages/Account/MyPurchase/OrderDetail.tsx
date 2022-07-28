@@ -51,6 +51,9 @@ function OrderDetail() {
         .finally();
     }
   };
+  const formatDate = (date: string) => {
+    return date.slice(8, 10) + "-" + date.slice(5, 7) + "-" + date.slice(0, 4);
+  };
   const loadPage = () => {
     console.log(orderId);
     if (orderId) {
@@ -82,7 +85,7 @@ function OrderDetail() {
           color: "	#555555",
         }}
       >
-        Mã đơn hàng: bks2h2k96{order.id}
+        Mã đơn hàng: {order.id}
       </p>
       <p
         style={{
@@ -102,7 +105,8 @@ function OrderDetail() {
           color: "	#555555",
         }}
       >
-        Ngày đặt: {order.date}
+        Ngày: {formatDate(order?.date?.slice(0, 10) || "")} - Giờ:{" "}
+        {order?.date?.slice(11, 21) || ""}
       </p>
       <p
         style={{

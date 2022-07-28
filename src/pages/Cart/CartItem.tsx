@@ -33,7 +33,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
         console.log(res);
         dispatch(updateCartData(res.data));
       })
-      .catch((err) => message.error("Cannot delete item"))
+      .catch((err) => message.error("Không thể xóa"))
       .finally();
   };
 
@@ -48,11 +48,11 @@ function CartItems({ cartItem }: CommentBoxProps) {
       quantity: quantity.target.value,
     };
     if (parseInt(quantity.target.value) > maxQuantity) {
-      message.error("Just " + maxQuantity + " Available Books");
+      message.error("Chỉ còn " + maxQuantity + " Cuốn");
     } else if (parseInt(quantity.target.value) < 1) {
-      message.error("At Least 1");
+      message.error("Ít nhất 1");
     } else if (quantity.target.value == "") {
-      message.error("Cannot Be Empty");
+      message.error("Không để trống");
     } else {
       httpClient()
         .post(APP_API.updateCartItem, cartUp)
@@ -63,7 +63,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
         })
         .catch((err) => {
           console.log(err);
-          message.error("Cannot Update Item");
+          message.error("Không Thể Thay Đổi");
         })
         .finally();
     }
@@ -92,11 +92,11 @@ function CartItems({ cartItem }: CommentBoxProps) {
         })
         .catch((err) => {
           console.log(err);
-          message.error("Cannot update cart");
+          message.error("Không Thể Thay Đổi");
         })
         .finally();
     } else {
-      message.error("Just " + maxQuantity + " Available Books");
+      message.error("Chỉ còn " + maxQuantity + " cuốn");
     }
   };
   const onDecrease = (bookId: number, quantity: number) => {
@@ -118,7 +118,7 @@ function CartItems({ cartItem }: CommentBoxProps) {
         })
         .catch((err) => {
           console.log(err);
-          message.error("Cannot update cart");
+          message.error("Không Thể Thay Đổi");
         })
         .finally();
     } else {

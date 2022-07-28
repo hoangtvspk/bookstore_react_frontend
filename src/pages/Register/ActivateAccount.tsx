@@ -32,7 +32,7 @@ const ActivateAccount = () => {
 
   return (
     <Spin spinning={loading}>
-      {showError && <h3>Incorrect activate code</h3>}
+      {showError && <h3>Mã Xác Thực Không Hợp Lệ</h3>}
     </Spin>
   );
 };

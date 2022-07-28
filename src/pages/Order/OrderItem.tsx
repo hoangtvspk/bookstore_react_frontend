@@ -46,6 +46,16 @@ function OrderItems({ cartItem }: CommentBoxProps) {
             cartItem.quantity
         );
       }
+    } else {
+      if (cartItem.book.discount > 0) {
+        setItemTotalPrice(
+          (cartItem.book.price -
+            (cartItem.book.price * cartItem.book.discount) / 100) *
+            cartItem.quantity
+        );
+      } else {
+        setItemTotalPrice(cartItem.book.price * cartItem.quantity);
+      }
     }
   }, [cartItem.id]);
 

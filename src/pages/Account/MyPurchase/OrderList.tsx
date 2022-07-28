@@ -28,7 +28,9 @@ function OrderList({ orderArray }: OrderProps) {
 
     return newNumber;
   };
-
+  const formatDate = (date: string) => {
+    return date.slice(8, 10) + "-" + date.slice(5, 7) + "-" + date.slice(0, 4);
+  };
   const navigate = useNavigate();
   const [checkedOrders, setCheckedOrders] = useState<number[]>([]);
 
@@ -62,11 +64,13 @@ function OrderList({ orderArray }: OrderProps) {
                           fontSize: "14px",
                           paddingTop: "0px",
                           marginBottom: 0,
-                          marginLeft: 20,
+
                           color: "	#555555",
                         }}
                       >
-                        {purchaseItem.date}
+                        Mã đơn hàng: {purchaseItem.id} - Ngày:{" "}
+                        {formatDate(purchaseItem.date?.slice(0, 10))} - Giờ:{" "}
+                        {purchaseItem.date?.slice(11, 21)}
                       </p>
                     </div>
                     <p
