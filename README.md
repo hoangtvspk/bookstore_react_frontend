@@ -31,8 +31,12 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Website's screenshot
 
-Homepage:
+Home Page:
 ![alt text](https://github.com/hoangtvspk/bookstore_react_frontend/blob/master/src/image/trangchu.png?raw=true)
+Book Detail Page:
+![alt text](https://github.com/hoangtvspk/bookstore_react_frontend/blob/master/src/image/chitietsanpham.png?raw=true)
+Search Page:
+![alt text](https://github.com/hoangtvspk/bookstore_react_frontend/blob/master/src/image/timkiem.png?raw=true)
 Events Page:
 ![alt text](https://github.com/hoangtvspk/bookstore_react_frontend/blob/master/src/image/sukien.png?raw=true)
 Cart Page:
